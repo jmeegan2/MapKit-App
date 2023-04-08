@@ -58,6 +58,8 @@ struct InputView: View {
     @State private var mpg = ""
     @State private var distance: Double = 0
     @State private var cost: Double = 0
+    @State private var avoidTolls = false // Toggle state for avoiding tolls
+    @State private var time: Double = 0
     
     
     var body: some View {
@@ -79,7 +81,8 @@ struct InputView: View {
             
             // Create a text field for average MPG
             TextField("Average MPG for vehicle", text: $mpg)
-            
+            // Create a toggle for avoiding tolls
+            Toggle("Avoid tolls", isOn: $avoidTolls)
             // Create a button to calculate distance and cost
             Button("Calculate Distance") {
                 // Convert latitude and longitude strings to Double
@@ -107,7 +110,12 @@ struct InputView: View {
                 directionRequest.source = startingMapItem
                 directionRequest.destination = destinationMapItem
                 directionRequest.transportType = .automobile
-                
+                //If else for toggle avoidTolls boolean value
+                if (avoidTolls) {
+                directionRequest.tollPreference = .avoid // Avoid tolls
+                } else {
+                    directionRequest.tollPreference = .any
+                }
                 let directions = MKDirections(request: directionRequest)
                 
                 directions.calculate { [self] (response, error) in
@@ -119,6 +127,7 @@ struct InputView: View {
                     // Get the first route in the response and calculate the distance
                     let route = response.routes[0]
                     let distanceInMeters = route.distance
+                    self.time = route.expectedTravelTime / 60 / 60// Convert seconds to minutes
                     self.distance = distanceInMeters / 1609.344 // Convert meters to miles
                     
                     // Calculate the cost based on distance and MPG
@@ -130,6 +139,7 @@ struct InputView: View {
             .border(Color.black, width: 1)
             
             // Display the distance and cost
+            Text("Trip Duration: \(time, specifier: "%.2f") Hours")
             Text("Distance: \(distance, specifier: "%.2f") miles")
             Text("Cost: $\(cost, specifier: "%.2f")")
         }
