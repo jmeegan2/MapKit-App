@@ -9,6 +9,9 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    let annotation = MKPointAnnotation()
+    let annotationTwo = MKPointAnnotation()
+    let saintPaulHospitalBC = MKPointAnnotation()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             //Baltimore, Maryland
@@ -25,6 +28,7 @@ struct MapView: View {
         }
     
 }
+
 
 
 
