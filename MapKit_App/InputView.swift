@@ -4,47 +4,9 @@
 //
 //  Created by James Meegan on 4/8/23.
 //
+//Baltimore 39.284176, -76.622368
+//San Francisco  37.773972, -122.431297
 
-
-//struct InputView: View {
-//    //State declarations
-//    @State private var startingLocation = ""
-//    @State private var destinationLocation = ""
-//    @State private var mpg = ""
-//    @State private var distance: Double = 0
-//    @State private var cost: Double = 0
-//
-//
-//    var body: some View {
-//        VStack(alignment: .center){
-//            TextField("Starting location", text: $startingLocation)
-//            TextField("Destination location", text: $destinationLocation)
-//            TextField("Average MPG for vehicle", text: $mpg)
-//            Button("Calculate Distance") {
-//                // Calculate distance using Starting location and Destination location
-//                // Set distance state variable
-//                // Calculate cost using distance and national gas price average
-//                // Set cost state variable
-//            }
-//            .frame(width: 100.0, height: 60.0)
-//            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-//            Text("Distance: \(distance)")
-//            Text("Cost: \(cost)")
-//            Button("Preview Route") {
-//                // Show MapView with starting and destination
-//            }
-//            .frame(width: 100.0, height: 60.0)
-//            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-//
-//        }
-//    }
-//}
-//
-//struct InputView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InputView()
-//    }
-//}
 
 import SwiftUI
 import MapKit
@@ -61,90 +23,135 @@ struct InputView: View {
     @State private var avoidTolls = false // Toggle state for avoiding tolls
     @State private var time: Double = 0
     
+
     
     var body: some View {
         VStack {
-            // Create two text fields for starting and destination locations
-            HStack {
+            Group {
                 VStack(alignment: .leading) {
                     Text("Starting location")
-                    TextField("Latitude", text: $startingLocationLat)
-                    TextField("Longitude", text: $startingLocationLong)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Destination location")
-                    TextField("Latitude", text: $destinationLocationLat)
-                    TextField("Longitude", text: $destinationLocationLong)
-                }
-            }
-            
-            // Create a text field for average MPG
-            TextField("Average MPG for vehicle", text: $mpg)
-            // Create a toggle for avoiding tolls
-            Toggle("Avoid tolls", isOn: $avoidTolls)
-            // Create a button to calculate distance and cost
-            Button("Calculate Distance") {
-                // Convert latitude and longitude strings to Double
-                guard let startingLat = Double(startingLocationLat),
-                      let startingLong = Double(startingLocationLong),
-                      let destinationLat = Double(destinationLocationLat),
-                      let destinationLong = Double(destinationLocationLong),
-                      let mpg = Double(mpg) else {
-                    return
-                }
-                
-                // Create starting and destination coordinates
-                let startingCoordinate = CLLocationCoordinate2D(latitude: startingLat, longitude: startingLong)
-                let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
-                
-                // Create map items for starting and destination locations
-                let startingPlacemark = MKPlacemark(coordinate: startingCoordinate)
-                let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
-                
-                let startingMapItem = MKMapItem(placemark: startingPlacemark)
-                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-                
-                // Calculate directions and distance between starting and destination locations
-                let directionRequest = MKDirections.Request()
-                directionRequest.source = startingMapItem
-                directionRequest.destination = destinationMapItem
-                directionRequest.transportType = .automobile
-                //If else for toggle avoidTolls boolean value
-                if (avoidTolls) {
-                directionRequest.tollPreference = .avoid // Avoid tolls
-                } else {
-                    directionRequest.tollPreference = .any
-                }
-                let directions = MKDirections(request: directionRequest)
-                
-                directions.calculate { [self] (response, error) in
-                    // Check if response is valid
-                    guard let response = response else {
-                        return
+                        .font(.headline)
+                    HStack {
+                        TextField("Latitude", text: $startingLocationLat)
+                        TextField("Longitude", text: $startingLocationLong)
                     }
-                    
-                    // Get the first route in the response and calculate the distance
-                    let route = response.routes[0]
-                    let distanceInMeters = route.distance
-                    self.time = route.expectedTravelTime / 60 / 60// Convert seconds to minutes
-                    self.distance = distanceInMeters / 1609.344 // Convert meters to miles
-                    
-                    // Calculate the cost based on distance and MPG
-                    let nationalGasPriceAverage = 3.00 // Example gas price per gallon
-                    self.cost = (self.distance / mpg) * nationalGasPriceAverage
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("Destination location")
+                        .font(.headline)
+                    HStack {
+                        TextField("Latitude", text: $destinationLocationLat)
+                        TextField("Longitude", text: $destinationLocationLong)
+                    }
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                     Text("Vehicle")
+                    .font(.headline)
+                TextField("Average MPG", text: $mpg)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Toggle("Avoid tolls", isOn: $avoidTolls)
+                        .padding(.vertical, 10)
+                    Button("Calculate Distance", action:calculateDistance)
+                        .padding(.all, 10.0)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(.blue)
+                        .fontWeight(.bold)
+                        .cornerRadius(10)
+                    Group {
+
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text("Trip Duration:")
+                                    .font(.headline)
+                                Spacer()
+                                Text("\(time, specifier: "%.2f") hours")
+                            }
+                            HStack {
+                                Text("Distance:")
+                                    .font(.headline)
+                                Spacer()
+                                Text("\(distance, specifier: "%.2f") miles")
+                            }
+                            HStack {
+                                Text("Cost:")
+                                    .font(.headline)
+                                Spacer()
+                                Text("$\(cost, specifier: "%.2f")")
+                            }
+                        }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                    }
                 }
+                //Baltimore 39.284176, -76.622368
+                //San Francisco  37.773972, -122.431297
+                Group {MapView()}
             }
-            .frame(width: 100.0, height: 60.0)
-            .border(Color.black, width: 1)
+            .padding()
+            .background(Color.white)
+            .padding(.horizontal)
+            Spacer()
+           
+        }
+        
             
-            // Display the distance and cost
-            Text("Trip Duration: \(time, specifier: "%.2f") Hours")
-            Text("Distance: \(distance, specifier: "%.2f") miles")
-            Text("Cost: $\(cost, specifier: "%.2f")")
+        }
+    func calculateDistance() {
+        // Convert latitude and longitude strings to Double
+        guard let startingLat = Double(startingLocationLat),
+              let startingLong = Double(startingLocationLong),
+              let destinationLat = Double(destinationLocationLat),
+              let destinationLong = Double(destinationLocationLong),
+              let mpg = Double(mpg) else {
+            return
+        }
+        
+        // Create starting and destination coordinates
+        let startingCoordinate = CLLocationCoordinate2D(latitude: startingLat, longitude: startingLong)
+        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+        
+        // Create map items for starting and destination locations
+        let startingPlacemark = MKPlacemark(coordinate: startingCoordinate)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+        
+        let startingMapItem = MKMapItem(placemark: startingPlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        
+        // Calculate directions and distance between starting and destination locations
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = startingMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.transportType = .automobile
+        //If else for toggle avoidTolls boolean value
+        if (avoidTolls) {
+            directionRequest.tollPreference = .avoid // Avoid tolls
+        } else {
+            directionRequest.tollPreference = .any
+        }
+        let directions = MKDirections(request: directionRequest)
+        
+        directions.calculate { [self] (response, error) in
+            // Check if response is valid
+            guard let response = response else {
+                return
+            }
+            
+            // Get the first route in the response and calculate the distance
+            let route = response.routes[0]
+            let distanceInMeters = route.distance
+            self.time = route.expectedTravelTime / 60 / 60// Convert seconds to minutes
+            self.distance = distanceInMeters / 1609.344 // Convert meters to miles
+            
+            // Calculate the cost based on distance and MPG
+            let nationalGasPriceAverage = 3.00 // Example gas price per gallon
+            self.cost = (self.distance / mpg) * nationalGasPriceAverage
         }
     }
-}
+
+    }
+
 
 struct InputView_Previews: PreviewProvider {
     static var previews: some View {
