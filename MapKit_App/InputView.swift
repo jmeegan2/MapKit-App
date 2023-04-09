@@ -6,7 +6,7 @@
 //
 //Baltimore 39.284176, -76.622368
 //San Francisco  37.773972, -122.431297
-
+//Omaha, Nebraska 41.257160 Longitude: -95.995102
 
 import SwiftUI
 import MapKit
@@ -22,83 +22,84 @@ struct InputView: View {
     @State private var cost: Double = 0
     @State private var avoidTolls = false // Toggle state for avoiding tolls
     @State private var time: Double = 0
+    @State private var startingCoordinate: CLLocationCoordinate2D?
+    @State private var destinationCoordinate: CLLocationCoordinate2D?
+    @State private var coordinatesUpdated = false
+    @State private var mapCoordinates: (CLLocationCoordinate2D, CLLocationCoordinate2D)?
+    @State private var mapIdentifier = UUID()
     
-
     
     var body: some View {
-        VStack {
-            Group {
-                VStack(alignment: .leading) {
-                    Text("Starting location")
-                        .font(.headline)
-                    HStack {
-                        TextField("Latitude", text: $startingLocationLat)
-                        TextField("Longitude", text: $startingLocationLong)
-                    }
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    Text("Destination location")
-                        .font(.headline)
-                    HStack {
-                        TextField("Latitude", text: $destinationLocationLat)
-                        TextField("Longitude", text: $destinationLocationLong)
-                    }
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                     Text("Vehicle")
-                    .font(.headline)
-                TextField("Average MPG", text: $mpg)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    Toggle("Avoid tolls", isOn: $avoidTolls)
-                        .padding(.vertical, 10)
-                    Button("Calculate Distance", action:calculateDistance)
-                        .padding(.all, 10.0)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(.blue)
-                        .fontWeight(.bold)
-                        .cornerRadius(10)
-                    Group {
-
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Text("Trip Duration:")
-                                    .font(.headline)
-                                Spacer()
-                                Text("\(time, specifier: "%.2f") hours")
-                            }
-                            HStack {
-                                Text("Distance:")
-                                    .font(.headline)
-                                Spacer()
-                                Text("\(distance, specifier: "%.2f") miles")
-                            }
-                            HStack {
-                                Text("Cost:")
-                                    .font(.headline)
-                                Spacer()
-                                Text("$\(cost, specifier: "%.2f")")
-                            }
-                        }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
-                    }
-                }
-                //Baltimore 39.284176, -76.622368
-                //San Francisco  37.773972, -122.431297
-                Group {MapView()}
+        VStack(alignment: .leading) {
+            Text("Starting location")
+                .font(.headline)
+            HStack {
+                TextField("Latitude", text: $startingLocationLat)
+                TextField("Longitude", text: $startingLocationLong)
             }
-            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            Text("Destination location")
+                .font(.headline)
+            HStack {
+                TextField("Latitude", text: $destinationLocationLat)
+                TextField("Longitude", text: $destinationLocationLong)
+            }
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            Text("Vehicle")
+                .font(.headline)
+            TextField("Average MPG", text: $mpg)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            Toggle("Avoid tolls", isOn: $avoidTolls)
+                .padding(.vertical, 10)
+            Button("Calculate Distance", action:calculateDistance)
+                .padding(.all, 10.0)
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(.blue)
+                .fontWeight(.bold)
+                .cornerRadius(10)
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Trip Duration:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(time, specifier: "%.2f") hours")
+                }
+                HStack {
+                    Text("Distance:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(distance, specifier: "%.2f") miles")
+                }
+                HStack {
+                    Text("Cost:")
+                        .font(.headline)
+                    Spacer()
+                    Text("$\(cost, specifier: "%.2f")")
+                }
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 20)
             .background(Color.white)
-            .padding(.horizontal)
-            Spacer()
-           
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            //Baltimore 39.284176, -76.622368
+            //San Francisco  37.773972, -122.431297
+            // Conditionally render the MapView when both startingCoordinate and destinationCoordinate are non-nil
+            if let startingCoordinate = startingCoordinate, let destinationCoordinate = destinationCoordinate {
+                MapView(startingCoordinate: startingCoordinate, destinationCoordinate: destinationCoordinate)
+                    .id(mapIdentifier)
+            } else {
+                Color.clear
+            }
         }
-        
-            
-        }
+        .padding()
+        .background(Color.white)
+        .padding(.horizontal)
+       
+    }
     func calculateDistance() {
+        mapIdentifier = UUID()
         // Convert latitude and longitude strings to Double
         guard let startingLat = Double(startingLocationLat),
               let startingLong = Double(startingLocationLong),
@@ -111,6 +112,10 @@ struct InputView: View {
         // Create starting and destination coordinates
         let startingCoordinate = CLLocationCoordinate2D(latitude: startingLat, longitude: startingLong)
         let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+        
+        // Update the @State properties
+        self.startingCoordinate = startingCoordinate
+        self.destinationCoordinate = destinationCoordinate
         
         // Create map items for starting and destination locations
         let startingPlacemark = MKPlacemark(coordinate: startingCoordinate)
@@ -145,16 +150,18 @@ struct InputView: View {
             self.distance = distanceInMeters / 1609.344 // Convert meters to miles
             
             // Calculate the cost based on distance and MPG
-            let nationalGasPriceAverage = 3.00 // Example gas price per gallon
+            let nationalGasPriceAverage = 3.5 // Example gas price per gallon
             self.cost = (self.distance / mpg) * nationalGasPriceAverage
         }
     }
 
+        
+    }
+    
+    
+    struct InputView_Previews: PreviewProvider {
+        static var previews: some View {
+            InputView()
+        }
     }
 
-
-struct InputView_Previews: PreviewProvider {
-    static var previews: some View {
-        InputView()
-    }
-}

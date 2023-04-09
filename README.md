@@ -15,3 +15,4 @@ References used
 * https://www.hackingwithswift.com/example-code/location/how-to-find-directions-using-mkmapview-and-mkdirectionsrequest
 
 
+have to make sure i add the tollsPreference to map call
