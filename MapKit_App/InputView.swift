@@ -87,7 +87,7 @@ struct InputView: View {
             //San Francisco  37.773972, -122.431297
             // Conditionally render the MapView when both startingCoordinate and destinationCoordinate are non-nil
             if let startingCoordinate = startingCoordinate, let destinationCoordinate = destinationCoordinate {
-                MapView(startingCoordinate: startingCoordinate, destinationCoordinate: destinationCoordinate)
+                MapView(startingCoordinate: startingCoordinate, destinationCoordinate: destinationCoordinate, avoidTolls: avoidTolls)
                     .id(mapIdentifier)
             } else {
                 Color.clear

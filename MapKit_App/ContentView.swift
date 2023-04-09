@@ -9,10 +9,13 @@ import SwiftUI
 import MapKit
 
 struct MapView: UIViewRepresentable {
+   
     let locationManager = CLLocationManager()
     
     var startingCoordinate: CLLocationCoordinate2D
     var destinationCoordinate: CLLocationCoordinate2D
+    var avoidTolls: Bool
+    
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
@@ -24,6 +27,13 @@ struct MapView: UIViewRepresentable {
         
         // Display the route on the map
         let directionRequest = MKDirections.Request()
+        
+        if avoidTolls {
+                directionRequest.tollPreference = .avoid // Avoid tolls
+            } else {
+                directionRequest.tollPreference = .any
+            }
+        
         directionRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
         directionRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
         directionRequest.transportType = .automobile
