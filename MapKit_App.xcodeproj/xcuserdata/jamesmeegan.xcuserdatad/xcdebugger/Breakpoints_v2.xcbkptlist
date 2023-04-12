@@ -3,4 +3,86 @@
    uuid = "B0FE9FFC-57E2-4FD6-B81C-DE053A1F797F"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "19ED04B5-D99A-4665-B403-EF59AE8833A6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapKit_App/InputView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "InputView"
+            landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3E158150-F06D-4C81-A794-A90C2A61D7E9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapKit_App/InputView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "InputView"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "3E158150-F06D-4C81-A794-A90C2A61D7E9 - 5ac51958eca01da7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of MapKit_App.InputView.startingLocationLat : Swift.String"
+                  moduleName = "MapKit_App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamesmeegan/Desktop/softwareDev/mobileApp/MapKit_App/MapKit_App/InputView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "3E158150-F06D-4C81-A794-A90C2A61D7E9 - d09a1b90699b9564"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MapKit_App.InputView.init() -&gt; MapKit_App.InputView"
+                  moduleName = "MapKit_App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamesmeegan/Desktop/softwareDev/mobileApp/MapKit_App/MapKit_App/InputView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "208">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "72B7E7A9-44E1-4427-871E-C0FB92C766B0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapKit_App/InputView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "InputView"
+            landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
