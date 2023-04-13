@@ -180,34 +180,24 @@ struct InputView: View {
 
     
     func openInAppleMaps() {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(startingLocation) { [self] (startingPlacemarks, startingError) in
-            if let startingPlacemark = startingPlacemarks?.first,
-               let startingLat = startingPlacemark.location?.coordinate.latitude,
-               let startingLong = startingPlacemark.location?.coordinate.longitude {
-                geocoder.geocodeAddressString(destinationLocation) { [self] (destinationPlacemarks, destinationError) in
-                    if let destinationPlacemark = destinationPlacemarks?.first,
-                       let destinationLat = destinationPlacemark.location?.coordinate.latitude,
-                       let destinationLong = destinationPlacemark.location?.coordinate.longitude {
-                        let startURL = "http://maps.apple.com/?saddr=\(startingLat),\(startingLong)"
-                        let destURL = "&daddr=\(destinationLat),\(destinationLong)"
-                        let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
-                        let url = URL(string: startURL + destURL + avoidTolls)
-                        if let url = url {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        } else {
-                            alertMessage = "Failed to open Apple Maps."
-                            showAlert = true
-                        }
-                    } else {
-                        alertMessage = "Failed to geocode destination location."
-                        showAlert = true
-                    }
-                }
-            } else {
-                alertMessage = "Failed to geocode starting location."
-                showAlert = true
-            }
+        guard let startingLocation = startingLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+              let destinationLocation = destinationLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            alertMessage = "Invalid input, please check your values."
+            showAlert = true
+            return
+        }
+        
+        let startURL = "http://maps.apple.com/?saddr=\(startingLocation)"
+        let destURL = "&daddr=\(destinationLocation)"
+        let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
+        
+        let url = URL(string: startURL + destURL + avoidTolls)
+        
+        if let url = url {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            alertMessage = "Failed to open Apple Maps."
+            showAlert = true
         }
     }
 
