@@ -30,6 +30,8 @@ struct InputView: View {
     @State private var mapIdentifier = UUID()
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var startingLocation = ""
+    @State private var destinationLocation = ""
 
     
     
@@ -38,17 +40,11 @@ struct InputView: View {
             Group {
                 Text("Starting location")
                     .font(.headline)
-                HStack {
-                    TextField("Latitude", text: $startingLocationLat)
-                    TextField("Longitude", text: $startingLocationLong)
-                }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("Starting location", text: $startingLocation)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 Text("Destination location")
                     .font(.headline)
-                HStack {
-                    TextField("Latitude", text: $destinationLocationLat)
-                    TextField("Longitude", text: $destinationLocationLong)
-                }
+                TextField("Destination location", text: $destinationLocation)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 Text("Vehicle MPG")
                     .font(.headline)
@@ -132,72 +128,89 @@ struct InputView: View {
     func calculateDistance() {
         mapIdentifier = UUID()
 
-        guard let startingLat = Double(startingLocationLat),
-                  let startingLong = Double(startingLocationLong),
-                  let destinationLat = Double(destinationLocationLat),
-                  let destinationLong = Double(destinationLocationLong),
-                  let mpg = Double(mpg),
-                  let gasPrice = Double(averageGasPrice) else {
-                alertMessage = "Invalid input, please check your values."
-                showAlert = true
-                return
-            }
-
-        let startingCoordinate = CLLocationCoordinate2D(latitude: startingLat, longitude: startingLong)
-        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
-
-        self.startingCoordinate = startingCoordinate
-        self.destinationCoordinate = destinationCoordinate
-
-        let startingMapItem = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
-        let destinationMapItem = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
-
-        let directionRequest = MKDirections.Request()
-        directionRequest.source = startingMapItem
-        directionRequest.destination = destinationMapItem
-        directionRequest.transportType = .automobile
-        directionRequest.tollPreference = avoidTolls ? .avoid : .any
-
-        let directions = MKDirections(request: directionRequest)
-        directions.calculate { [self] (response, error) in
-            guard let response = response else {
-                return
-            }
-
-            let route = response.routes[0]
-            self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
-            self.distance = route.distance / 1609.344 // Convert meters to miles
-
-            self.cost = (self.distance / mpg) * gasPrice
-        }
-    }
-    
-    func openInAppleMaps() {
-        guard let startingLat = Double(startingLocationLat),
-              let startingLong = Double(startingLocationLong),
-              let destinationLat = Double(destinationLocationLat),
-              let destinationLong = Double(destinationLocationLong) else {
+        guard let mpg = Double(mpg),
+              let gasPrice = Double(averageGasPrice) else {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
             return
         }
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(startingLocation) { [self] (placemarks, error) in
+            if let placemark = placemarks?.first,
+               let startingCoordinate = placemark.location?.coordinate {
+                geocoder.geocodeAddressString(destinationLocation) { [self] (placemarks, error) in
+                    if let placemark = placemarks?.first,
+                       let destinationCoordinate = placemark.location?.coordinate {
+                        self.startingCoordinate = startingCoordinate
+                        self.destinationCoordinate = destinationCoordinate
 
-        let startingCoordinate = CLLocationCoordinate2D(latitude: startingLat, longitude: startingLong)
-        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+                        let startingMapItem = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
+                        let destinationMapItem = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
 
-        let startURL = "http://maps.apple.com/?saddr=\(startingCoordinate.latitude),\(startingCoordinate.longitude)"
-        let destURL = "&daddr=\(destinationCoordinate.latitude),\(destinationCoordinate.longitude)"
-        let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
+                        let directionRequest = MKDirections.Request()
+                        directionRequest.source = startingMapItem
+                        directionRequest.destination = destinationMapItem
+                        directionRequest.transportType = .automobile
+                        directionRequest.tollPreference = avoidTolls ? .avoid : .any
 
-        let url = URL(string: startURL + destURL + avoidTolls)
+                        let directions = MKDirections(request: directionRequest)
+                        directions.calculate { [self] (response, error) in
+                            guard let response = response else {
+                                return
+                            }
 
-        if let url = url {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            alertMessage = "Failed to open Apple Maps."
-            showAlert = true
+                            let route = response.routes[0]
+                            self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
+                            self.distance = route.distance / 1609.344 // Convert meters to miles
+
+                            self.cost = (self.distance / mpg) * gasPrice
+                        }
+                    } else {
+                        alertMessage = "Failed to geocode destination location."
+                        showAlert = true
+                    }
+                }
+            } else {
+                alertMessage = "Failed to geocode starting location."
+                showAlert = true
+            }
         }
     }
+
+    
+    func openInAppleMaps() {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(startingLocation) { [self] (startingPlacemarks, startingError) in
+            if let startingPlacemark = startingPlacemarks?.first,
+               let startingLat = startingPlacemark.location?.coordinate.latitude,
+               let startingLong = startingPlacemark.location?.coordinate.longitude {
+                geocoder.geocodeAddressString(destinationLocation) { [self] (destinationPlacemarks, destinationError) in
+                    if let destinationPlacemark = destinationPlacemarks?.first,
+                       let destinationLat = destinationPlacemark.location?.coordinate.latitude,
+                       let destinationLong = destinationPlacemark.location?.coordinate.longitude {
+                        let startURL = "http://maps.apple.com/?saddr=\(startingLat),\(startingLong)"
+                        let destURL = "&daddr=\(destinationLat),\(destinationLong)"
+                        let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
+                        let url = URL(string: startURL + destURL + avoidTolls)
+                        if let url = url {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        } else {
+                            alertMessage = "Failed to open Apple Maps."
+                            showAlert = true
+                        }
+                    } else {
+                        alertMessage = "Failed to geocode destination location."
+                        showAlert = true
+                    }
+                }
+            } else {
+                alertMessage = "Failed to geocode starting location."
+                showAlert = true
+            }
+        }
+    }
+
 
 
         
