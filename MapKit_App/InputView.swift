@@ -32,7 +32,8 @@ struct InputView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            if isLoading {
+        
+            if (isLoading ) {
                 LoadingView()
             } else {
                 Group {
@@ -64,9 +65,6 @@ struct InputView: View {
                         .fontWeight(.bold)
                     
                     Button(action: {
-                        withAnimation {
-                            isLoading = true
-                        }
                         calculateTripDetails()
                     }) {
                         Text("Calculate")
@@ -141,7 +139,6 @@ struct InputView: View {
         .padding(.horizontal)
     }
     func calculateTripDetails() {
-        isLoading = true
         calculateButtonPressed = true
         mapIdentifier = UUID()
 
@@ -152,6 +149,7 @@ struct InputView: View {
             return
            
         }
+        isLoading = true
         
         geocodeStartingLocation { [self] (startingPlacemark) in
             geocodeDestinationLocation { [self] (destinationPlacemark) in
@@ -168,6 +166,7 @@ struct InputView: View {
                 completion(startingPlacemark)
             } else {
                 alertMessage = "Failed to geocode starting location."
+                isLoading = false
                 showAlert = true
             }
         }
@@ -180,6 +179,7 @@ struct InputView: View {
                 completion(destinationPlacemark)
             } else {
                 alertMessage = "Failed to geocode destination location."
+                isLoading = false
                 showAlert = true
             }
         }
@@ -202,6 +202,7 @@ struct InputView: View {
                 } else {
                     alertMessage = "Failed to calculate route."
                 }
+                isLoading = false
                 showAlert = true
                 return
             }
@@ -220,6 +221,7 @@ struct InputView: View {
               let destinationLocation = destinationLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
+            isLoading = false
             return
         }
         
@@ -234,6 +236,7 @@ struct InputView: View {
         } else {
             alertMessage = "Failed to open Apple Maps."
             showAlert = true
+            isLoading = false
         }
     }
 

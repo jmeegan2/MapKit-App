@@ -45,6 +45,7 @@
 		11EE9F7A29E1FCE900436563 = {
 			isa = PBXGroup;
 			children = (
+				11EE9F9429E2066100436563 /* README.md */,
 				11EE9F8529E1FCE900436563 /* MapKit_App */,
 				11EE9F8429E1FCE900436563 /* Products */,
 			);
@@ -62,7 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
-				11EE9F9429E2066100436563 /* README.md */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
 				11EE9F9529E2076500436563 /* InputView.swift */,
 				11DDC7A329E910A30093E3A5 /* MapView.swift */,
