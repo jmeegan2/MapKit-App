@@ -63,11 +63,22 @@ struct MapView: UIViewRepresentable {
                 let directions = MKDirections(request: directionRequest)
                 directions.calculate { response, error in
                     guard let response = response else { return }
-
+                    
+                    var annotations = [MKAnnotation]()
                     for route in response.routes {
                         mapView.addOverlay(route.polyline)
-                        mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-                    }
+                        let startingAnnotation = MKPointAnnotation()
+                        startingAnnotation.coordinate = startingCoordinate
+                        startingAnnotation.title = "Starting Location"
+                        mapView.addAnnotation(startingAnnotation)
+                        annotations.append(startingAnnotation)
+                        let destinationAnnotation = MKPointAnnotation()
+                        destinationAnnotation.coordinate = destinationCoordinate
+                        destinationAnnotation.title = "Destination Location"
+                        mapView.addAnnotation(destinationAnnotation)
+                        annotations.append(destinationAnnotation)                    }
+                    
+                    mapView.showAnnotations(annotations, animated: true)
                 }
             }
         }
@@ -102,3 +113,4 @@ struct MapView_Previews: PreviewProvider {
         InputView()
     }
 }
+
