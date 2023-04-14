@@ -13,29 +13,23 @@ import MapKit
 
 struct InputView: View {
     // State declarations
-    @State private var startingLocationLat = ""
-    @State private var startingLocationLong = ""
-    @State private var destinationLocationLat = ""
-    @State private var destinationLocationLong = ""
+    @State private var startingLocation = ""
+    @State private var destinationLocation = ""
     @State private var mpg = ""
     @State private var averageGasPrice = ""
     @State private var distance: Double = 0
     @State private var cost: Double = 0
     @State private var avoidTolls = false // Toggle state for avoiding tolls
     @State private var time: Double = 0
-    @State private var startingCoordinate: CLLocationCoordinate2D?
-    @State private var destinationCoordinate: CLLocationCoordinate2D?
-    @State private var coordinatesUpdated = false
-    @State private var mapCoordinates: (CLLocationCoordinate2D, CLLocationCoordinate2D)?
     @State private var mapIdentifier = UUID()
     @State private var showAlert = false
     @State private var alertMessage = ""
-    @State private var startingLocation = ""
-    @State private var destinationLocation = ""
-
-    
-    
+    @State private var calculateButtonPressed = false
+    var showMapView: Bool {
+      !showAlert && calculateButtonPressed
+    }
     var body: some View {
+        
         VStack(alignment: .leading) {
             Group {
                 Text("Starting location")
@@ -58,8 +52,8 @@ struct InputView: View {
                     .padding(.vertical, 10)
                     .fontWeight(.bold)
                 
-                Button(action: calculateDistance) {
-                    Text("Calculate Distance")
+                Button(action: calculateTripDetails ) {
+                    Text("Calculate")
                         .frame(maxWidth: .infinity)
                         .padding(.all, 10.0)
                         .foregroundColor(.white)
@@ -95,13 +89,10 @@ struct InputView: View {
             .cornerRadius(10)
             .shadow(radius: 5)
             
-            //Baltimore 39.284176, -76.622368
-            //San Francisco  37.773972, -122.431297
-            // Conditionally render the MapView when both startingCoordinate and destinationCoordinate are non-nil
-            if let startingCoordinate = startingCoordinate, let destinationCoordinate = destinationCoordinate {
-                MapView(startingCoordinate: startingCoordinate, destinationCoordinate: destinationCoordinate, avoidTolls: avoidTolls)
+            if (showMapView) {
+                MapView(startingLocation: startingLocation, destinationLocation: destinationLocation, avoidTolls: avoidTolls)
                     .id(mapIdentifier)
-                Button(action: openInAppleMaps) {
+                Button(action: openInAppleMaps ) {
                     Text("Open in Apple Maps")
                         .frame(maxWidth: .infinity)
                         .padding(.all, 10.0)
@@ -114,18 +105,25 @@ struct InputView: View {
                 Color.clear
             }
         }
-        .alert(isPresented: $showAlert) {
+        .alert(isPresented: $showAlert ) {
             Alert(title: Text("Error"),
                   message: Text(alertMessage),
                   dismissButton: .default(Text("OK")) {
-                    // Perform any additional actions if needed when the alert is dismissed
-                  })
+                calculateButtonPressed = false // Set the button state back to false
+                distance = 0
+                time = 0
+                cost = 0
+                
+                        })
+            
         }
+        
         .padding()
         .background(Color.white)
         .padding(.horizontal)
     }
-    func calculateDistance() {
+    func calculateTripDetails() {
+        calculateButtonPressed = true
         mapIdentifier = UUID()
 
         guard let mpg = Double(mpg),
@@ -136,17 +134,18 @@ struct InputView: View {
         }
         
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(startingLocation) { [self] (placemarks, error) in
-            if let placemark = placemarks?.first,
-               let startingCoordinate = placemark.location?.coordinate {
-                geocoder.geocodeAddressString(destinationLocation) { [self] (placemarks, error) in
-                    if let placemark = placemarks?.first,
-                       let destinationCoordinate = placemark.location?.coordinate {
-                        self.startingCoordinate = startingCoordinate
-                        self.destinationCoordinate = destinationCoordinate
+        geocoder.geocodeAddressString(startingLocation) { [self] (startingPlacemarks, error) in
+            if let startingPlacemark = startingPlacemarks?.first {
+                geocoder.geocodeAddressString(destinationLocation) { [self] (destinationPlacemarks, error) in
+                    if let destinationPlacemark = destinationPlacemarks?.first {
+                        let startingCoordinate = startingPlacemark.location?.coordinate
+                        let destinationCoordinate = destinationPlacemark.location?.coordinate
+                        
+                        let startingPlacemark = MKPlacemark(coordinate: startingCoordinate!)
+                        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate!)
 
-                        let startingMapItem = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
-                        let destinationMapItem = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
+                        let startingMapItem = MKMapItem(placemark: startingPlacemark)
+                        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
 
                         let directionRequest = MKDirections.Request()
                         directionRequest.source = startingMapItem
@@ -201,9 +200,10 @@ struct InputView: View {
         }
     }
 
+    
 
 
-        
+        //End of view 
     }
     
     
