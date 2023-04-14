@@ -13,6 +13,7 @@ import MapKit
 
 struct InputView: View {
     // State declarations
+    @State private var isLoading = false
     @State private var startingLocation = ""
     @State private var destinationLocation = ""
     @State private var mpg = ""
@@ -31,87 +32,97 @@ struct InputView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            Group {
-                Text("Starting location")
-                    .font(.headline)
-                TextField("Starting location", text: $startingLocation)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("Destination location")
-                    .font(.headline)
-                TextField("Destination location", text: $destinationLocation)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Vehicle MPG")
-                            .font(.headline)
-                        TextField("MPG", text: $mpg)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    Spacer()
-                    VStack(alignment: .leading) {
-                        Text("Average Gas Price")
-                            .font(.headline)
-                        TextField("Per Gallon", text: $averageGasPrice)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                }
-                Toggle("Avoid tolls", isOn: $avoidTolls)
-                    .padding(.vertical, 10)
-                    .fontWeight(.bold)
-                
-                Button(action: calculateTripDetails ) {
-                    Text("Calculate")
-                        .frame(maxWidth: .infinity)
-                        .padding(.all, 10.0)
-                        .foregroundColor(.white)
-                        .background(Color(red: 30/255, green: 65/255, blue: 105/255))
-                        .fontWeight(.bold)
-                        .cornerRadius(10)
-                }
-            }
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text("Trip Duration:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(time, specifier: "%.2f") hours")
-                }
-                HStack {
-                    Text("Distance:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(distance, specifier: "%.2f") miles")
-                }
-                HStack {
-                    Text("Cost:")
-                        .font(.headline)
-                    Spacer()
-                    Text("$\(cost, specifier: "%.2f")")
-                }
-            }
-    
-            .padding(.vertical, 10)
-            .padding(.horizontal, 20)
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            
-            if (showMapView) {
-                MapView(startingLocation: startingLocation, destinationLocation: destinationLocation, avoidTolls: avoidTolls)
-                    .id(mapIdentifier)
-                Button(action: openInAppleMaps ) {
-                    Text("Open in Apple Maps")
-                        .frame(maxWidth: .infinity)
-                        .padding(.all, 10.0)
-                        .foregroundColor(.white)
-                        .background(Color(red: 30/255, green: 65/255, blue: 105/255))
-                        .fontWeight(.bold)
-                        .cornerRadius(10)
-                }
+            if isLoading {
+                LoadingView()
             } else {
-                Color.clear
+                Group {
+                    Text("Starting location")
+                        .font(.headline)
+                    TextField("Starting location", text: $startingLocation)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("Destination location")
+                        .font(.headline)
+                    TextField("Destination location", text: $destinationLocation)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Vehicle MPG")
+                                .font(.headline)
+                            TextField("MPG", text: $mpg)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        Spacer()
+                        VStack(alignment: .leading) {
+                            Text("Average Gas Price")
+                                .font(.headline)
+                            TextField("Per Gallon", text: $averageGasPrice)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                    }
+                    Toggle("Avoid tolls", isOn: $avoidTolls)
+                        .padding(.vertical, 10)
+                        .fontWeight(.bold)
+                    
+                    Button(action: {
+                        withAnimation {
+                            isLoading = true
+                        }
+                        calculateTripDetails()
+                    }) {
+                        Text("Calculate")
+                            .frame(maxWidth: .infinity)
+                            .padding(.all, 10.0)
+                            .foregroundColor(.white)
+                            .background(Color(red: 30/255, green: 65/255, blue: 105/255))
+                            .fontWeight(.bold)
+                            .cornerRadius(10)
+                    }.disabled(isLoading)
+                }
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text("Trip Duration:")
+                            .font(.headline)
+                        Spacer()
+                        Text("\(time, specifier: "%.2f") hours")
+                    }
+                    HStack {
+                        Text("Distance:")
+                            .font(.headline)
+                        Spacer()
+                        Text("\(distance, specifier: "%.2f") miles")
+                    }
+                    HStack {
+                        Text("Cost:")
+                            .font(.headline)
+                        Spacer()
+                        Text("$\(cost, specifier: "%.2f")")
+                    }
+                }
+                
+                .padding(.vertical, 10)
+                .padding(.horizontal, 20)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                
+                if (showMapView) {
+                    MapView(startingLocation: startingLocation, destinationLocation: destinationLocation, avoidTolls: avoidTolls)
+                        .id(mapIdentifier)
+                    Button(action: openInAppleMaps ) {
+                        Text("Open in Apple Maps")
+                            .frame(maxWidth: .infinity)
+                            .padding(.all, 10.0)
+                            .foregroundColor(.white)
+                            .background(Color(red: 30/255, green: 65/255, blue: 105/255))
+                            .fontWeight(.bold)
+                            .cornerRadius(10)
+                    }
+                } else {
+                    Color.clear
+                }
             }
         }
+       
         .alert(isPresented: $showAlert ) {
             Alert(title: Text("Error"),
                   message: Text(alertMessage),
@@ -130,6 +141,7 @@ struct InputView: View {
         .padding(.horizontal)
     }
     func calculateTripDetails() {
+        isLoading = true
         calculateButtonPressed = true
         mapIdentifier = UUID()
 
@@ -138,6 +150,7 @@ struct InputView: View {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
             return
+           
         }
         
         geocodeStartingLocation { [self] (startingPlacemark) in
@@ -145,6 +158,7 @@ struct InputView: View {
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
             }
         }
+        
     }
 
     func geocodeStartingLocation(completion: @escaping (CLPlacemark) -> Void) {
@@ -194,6 +208,8 @@ struct InputView: View {
             self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
             self.distance = route.distance / 1609.344 // Convert meters to miles
             self.cost = (self.distance / mpg) * gasPrice
+            
+            isLoading = false
         }
     }
 

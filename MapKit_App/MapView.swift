@@ -28,11 +28,7 @@ struct MapView: UIViewRepresentable {
                 return
             }
             
-            // Add an annotation for the starting location
-            let startingAnnotation = MKPointAnnotation()
-            startingAnnotation.coordinate = startingCoordinate
-            startingAnnotation.title = "Starting Location"
-            mapView.addAnnotation(startingAnnotation)
+
 
             geocoder.geocodeAddressString(destinationLocation) { [weak mapView] (placemarks, error) in
                 guard let mapView = mapView,
@@ -41,11 +37,6 @@ struct MapView: UIViewRepresentable {
                     return
                 }
 
-                // Add an annotation for the destination location
-                let destinationAnnotation = MKPointAnnotation()
-                destinationAnnotation.coordinate = destinationCoordinate
-                destinationAnnotation.title = "Destination Location"
-                mapView.addAnnotation(destinationAnnotation)
 
                 // Display the route on the map
                 let directionRequest = MKDirections.Request()
@@ -69,12 +60,12 @@ struct MapView: UIViewRepresentable {
                         mapView.addOverlay(route.polyline)
                         let startingAnnotation = MKPointAnnotation()
                         startingAnnotation.coordinate = startingCoordinate
-                        startingAnnotation.title = "Starting Location"
+                        startingAnnotation.title = ""
                         mapView.addAnnotation(startingAnnotation)
                         annotations.append(startingAnnotation)
                         let destinationAnnotation = MKPointAnnotation()
                         destinationAnnotation.coordinate = destinationCoordinate
-                        destinationAnnotation.title = "Destination Location"
+                        destinationAnnotation.title = "Destination"
                         mapView.addAnnotation(destinationAnnotation)
                         annotations.append(destinationAnnotation)                    }
                     
