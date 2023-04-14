@@ -40,14 +40,21 @@ struct InputView: View {
                     .font(.headline)
                 TextField("Destination location", text: $destinationLocation)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("Vehicle MPG")
-                    .font(.headline)
-                TextField("Average MPG", text: $mpg)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("Average Gas Price")
-                    .font(.headline)
-                TextField("Gas price per gallon", text: $averageGasPrice)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Vehicle MPG")
+                            .font(.headline)
+                        TextField("MPG", text: $mpg)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                    Spacer()
+                    VStack(alignment: .leading) {
+                        Text("Average Gas Price")
+                            .font(.headline)
+                        TextField("Per Gallon", text: $averageGasPrice)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                }
                 Toggle("Avoid tolls", isOn: $avoidTolls)
                     .padding(.vertical, 10)
                     .fontWeight(.bold)
@@ -57,7 +64,7 @@ struct InputView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.all, 10.0)
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color(red: 30/255, green: 65/255, blue: 105/255))
                         .fontWeight(.bold)
                         .cornerRadius(10)
                 }
@@ -97,7 +104,7 @@ struct InputView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.all, 10.0)
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color(red: 30/255, green: 65/255, blue: 105/255))
                         .fontWeight(.bold)
                         .cornerRadius(10)
                 }
@@ -133,49 +140,55 @@ struct InputView: View {
             return
         }
         
+        geocodeStartingLocation { [self] (startingPlacemark) in
+            geocodeDestinationLocation { [self] (destinationPlacemark) in
+                calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
+            }
+        }
+    }
+
+    func geocodeStartingLocation(completion: @escaping (CLPlacemark) -> Void) {
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(startingLocation) { [self] (startingPlacemarks, error) in
+        geocoder.geocodeAddressString(startingLocation) { (startingPlacemarks, error) in
             if let startingPlacemark = startingPlacemarks?.first {
-                geocoder.geocodeAddressString(destinationLocation) { [self] (destinationPlacemarks, error) in
-                    if let destinationPlacemark = destinationPlacemarks?.first {
-                        let startingCoordinate = startingPlacemark.location?.coordinate
-                        let destinationCoordinate = destinationPlacemark.location?.coordinate
-                        
-                        let startingPlacemark = MKPlacemark(coordinate: startingCoordinate!)
-                        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate!)
-
-                        let startingMapItem = MKMapItem(placemark: startingPlacemark)
-                        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-
-                        let directionRequest = MKDirections.Request()
-                        directionRequest.source = startingMapItem
-                        directionRequest.destination = destinationMapItem
-                        directionRequest.transportType = .automobile
-                        directionRequest.tollPreference = avoidTolls ? .avoid : .any
-
-                        let directions = MKDirections(request: directionRequest)
-                        directions.calculate { [self] (response, error) in
-                            guard let response = response else {
-                                return
-                            }
-
-                            let route = response.routes[0]
-                            self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
-                            self.distance = route.distance / 1609.344 // Convert meters to miles
-
-                            self.cost = (self.distance / mpg) * gasPrice
-                        }
-                    } else {
-                        alertMessage = "Failed to geocode destination location."
-                        showAlert = true
-                    }
-                }
+                completion(startingPlacemark)
             } else {
                 alertMessage = "Failed to geocode starting location."
                 showAlert = true
             }
         }
     }
+
+    func geocodeDestinationLocation(completion: @escaping (CLPlacemark) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(destinationLocation) { (destinationPlacemarks, error) in
+            if let destinationPlacemark = destinationPlacemarks?.first {
+                completion(destinationPlacemark)
+            } else {
+                alertMessage = "Failed to geocode destination location."
+                showAlert = true
+            }
+        }
+    }
+
+    func calculateRoute(from startingPlacemark: CLPlacemark, to destinationPlacemark: CLPlacemark, mpg: Double, gasPrice: Double) {
+        let startingItem = MKMapItem(placemark: MKPlacemark(coordinate: startingPlacemark.location!.coordinate))
+        let destinationItem = MKMapItem(placemark: MKPlacemark(coordinate: destinationPlacemark.location!.coordinate))
+
+        let request = MKDirections.Request()
+        request.source = startingItem
+        request.destination = destinationItem
+        request.transportType = .automobile
+        request.tollPreference = avoidTolls ? .avoid : .any
+
+        MKDirections(request: request).calculate { [self] response, error in
+            guard let route = response?.routes.first else { return }
+            self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
+            self.distance = route.distance / 1609.344 // Convert meters to miles
+            self.cost = (self.distance / mpg) * gasPrice
+        }
+    }
+
 
     
     func openInAppleMaps() {
@@ -212,4 +225,7 @@ struct InputView: View {
             InputView()
         }
     }
+
+
+
 
