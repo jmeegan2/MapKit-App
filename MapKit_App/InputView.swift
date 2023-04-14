@@ -26,7 +26,7 @@ struct InputView: View {
     @State private var alertMessage = ""
     @State private var calculateButtonPressed = false
     var showMapView: Bool {
-      !showAlert && calculateButtonPressed
+      !showAlert && calculateButtonPressed && distance > 0
     }
     var body: some View {
         
@@ -182,7 +182,15 @@ struct InputView: View {
         request.tollPreference = avoidTolls ? .avoid : .any
 
         MKDirections(request: request).calculate { [self] response, error in
-            guard let route = response?.routes.first else { return }
+            guard let route = response?.routes.first else {
+                if let error = error {
+                    alertMessage = "Failed to calculate route: \(error.localizedDescription)"
+                } else {
+                    alertMessage = "Failed to calculate route."
+                }
+                showAlert = true
+                return
+            }
             self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
             self.distance = route.distance / 1609.344 // Convert meters to miles
             self.cost = (self.distance / mpg) * gasPrice
