@@ -13,6 +13,7 @@ struct MapView: UIViewRepresentable {
     var startingLocation: String
     var destinationLocation: String
     var avoidTolls: Bool
+    var avoidHighways: Bool
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -44,6 +45,12 @@ struct MapView: UIViewRepresentable {
                 } else {
                     directionRequest.tollPreference = .any
                 }
+                if avoidHighways {
+                    directionRequest.highwayPreference = .avoid // Avoid highways
+                } else {
+                    directionRequest.highwayPreference = .any
+                }
+
                 
                 directionRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
                 directionRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))

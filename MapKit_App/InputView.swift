@@ -21,6 +21,7 @@ struct InputView: View {
     @State private var distance: Double = 0
     @State private var cost: Double = 0
     @State private var avoidTolls = false // Toggle state for avoiding tolls
+    @State private var avoidHighways = false // Toggle state for avoiding highways
     @State private var time: Double = 0
     @State private var mapIdentifier = UUID()
     @State private var showAlert = false
@@ -37,13 +38,13 @@ struct InputView: View {
                 LoadingView()
             } else {
                 Group {
-                    Text("Starting location")
+                    Text("Starting Location")
                         .font(.headline)
-                    TextField("Starting location", text: $startingLocation)
+                    TextField("Starting Location", text: $startingLocation)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    Text("Destination location")
+                    Text("Destination Location")
                         .font(.headline)
-                    TextField("Destination location", text: $destinationLocation)
+                    TextField("Destination Location", text: $destinationLocation)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     HStack {
                         VStack(alignment: .leading) {
@@ -60,10 +61,15 @@ struct InputView: View {
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                     }
-                    Toggle("Avoid tolls", isOn: $avoidTolls)
-                        .padding(.vertical, 10)
-                        .fontWeight(.bold)
-                    
+                    VStack{
+                        Toggle("Avoid Tolls", isOn: $avoidTolls)
+                            .padding(.vertical, 2)
+                            .fontWeight(.bold)
+                        Toggle("Avoid Highways", isOn: $avoidHighways)
+                            .padding(.vertical, 2)
+                            .fontWeight(.bold)
+                        
+                    }
                     Button(action: {
                         calculateTripDetails()
                     }) {
@@ -104,7 +110,7 @@ struct InputView: View {
                 .shadow(radius: 5)
                 
                 if (showMapView) {
-                    MapView(startingLocation: startingLocation, destinationLocation: destinationLocation, avoidTolls: avoidTolls)
+                    MapView(startingLocation: startingLocation, destinationLocation: destinationLocation, avoidTolls: avoidTolls, avoidHighways: avoidHighways)
                         .id(mapIdentifier)
                     Button(action: openInAppleMaps ) {
                         Text("Open in Apple Maps")
@@ -194,6 +200,7 @@ struct InputView: View {
         request.destination = destinationItem
         request.transportType = .automobile
         request.tollPreference = avoidTolls ? .avoid : .any
+        request.highwayPreference = avoidHighways ? .avoid : .any
 
         MKDirections(request: request).calculate { [self] response, error in
             guard let route = response?.routes.first else {
@@ -227,9 +234,10 @@ struct InputView: View {
         
         let startURL = "http://maps.apple.com/?saddr=\(startingLocation)"
         let destURL = "&daddr=\(destinationLocation)"
+        //these dont seem to pass atm, well read the documentation
         let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
-        
-        let url = URL(string: startURL + destURL + avoidTolls)
+        let avoidHighways = self.avoidHighways ? "&exclHwy=true" : ""
+        let url = URL(string: startURL + destURL + avoidTolls + avoidHighways )
         
         if let url = url {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

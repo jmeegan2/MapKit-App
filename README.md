@@ -17,7 +17,7 @@ Usage
 1. Launch the app on an iOS device or simulator.
 2. Enter the starting location and destination location.
 3. Input your vehicle's average MPG (miles per gallon) and the average gas price per gallon.
-4. Toggle the "Avoid tolls" switch if you wish to avoid toll roads.
+4. Toggle the "Avoid Tolls" and/or the "Avodi Highways" switch if you wish to avoid toll roads and/or avoid highways. 
 5. Click the "Calculate" button to generate the trip details, which includes the trip duration, distance, and cost.
 6. View the route on the interactive map.
 7. Optionally, click the "Open in Apple Maps" button to open the route in the Apple Maps app for easy navigation.
