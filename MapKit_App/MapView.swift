@@ -19,24 +19,41 @@ struct MapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
 
-        // Get the coordinates for the starting and destination locations
-        let geocoder = CLGeocoder()
-
-        geocoder.geocodeAddressString(startingLocation) { [weak mapView] (placemarks, error) in
-            guard let mapView = mapView,
-                  let placemark = placemarks?.first,
-                  let startingCoordinate = placemark.location?.coordinate else {
-                return
-            }
         
-            geocoder.geocodeAddressString(destinationLocation) { [weak mapView] (placemarks, error) in
-                guard let mapView = mapView,
-                      let placemark = placemarks?.first,
-                      let destinationCoordinate = placemark.location?.coordinate else {
-                    return
-                }
+        // Get the coordinates for the starting and destination locations
+           let searchRequest = MKLocalSearch.Request()
+           searchRequest.naturalLanguageQuery = startingLocation
+
+           let search = MKLocalSearch(request: searchRequest)
+           search.start { [weak mapView] (response, error) in
+               guard let mapView = mapView,
+                   let response = response,
+                   let mapItem = response.mapItems.first,
+                   let startingCoordinate = mapItem.placemark.location?.coordinate else {
+                   return
+               }
+
+               let destinationSearchRequest = MKLocalSearch.Request()
+               destinationSearchRequest.naturalLanguageQuery = destinationLocation
+
+               let destinationSearch = MKLocalSearch(request: destinationSearchRequest)
+               destinationSearch.start { [weak mapView] (response, error) in
+                   guard let mapView = mapView,
+                       let response = response,
+                       let mapItem = response.mapItems.first,
+                       let destinationCoordinate = mapItem.placemark.location?.coordinate else {
+                       return
+                   }
                 
-                
+                   
+                   let destinationAnnotation = MKPointAnnotation()
+                   destinationAnnotation.coordinate = destinationCoordinate
+                   destinationAnnotation.title = destinationLocation
+                   
+                   let startingAnnotation = MKPointAnnotation()
+                   startingAnnotation.coordinate = startingCoordinate
+                   startingAnnotation.title = startingLocation
+                   
                 // Display the route on the map
                 let directionRequest = MKDirections.Request()
                 
@@ -59,18 +76,7 @@ struct MapView: UIViewRepresentable {
                 let directions = MKDirections(request: directionRequest)
                 directions.calculate { response, error in
                     guard let response = response else { return }
-                    
-                    
-//                    let coordinates = [startingCoordinate, destinationCoordinate]
-//
-//                    // Instantiate the main polyline
-//                    let mainPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-//                    mainPolyline.title = "main"
-//                    // Instantiate the border polyline
-//                    let borderPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-                    
-                    
-                    
+
                     let annotations = [MKAnnotation]()
                     for route in response.routes {
                         // Instantiate the main polyline
@@ -81,7 +87,7 @@ struct MapView: UIViewRepresentable {
                         mapView.addOverlay(mainPolyline)
                         //add border polyline
                         mapView.insertOverlay(borderPolyline, below: mainPolyline)
-                        
+                        mapView.addAnnotation(destinationAnnotation)
                         // Zoom in on the polyline route
                         var regionRect = mainPolyline.boundingMapRect
 
@@ -103,6 +109,7 @@ struct MapView: UIViewRepresentable {
                     }
                 }
             }
+               
         }
 
         return mapView
@@ -135,8 +142,30 @@ struct MapView: UIViewRepresentable {
                 renderer.lineCap = .round
                 renderer.lineJoin = .bevel
                 return renderer
+            
+            //use destinationCoordinator
                 }
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+               if annotation is MKPointAnnotation {
+                   let reuseId = "destination"
+                   var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+
+                   if annotationView == nil {
+                       annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                       annotationView?.canShowCallout = true
+                   } else {
+                       annotationView?.annotation = annotation
+                   }
+
+                   return annotationView
+               }
+
+               return nil
+           }
     }
+    
+    
 }
 
 struct MapView_Previews: PreviewProvider {
@@ -144,4 +173,5 @@ struct MapView_Previews: PreviewProvider {
         InputView()
     }
 }
+
 

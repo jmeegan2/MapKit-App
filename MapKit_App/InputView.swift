@@ -171,47 +171,35 @@ struct InputView: View {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
             return
-           
         }
         isLoading = true
-        
-        geocodeStartingLocation { [self] (startingPlacemark) in
-            geocodeDestinationLocation { [self] (destinationPlacemark) in
+
+        searchLocation(startingLocation) { [self] (startingPlacemark) in
+            searchLocation(destinationLocation) { [self] (destinationPlacemark) in
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
             }
         }
-        
     }
 
-    func geocodeStartingLocation(completion: @escaping (CLPlacemark) -> Void) {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(startingLocation) { (startingPlacemarks, error) in
-            if let startingPlacemark = startingPlacemarks?.first {
-                completion(startingPlacemark)
+    func searchLocation(_ location: String, completion: @escaping (MKPlacemark) -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = location
+
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            if let response = response, let mapItem = response.mapItems.first {
+                completion(MKPlacemark(coordinate: mapItem.placemark.coordinate))
             } else {
-                alertMessage = "Failed to geocode starting location."
+                alertMessage = "Failed to find location: \(location)"
                 isLoading = false
                 showAlert = true
             }
         }
     }
 
-    func geocodeDestinationLocation(completion: @escaping (CLPlacemark) -> Void) {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(destinationLocation) { (destinationPlacemarks, error) in
-            if let destinationPlacemark = destinationPlacemarks?.first {
-                completion(destinationPlacemark)
-            } else {
-                alertMessage = "Failed to geocode destination location."
-                isLoading = false
-                showAlert = true
-            }
-        }
-    }
-
-    func calculateRoute(from startingPlacemark: CLPlacemark, to destinationPlacemark: CLPlacemark, mpg: Double, gasPrice: Double) {
-        let startingItem = MKMapItem(placemark: MKPlacemark(coordinate: startingPlacemark.location!.coordinate))
-        let destinationItem = MKMapItem(placemark: MKPlacemark(coordinate: destinationPlacemark.location!.coordinate))
+    func calculateRoute(from startingPlacemark: MKPlacemark, to destinationPlacemark: MKPlacemark, mpg: Double, gasPrice: Double) {
+        let startingItem = MKMapItem(placemark: startingPlacemark)
+        let destinationItem = MKMapItem(placemark: destinationPlacemark)
 
         let request = MKDirections.Request()
         request.source = startingItem
@@ -221,6 +209,7 @@ struct InputView: View {
         request.highwayPreference = avoidHighways ? .avoid : .any
 
         MKDirections(request: request).calculate { [self] response, error in
+           
             guard let route = response?.routes.first else {
                 if let error = error {
                     alertMessage = "Failed to calculate route: \(error.localizedDescription)"
@@ -232,15 +221,19 @@ struct InputView: View {
                 return
             }
             self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
+            
             self.distance = route.distance / 1609.344 // Convert meters to miles
             self.cost = (self.distance / mpg) * gasPrice
-            
+
+            print("\n\n")
+            print("Expected travel time: \(String(format: "%.2f", self.time)) hours\n"
+                  + "Distance: \(String(format: "%.2f", self.distance)) miles\n"
+                  + "Cost: $\(String(format: "%.2f", self.cost))")
+            print("\n\n")
             isLoading = false
         }
     }
 
-
-    
     func openInAppleMaps() {
         guard let startingLocation = startingLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
               let destinationLocation = destinationLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
@@ -249,14 +242,13 @@ struct InputView: View {
             isLoading = false
             return
         }
-        
+
         let startURL = "http://maps.apple.com/?saddr=\(startingLocation)"
         let destURL = "&daddr=\(destinationLocation)"
-        //these dont seem to pass atm, well read the documentation
         let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
         let avoidHighways = self.avoidHighways ? "&exclHwy=true" : ""
         let url = URL(string: startURL + destURL + avoidTolls + avoidHighways )
-        
+
         if let url = url {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
