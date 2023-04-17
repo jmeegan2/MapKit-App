@@ -8,8 +8,8 @@
 import SwiftUI
 import MapKit
 
-struct MapView: UIViewRepresentable {
 
+struct MapView: UIViewRepresentable {
     var startingLocation: String
     var destinationLocation: String
     var avoidTolls: Bool
@@ -27,9 +27,7 @@ struct MapView: UIViewRepresentable {
                   let startingCoordinate = placemark.location?.coordinate else {
                 return
             }
-            
-
-
+        
             geocoder.geocodeAddressString(destinationLocation) { [weak mapView] (placemarks, error) in
                 guard let mapView = mapView,
                       let placemark = placemarks?.first,
@@ -55,19 +53,46 @@ struct MapView: UIViewRepresentable {
                 directions.calculate { response, error in
                     guard let response = response else { return }
                     
-                    var annotations = [MKAnnotation]()
+                    
+//                    let coordinates = [startingCoordinate, destinationCoordinate]
+//
+//                    // Instantiate the main polyline
+//                    let mainPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+//                    mainPolyline.title = "main"
+//                    // Instantiate the border polyline
+//                    let borderPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+                    
+                    
+                    
+                    let annotations = [MKAnnotation]()
                     for route in response.routes {
-                        mapView.addOverlay(route.polyline)
-                        //                        let startingAnnotation = MKPointAnnotation()
-                        //                        mapView.addAnnotation(startingAnnotation)
-                        //                        annotations.append(startingAnnotation)
-                        //                        let destinationAnnotation = MKPointAnnotation()
-                        //                        destinationAnnotation.coordinate = destinationCoordinate
-                        //                        destinationAnnotation.title = "Destination"
-                        //                        mapView.addAnnotation(destinationAnnotation)
-                        //                        annotations.append(destinationAnnotation)                    }
+                        // Instantiate the main polyline
+                        let mainPolyline = route.polyline
+                        mainPolyline.title = "main"
+                        // Instantiate the border polyline
+                        let borderPolyline = route.polyline
+                        mapView.addOverlay(mainPolyline)
+                        //add border polyline
+                        mapView.insertOverlay(borderPolyline, below: mainPolyline)
+                        
+                        // Zoom in on the polyline route
+                        var regionRect = mainPolyline.boundingMapRect
+
+                        let wPadding = regionRect.size.width * 0.25
+                        let hPadding = regionRect.size.height * 0.25
+                                    
+                        // Add padding to the region
+                        regionRect.size.width += wPadding
+                        regionRect.size.height += hPadding
+                                    
+                        // Center the region on the line
+                        regionRect.origin.x -= wPadding / 2
+                        regionRect.origin.y -= hPadding / 2
+
+                        mapView.setRegion(MKCoordinateRegion(regionRect), animated: true)
                         
                         mapView.showAnnotations(annotations, animated: true)
+                
                     }
                 }
             }
@@ -82,22 +107,6 @@ struct MapView: UIViewRepresentable {
         Coordinator(self)
     }
 
-    class BorderPolylineRenderer: MKPolylineRenderer {
-        override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-            let borderWidth: CGFloat = 7.0
-            let mainLineWidth: CGFloat = 5.5
-
-            // Draw black polyline border
-            self.lineWidth = borderWidth
-            self.strokeColor = UIColor.black
-            super.draw(mapRect, zoomScale: zoomScale, in: context)
-
-            // Draw main polyline with desired color on top of the border
-            self.lineWidth = mainLineWidth
-            self.strokeColor = UIColor(red: 70/255, green: 153/255, blue: 255/255, alpha: 1.0)
-            super.draw(mapRect, zoomScale: zoomScale, in: context)
-        }
-    }
 
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
@@ -106,10 +115,20 @@ struct MapView: UIViewRepresentable {
             self.parent = parent
         }
 
+        
+    
+
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            let renderer = BorderPolylineRenderer(overlay: overlay)
-            return renderer
-        }
+           let renderer = MKPolylineRenderer(overlay: overlay)
+            // Use different colors for the border and the main polyline
+            renderer.strokeColor = overlay.title == "main" ? UIColor(red: 24/255, green: 100/255, blue: 230/255, alpha: 1.0) : .black
+                // Make the border polyline bigger. Their difference will be like the borderWidth of the main polyline
+                renderer.lineWidth = overlay.title == "main" ? 6 : 8
+                // Other polyline customizations
+                renderer.lineCap = .round
+                renderer.lineJoin = .bevel
+                return renderer
+                }
     }
 }
 
