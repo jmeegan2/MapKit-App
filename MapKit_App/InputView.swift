@@ -74,7 +74,7 @@ struct InputView: View {
                             .background(Color(red: 30/255, green: 65/255, blue: 105/255))
                             .fontWeight(.bold)
                             .cornerRadius(10)
-                    }.disabled(isLoading)
+                    }
                 }
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {

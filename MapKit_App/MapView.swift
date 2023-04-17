@@ -36,21 +36,21 @@ struct MapView: UIViewRepresentable {
                       let destinationCoordinate = placemark.location?.coordinate else {
                     return
                 }
-
-
+                
+                
                 // Display the route on the map
                 let directionRequest = MKDirections.Request()
-
+                
                 if avoidTolls {
                     directionRequest.tollPreference = .avoid // Avoid tolls
                 } else {
                     directionRequest.tollPreference = .any
                 }
-
+                
                 directionRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
                 directionRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
                 directionRequest.transportType = .automobile
-
+                
                 let directions = MKDirections(request: directionRequest)
                 directions.calculate { response, error in
                     guard let response = response else { return }
@@ -58,18 +58,17 @@ struct MapView: UIViewRepresentable {
                     var annotations = [MKAnnotation]()
                     for route in response.routes {
                         mapView.addOverlay(route.polyline)
-                        let startingAnnotation = MKPointAnnotation()
-                        startingAnnotation.coordinate = startingCoordinate
-                        startingAnnotation.title = ""
-                        mapView.addAnnotation(startingAnnotation)
-                        annotations.append(startingAnnotation)
-                        let destinationAnnotation = MKPointAnnotation()
-                        destinationAnnotation.coordinate = destinationCoordinate
-                        destinationAnnotation.title = "Destination"
-                        mapView.addAnnotation(destinationAnnotation)
-                        annotations.append(destinationAnnotation)                    }
-                    
-                    mapView.showAnnotations(annotations, animated: true)
+                        //                        let startingAnnotation = MKPointAnnotation()
+                        //                        mapView.addAnnotation(startingAnnotation)
+                        //                        annotations.append(startingAnnotation)
+                        //                        let destinationAnnotation = MKPointAnnotation()
+                        //                        destinationAnnotation.coordinate = destinationCoordinate
+                        //                        destinationAnnotation.title = "Destination"
+                        //                        mapView.addAnnotation(destinationAnnotation)
+                        //                        annotations.append(destinationAnnotation)                    }
+                        
+                        mapView.showAnnotations(annotations, animated: true)
+                    }
                 }
             }
         }
@@ -83,6 +82,23 @@ struct MapView: UIViewRepresentable {
         Coordinator(self)
     }
 
+    class BorderPolylineRenderer: MKPolylineRenderer {
+        override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+            let borderWidth: CGFloat = 7.0
+            let mainLineWidth: CGFloat = 5.5
+
+            // Draw black polyline border
+            self.lineWidth = borderWidth
+            self.strokeColor = UIColor.black
+            super.draw(mapRect, zoomScale: zoomScale, in: context)
+
+            // Draw main polyline with desired color on top of the border
+            self.lineWidth = mainLineWidth
+            self.strokeColor = UIColor(red: 70/255, green: 153/255, blue: 255/255, alpha: 1.0)
+            super.draw(mapRect, zoomScale: zoomScale, in: context)
+        }
+    }
+
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
 
@@ -91,9 +107,7 @@ struct MapView: UIViewRepresentable {
         }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = .blue
-            renderer.lineWidth = 3
+            let renderer = BorderPolylineRenderer(overlay: overlay)
             return renderer
         }
     }
