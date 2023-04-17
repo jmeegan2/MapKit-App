@@ -87,7 +87,7 @@ struct InputView: View {
                         Text("Trip Duration:")
                             .font(.headline)
                         Spacer()
-                        Text("\(time, specifier: "%.2f") hours")
+                        Text("\(formatTime(time))")
                     }
                     HStack {
                         Text("Distance:")
@@ -125,6 +125,7 @@ struct InputView: View {
                     Color.clear
                 }
             }
+            
         }
        
         .alert(isPresented: $showAlert ) {
@@ -144,6 +145,23 @@ struct InputView: View {
         .background(Color.white)
         .padding(.horizontal)
     }
+    
+    func formatTime(_ time: Double) -> String {
+        if time >= 24 {
+            let days = Int(time / 24)
+            let hours = Int(time.truncatingRemainder(dividingBy: 24))
+            return "\(days) day\(days == 1 ? "" : "s") \(hours) hour\(hours == 1 ? "" : "s")"
+        } else if time < 1 {
+            let minutes = Int(ceil(time * 60))
+            return "\(minutes) minute\(minutes == 1 ? "" : "s")"
+        } else {
+            let hours = Int(time)
+            let minutes = Int(ceil((time - Double(hours)) * 60))
+            return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
+        }
+    }
+
+    
     func calculateTripDetails() {
         calculateButtonPressed = true
         mapIdentifier = UUID()
@@ -253,6 +271,9 @@ struct InputView: View {
 
         //End of view 
     }
+
+
+
     
     
     struct InputView_Previews: PreviewProvider {
