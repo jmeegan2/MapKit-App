@@ -7,6 +7,7 @@ Issues:
 * Difficulty adding border polyline below main polyline (asked question on stackOverflow and reddit), I saw people do this but they used coordinates and not routes for polyline, right now im only able to draw one polyline route but with cooordinates it doesnt work
 * Not able to pass tollsPreference or highwayPreference when opening the maps app from mine, not sure if possible, read on old threads its not
 * Had been using GLGeocode but it didnt accept things like 'The White House' as an entry it wanted the actual address which isnt very practical for user to have to to type in so I changed it to use MKLocalSearch so it recognizes those kind of non-specifc locations
+* Didn't realize that if I get a 'Directions not available' error message from 'error.localizedDescription' that its most likely a problem with the roads and not my actual code. Like you cant get directions to Yellowstone if the roads are blocked with snow or some kind of natural event impeading traffic
 
 
 Random notes:

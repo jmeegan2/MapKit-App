@@ -105,17 +105,19 @@ struct MapView: UIViewRepresentable {
                         mapView.setRegion(MKCoordinateRegion(regionRect), animated: true)
                         
                         mapView.showAnnotations(annotations, animated: true)
-                
                     }
                 }
             }
                
         }
-
+     
+        
         return mapView
+        
     }
 
-    func updateUIView(_ view: MKMapView, context: Context) {}
+    func updateUIView(_ view: MKMapView, context: Context) {
+    }
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -163,6 +165,8 @@ struct MapView: UIViewRepresentable {
 
                return nil
            }
+        
+       
     }
     
     

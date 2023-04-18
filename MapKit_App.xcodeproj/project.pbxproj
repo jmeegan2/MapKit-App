@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1176F52229EE49CD00E7834B /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1176F52129EE490400E7834B /* InputFunctions.swift */; };
 		11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* MapView.swift */; };
 		11DDC7A729E947B70093E3A5 /* TripDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A629E947B70093E3A5 /* TripDetailsViewModel.swift */; };
 		11DDC7A929E949920093E3A5 /* OpenAppleMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A829E949920093E3A5 /* OpenAppleMaps.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1176F52129EE490400E7834B /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
 		11DDC7A329E910A30093E3A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		11DDC7A529E944F10093E3A5 /* DevLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevLog.md; sourceTree = "<group>"; };
 		11DDC7A629E947B70093E3A5 /* TripDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
+				1176F52129EE490400E7834B /* InputFunctions.swift */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
 				11EE9F9529E2076500436563 /* InputView.swift */,
 				11DDC7A329E910A30093E3A5 /* MapView.swift */,
@@ -155,6 +158,7 @@
 			files = (
 				11EE9F9629E2076500436563 /* InputView.swift in Sources */,
 				11DDC7A929E949920093E3A5 /* OpenAppleMaps.swift in Sources */,
+				1176F52229EE49CD00E7834B /* InputFunctions.swift in Sources */,
 				11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */,
 				11DDC7A729E947B70093E3A5 /* TripDetailsViewModel.swift in Sources */,
 				11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */,

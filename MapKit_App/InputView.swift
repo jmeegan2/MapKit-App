@@ -31,10 +31,8 @@ struct InputView: View {
       !showAlert && calculateButtonPressed && distance > 0
     }
     var body: some View {
-        
         VStack(alignment: .leading) {
-        
-            if (isLoading ) {
+            if isLoading {
                 LoadingView()
             } else {
                 Group {
@@ -61,21 +59,22 @@ struct InputView: View {
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                     }
-                    VStack{
+                    
+                    // THIS CODE
+                    HStack {
                         Toggle("Avoid Tolls", isOn: $avoidTolls)
                             .padding(.vertical, 2)
                             .fontWeight(.bold)
+                        Spacer()
                         Toggle("Avoid Highways", isOn: $avoidHighways)
                             .padding(.vertical, 2)
                             .fontWeight(.bold)
-                        
                     }
-                    Button(action: {
-                        calculateTripDetails()
-                    }) {
+                    //END
+                    Button(action: calculateTripDetails) {
                         Text("Calculate")
                             .frame(maxWidth: .infinity)
-                            .padding(.all, 10.0)
+                            .padding(.all, 10)
                             .foregroundColor(.white)
                             .background(Color(red: 30/255, green: 65/255, blue: 105/255))
                             .fontWeight(.bold)
@@ -93,7 +92,7 @@ struct InputView: View {
                         Text("Distance:")
                             .font(.headline)
                         Spacer()
-                        Text("\(distance, specifier: "%.2f") miles")
+                        Text("\(distance, specifier: "%.0f") miles")
                     }
                     HStack {
                         Text("Cost:")
@@ -102,7 +101,6 @@ struct InputView: View {
                         Text("$\(cost, specifier: "%.2f")")
                     }
                 }
-                
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 .background(Color.white)
@@ -146,6 +144,8 @@ struct InputView: View {
         .padding(.horizontal)
     }
     
+        // MARK: - Functions
+    
     func formatTime(_ time: Double) -> String {
         if time >= 24 {
             let days = Int(time / 24)
@@ -160,7 +160,8 @@ struct InputView: View {
             return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
         }
     }
-
+    
+   
     
     func calculateTripDetails() {
         calculateButtonPressed = true
@@ -198,21 +199,39 @@ struct InputView: View {
     }
 
     func calculateRoute(from startingPlacemark: MKPlacemark, to destinationPlacemark: MKPlacemark, mpg: Double, gasPrice: Double) {
+
+        // Initializations
         let startingItem = MKMapItem(placemark: startingPlacemark)
         let destinationItem = MKMapItem(placemark: destinationPlacemark)
-
         let request = MKDirections.Request()
+
         request.source = startingItem
         request.destination = destinationItem
         request.transportType = .automobile
         request.tollPreference = avoidTolls ? .avoid : .any
         request.highwayPreference = avoidHighways ? .avoid : .any
 
+        // Print statements for validation purposes
+        print("\n\nCalculating Route information")
+        print("Starting item: \(startingItem)")
+        print("Destination item: \(destinationItem)")
+        print("Request source: \(String(describing: request.source))")
+        print("Request destination: \(String(describing: request.destination))")
+        print("Request transport type: \(request.transportType)")
+        print("Request toll preference: \(request.tollPreference)")
+        print("Request highway preference: \(request.highwayPreference)")
+        
+        
         MKDirections(request: request).calculate { [self] response, error in
            
             guard let route = response?.routes.first else {
                 if let error = error {
                     alertMessage = "Failed to calculate route: \(error.localizedDescription)"
+                    print("Error calculating route: \(error.localizedDescription)")
+                    print("\nMore error description: \(error.self)")
+                    isLoading = false
+                    showAlert = true
+                    return
                 } else {
                     alertMessage = "Failed to calculate route."
                 }
@@ -222,12 +241,13 @@ struct InputView: View {
             }
             self.time = route.expectedTravelTime / 3600 // Convert seconds to hours
             
-            self.distance = route.distance / 1609.344 // Convert meters to miles
+            self.distance = (round(route.distance / 1609.344))
+            // Convert meters to miles
             self.cost = (self.distance / mpg) * gasPrice
 
             print("\n\n")
             print("Expected travel time: \(String(format: "%.2f", self.time)) hours\n"
-                  + "Distance: \(String(format: "%.2f", self.distance)) miles\n"
+                  + "Distance: \(String(format: "%.2f", route.distance / 1609.344)) miles\n"
                   + "Cost: $\(String(format: "%.2f", self.cost))")
             print("\n\n")
             isLoading = false
@@ -242,13 +262,12 @@ struct InputView: View {
             isLoading = false
             return
         }
-
         let startURL = "http://maps.apple.com/?saddr=\(startingLocation)"
         let destURL = "&daddr=\(destinationLocation)"
         let avoidTolls = self.avoidTolls ? "&dirflg=t" : ""
         let avoidHighways = self.avoidHighways ? "&exclHwy=true" : ""
         let url = URL(string: startURL + destURL + avoidTolls + avoidHighways )
-
+        
         if let url = url {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
@@ -257,10 +276,6 @@ struct InputView: View {
             isLoading = false
         }
     }
-
-    
-
-
         //End of view 
     }
 
