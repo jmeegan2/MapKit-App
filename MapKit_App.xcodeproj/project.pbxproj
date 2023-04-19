@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1176F52229EE49CD00E7834B /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1176F52129EE490400E7834B /* InputFunctions.swift */; };
+		11C9099729F07FF700B4D4EA /* 1200px-White_dot.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */; };
 		11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* MapView.swift */; };
 		11DDC7A729E947B70093E3A5 /* TripDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A629E947B70093E3A5 /* TripDetailsViewModel.swift */; };
 		11DDC7A929E949920093E3A5 /* OpenAppleMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A829E949920093E3A5 /* OpenAppleMaps.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		1176F52129EE490400E7834B /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
+		11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "1200px-White_dot.svg.png"; path = "../../1200px-White_dot.svg.png"; sourceTree = "<group>"; };
 		11DDC7A329E910A30093E3A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		11DDC7A529E944F10093E3A5 /* DevLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevLog.md; sourceTree = "<group>"; };
 		11DDC7A629E947B70093E3A5 /* TripDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		11EE9F8529E1FCE900436563 /* MapKit_App */ = {
 			isa = PBXGroup;
 			children = (
+				11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */,
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
 				1176F52129EE490400E7834B /* InputFunctions.swift */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11EE9F8E29E1FCEA00436563 /* Preview Assets.xcassets in Resources */,
+				11C9099729F07FF700B4D4EA /* 1200px-White_dot.svg.png in Resources */,
 				11EE9F8B29E1FCEA00436563 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

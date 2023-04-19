@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 
+class StartingAnnotation: MKPointAnnotation {}
 
 struct MapView: UIViewRepresentable {
     var startingLocation: String
@@ -50,9 +51,12 @@ struct MapView: UIViewRepresentable {
                    destinationAnnotation.coordinate = destinationCoordinate
                    destinationAnnotation.title = destinationLocation
                    
-                   let startingAnnotation = MKPointAnnotation()
+                   
+                   //Weird declaration for customization purposes
+                   let startingAnnotation = StartingAnnotation()
                    startingAnnotation.coordinate = startingCoordinate
                    startingAnnotation.title = startingLocation
+                    
                    
                 // Display the route on the map
                 let directionRequest = MKDirections.Request()
@@ -88,6 +92,7 @@ struct MapView: UIViewRepresentable {
                         //add border polyline
                         mapView.insertOverlay(borderPolyline, below: mainPolyline)
                         mapView.addAnnotation(destinationAnnotation)
+                        mapView.addAnnotation(startingAnnotation)
                         // Zoom in on the polyline route
                         var regionRect = mainPolyline.boundingMapRect
 
@@ -148,24 +153,36 @@ struct MapView: UIViewRepresentable {
             //use destinationCoordinator
                 }
         
+        
+        func resizeImage(image: UIImage, newSize: CGSize = CGSize(width: 10, height: 10)) -> UIImage {
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+            image.draw(in: CGRect(origin: CGPoint.zero, size: newSize))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage!
+        }
+        
+        //This will give me an image for the starting annotation or any annotation really
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-               if annotation is MKPointAnnotation {
-                   let reuseId = "destination"
-                   var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+            if annotation is StartingAnnotation {
+                let reuseId = "customAnnotation"
+                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
 
-                   if annotationView == nil {
-                       annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                       annotationView?.canShowCallout = true
-                   } else {
-                       annotationView?.annotation = annotation
+                if annotationView == nil {
+                           annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                           annotationView?.canShowCallout = true
+                           if let startingImage = UIImage(named: "1200px-White_dot.svg.png") {
+                               annotationView?.image = resizeImage(image: startingImage) // Resize the image before setting it
+                           }
+                       } else {
+                           annotationView?.annotation = annotation
+                       }
+
+                       return annotationView
                    }
 
-                   return annotationView
+                   return nil
                }
-
-               return nil
-           }
-        
        
     }
     

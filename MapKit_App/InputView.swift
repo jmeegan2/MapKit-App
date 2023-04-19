@@ -60,7 +60,8 @@ struct InputView: View {
                         }
                     }
                     
-                    // THIS CODE
+                    // THIS CODE, try to make this into a contextMenu
+                    
                     HStack {
                         Toggle("Avoid Tolls", isOn: $avoidTolls)
                             .padding(.vertical, 2)

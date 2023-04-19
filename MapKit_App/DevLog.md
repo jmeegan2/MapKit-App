@@ -14,4 +14,15 @@ Random notes:
 
 Use this for annotations: https://www.hackingwithswift.com/books/ios-swiftui/improving-our-map-annotations
 
+Challenge get all necessary done in next three days 4/19 on 4/21 be done
 
+Necessary ToDo before launching
+* Add white dot for starting position (done 4/19 but need to have it have a border for the image, basically done though)
+* Refactoring for neatness and good practices
+* Menu creation for avoid highways and tolls option
+* Have loading screen wait for the map to load before showing the screen with the values or maybe put give it its own loading screen
+* Add user current location functionality 
+
+Nice to haves 
+* Background for the route polyline 
+* Have the UIApplication.shared.open for open AppleMaps be able to take avoid tolls and highway preferences, dont think its possible though 
