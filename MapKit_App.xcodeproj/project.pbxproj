@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1176F52229EE49CD00E7834B /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1176F52129EE490400E7834B /* InputFunctions.swift */; };
+		119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D529F1CC2D0064ABA2 /* TripViewModel.swift */; };
+		119118D829F1CC3D0064ABA2 /* LocationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D729F1CC3D0064ABA2 /* LocationTextField.swift */; };
+		119118DA29F1CC4F0064ABA2 /* ValueTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D929F1CC4F0064ABA2 /* ValueTextField.swift */; };
+		119118DC29F1CC6B0064ABA2 /* RouteOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DB29F1CC6B0064ABA2 /* RouteOptionsView.swift */; };
+		119118DE29F1CC870064ABA2 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DD29F1CC870064ABA2 /* ResultView.swift */; };
+		119118E029F1CCA40064ABA2 /* OpenInAppleMapsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DF29F1CCA40064ABA2 /* OpenInAppleMapsButton.swift */; };
 		11C9099729F07FF700B4D4EA /* 1200px-White_dot.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */; };
 		11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* MapView.swift */; };
 		11DDC7A729E947B70093E3A5 /* TripDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A629E947B70093E3A5 /* TripDetailsViewModel.swift */; };
@@ -20,7 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1176F52129EE490400E7834B /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
+		119118D529F1CC2D0064ABA2 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
+		119118D729F1CC3D0064ABA2 /* LocationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTextField.swift; sourceTree = "<group>"; };
+		119118D929F1CC4F0064ABA2 /* ValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueTextField.swift; sourceTree = "<group>"; };
+		119118DB29F1CC6B0064ABA2 /* RouteOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteOptionsView.swift; sourceTree = "<group>"; };
+		119118DD29F1CC870064ABA2 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		119118DF29F1CCA40064ABA2 /* OpenInAppleMapsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInAppleMapsButton.swift; sourceTree = "<group>"; };
 		11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "1200px-White_dot.svg.png"; path = "../../1200px-White_dot.svg.png"; sourceTree = "<group>"; };
 		11DDC7A329E910A30093E3A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		11DDC7A529E944F10093E3A5 /* DevLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevLog.md; sourceTree = "<group>"; };
@@ -68,9 +78,14 @@
 			children = (
 				11C9099629F07FF600B4D4EA /* 1200px-White_dot.svg.png */,
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
-				1176F52129EE490400E7834B /* InputFunctions.swift */,
+				119118D729F1CC3D0064ABA2 /* LocationTextField.swift */,
+				119118D929F1CC4F0064ABA2 /* ValueTextField.swift */,
+				119118DB29F1CC6B0064ABA2 /* RouteOptionsView.swift */,
+				119118DD29F1CC870064ABA2 /* ResultView.swift */,
+				119118DF29F1CCA40064ABA2 /* OpenInAppleMapsButton.swift */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
 				11EE9F9529E2076500436563 /* InputView.swift */,
+				119118D529F1CC2D0064ABA2 /* TripViewModel.swift */,
 				11DDC7A329E910A30093E3A5 /* MapView.swift */,
 				11EE9F8629E1FCE900436563 /* MapKit_AppApp.swift */,
 				11EE9F8A29E1FCEA00436563 /* Assets.xcassets */,
@@ -160,13 +175,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */,
 				11EE9F9629E2076500436563 /* InputView.swift in Sources */,
+				119118DE29F1CC870064ABA2 /* ResultView.swift in Sources */,
+				119118DA29F1CC4F0064ABA2 /* ValueTextField.swift in Sources */,
 				11DDC7A929E949920093E3A5 /* OpenAppleMaps.swift in Sources */,
-				1176F52229EE49CD00E7834B /* InputFunctions.swift in Sources */,
 				11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */,
+				119118D829F1CC3D0064ABA2 /* LocationTextField.swift in Sources */,
 				11DDC7A729E947B70093E3A5 /* TripDetailsViewModel.swift in Sources */,
 				11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */,
 				11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */,
+				119118E029F1CCA40064ABA2 /* OpenInAppleMapsButton.swift in Sources */,
+				119118DC29F1CC6B0064ABA2 /* RouteOptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

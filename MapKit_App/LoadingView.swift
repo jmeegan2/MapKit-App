@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct LoadingView: View {
     @State private var isLoading = false
