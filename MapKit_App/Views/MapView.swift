@@ -19,106 +19,90 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-
         
-        // Get the coordinates for the starting and destination locations
-           let searchRequest = MKLocalSearch.Request()
-           searchRequest.naturalLanguageQuery = startingLocation
-
-           let search = MKLocalSearch(request: searchRequest)
-           search.start { [weak mapView] (response, error) in
-               guard let mapView = mapView,
-                   let response = response,
-                   let mapItem = response.mapItems.first,
-                   let startingCoordinate = mapItem.placemark.location?.coordinate else {
-                   return
-               }
-
-               let destinationSearchRequest = MKLocalSearch.Request()
-               destinationSearchRequest.naturalLanguageQuery = destinationLocation
-
-               let destinationSearch = MKLocalSearch(request: destinationSearchRequest)
-               destinationSearch.start { [weak mapView] (response, error) in
-                   guard let mapView = mapView,
-                       let response = response,
-                       let mapItem = response.mapItems.first,
-                       let destinationCoordinate = mapItem.placemark.location?.coordinate else {
-                       return
-                   }
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = startingLocation
+        
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { [weak mapView] response, error in
+            guard let mapView = mapView,
+                  let response = response,
+                  let mapItem = response.mapItems.first,
+                  let startingCoordinate = mapItem.placemark.location?.coordinate else {
+                      return
+            }
+            
+            let destinationSearchRequest = MKLocalSearch.Request()
+            destinationSearchRequest.naturalLanguageQuery = destinationLocation
+            
+            let destinationSearch = MKLocalSearch(request: destinationSearchRequest)
+            destinationSearch.start { [weak mapView] response, error in
+                guard let mapView = mapView,
+                      let response = response,
+                      let mapItem = response.mapItems.first,
+                      let destinationCoordinate = mapItem.placemark.location?.coordinate else {
+                          return
+                }
                 
-                   
-                   let destinationAnnotation = MKPointAnnotation()
-                   destinationAnnotation.coordinate = destinationCoordinate
-                   destinationAnnotation.title = destinationLocation
-                   
-                   
-                   //Weird declaration for customization purposes
-                   let startingAnnotation = StartingAnnotation()
-                   startingAnnotation.coordinate = startingCoordinate
-                   startingAnnotation.title = startingLocation
-                    
-                   
-                // Display the route on the map
+                let destinationAnnotation = MKPointAnnotation()
+                destinationAnnotation.coordinate = destinationCoordinate
+                destinationAnnotation.title = destinationLocation
+                
+                let startingAnnotation = StartingAnnotation()
+                startingAnnotation.coordinate = startingCoordinate
+                startingAnnotation.title = startingLocation
+                
                 let directionRequest = MKDirections.Request()
-                
-                if avoidTolls {
-                    directionRequest.tollPreference = .avoid // Avoid tolls
-                } else {
-                    directionRequest.tollPreference = .any
-                }
-                if avoidHighways {
-                    directionRequest.highwayPreference = .avoid // Avoid highways
-                } else {
-                    directionRequest.highwayPreference = .any
-                }
-
-                
                 directionRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))
                 directionRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
                 directionRequest.transportType = .automobile
                 
+                if avoidTolls {
+                    directionRequest.tollPreference = .avoid
+                } else {
+                    directionRequest.tollPreference = .any
+                }
+                
+                if avoidHighways {
+                    directionRequest.highwayPreference = .avoid
+                } else {
+                    directionRequest.highwayPreference = .any
+                }
+                
                 let directions = MKDirections(request: directionRequest)
-                directions.calculate { response, error in
+                directions.calculate { [weak mapView] response, error in
                     guard let response = response else { return }
-
-                    let annotations = [MKAnnotation]()
+                    
+                    var annotations = [MKAnnotation]()
                     for route in response.routes {
-                        // Instantiate the main polyline
                         let mainPolyline = route.polyline
                         mainPolyline.title = "main"
-                        // Instantiate the border polyline
+                        
                         let borderPolyline = route.polyline
-                        mapView.addOverlay(mainPolyline)
-                        //add border polyline
-                        mapView.insertOverlay(borderPolyline, below: mainPolyline)
-                        mapView.addAnnotation(destinationAnnotation)
-                        mapView.addAnnotation(startingAnnotation)
-                        // Zoom in on the polyline route
+                        mapView?.addOverlay(mainPolyline)
+                        mapView?.insertOverlay(borderPolyline, below: mainPolyline)
+                        mapView?.addAnnotation(destinationAnnotation)
+                        mapView?.addAnnotation(startingAnnotation)
+                        
                         var regionRect = mainPolyline.boundingMapRect
-
                         let wPadding = regionRect.size.width * 0.25
                         let hPadding = regionRect.size.height * 0.25
-                                    
-                        // Add padding to the region
                         regionRect.size.width += wPadding
                         regionRect.size.height += hPadding
-                                    
-                        // Center the region on the line
                         regionRect.origin.x -= wPadding / 2
                         regionRect.origin.y -= hPadding / 2
-
-                        mapView.setRegion(MKCoordinateRegion(regionRect), animated: true)
                         
-                        mapView.showAnnotations(annotations, animated: true)
+                        mapView?.setRegion(MKCoordinateRegion(regionRect), animated: true)
+                        
+                        annotations.append(contentsOf: mapView?.annotations ?? [])
                     }
+                    
+                    mapView?.showAnnotations(annotations, animated: true)
                 }
             }
-               
         }
-     
         
         return mapView
-        
     }
 
     func updateUIView(_ view: MKMapView, context: Context) {
@@ -155,11 +139,11 @@ struct MapView: UIViewRepresentable {
         
         
         func resizeImage(image: UIImage, newSize: CGSize = CGSize(width: 10, height: 10)) -> UIImage {
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-            image.draw(in: CGRect(origin: CGPoint.zero, size: newSize))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return newImage!
+            let renderer = UIGraphicsImageRenderer(size: newSize)
+            let newImage = renderer.image { _ in
+                image.draw(in: CGRect(origin: .zero, size: newSize))
+            }
+            return newImage
         }
         
         //This will give me an image for the starting annotation or any annotation really
@@ -171,7 +155,7 @@ struct MapView: UIViewRepresentable {
                 if annotationView == nil {
                            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
                            annotationView?.canShowCallout = true
-                           if let startingImage = UIImage(named: "1200px-White_dot.svg.png") {
+                           if let startingImage = UIImage(named: "/Users/jamesmeegan/Desktop/softwareDev/mobileApp/MapKit_App/MapKit_App/Views/1200px-White_dot.svg.png") {
                                annotationView?.image = resizeImage(image: startingImage) // Resize the image before setting it
                            }
                        } else {
@@ -194,5 +178,3 @@ struct MapView_Previews: PreviewProvider {
         InputView()
     }
 }
-
-
