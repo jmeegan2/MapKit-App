@@ -119,24 +119,6 @@ struct MapView: UIViewRepresentable {
         init(_ parent: MapView) {
             self.parent = parent
         }
-
-        
-    
-
-        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-           let renderer = MKPolylineRenderer(overlay: overlay)
-            // Use different colors for the border and the main polyline
-            renderer.strokeColor = overlay.title == "main" ? UIColor(red: 24/255, green: 100/255, blue: 230/255, alpha: 1.0) : .black
-                // Make the border polyline bigger. Their difference will be like the borderWidth of the main polyline
-                renderer.lineWidth = overlay.title == "main" ? 6 : 8
-                // Other polyline customizations
-                renderer.lineCap = .round
-                renderer.lineJoin = .bevel
-                return renderer
-            
-            //use destinationCoordinator
-                }
-        
         
         func resizeImage(image: UIImage, newSize: CGSize = CGSize(width: 10, height: 10)) -> UIImage {
             let renderer = UIGraphicsImageRenderer(size: newSize)
@@ -146,7 +128,6 @@ struct MapView: UIViewRepresentable {
             return newImage
         }
         
-        //This will give me an image for the starting annotation or any annotation really
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if annotation is StartingAnnotation {
                 let reuseId = "customAnnotation"
@@ -156,7 +137,7 @@ struct MapView: UIViewRepresentable {
                            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
                            annotationView?.canShowCallout = true
                            if let startingImage = UIImage(named: "/Users/jamesmeegan/Desktop/softwareDev/mobileApp/MapKit_App/MapKit_App/Views/1200px-White_dot.svg.png") {
-                               annotationView?.image = resizeImage(image: startingImage) // Resize the image before setting it
+                               annotationView?.image = resizeImage(image: startingImage)
                            }
                        } else {
                            annotationView?.annotation = annotation
@@ -167,6 +148,15 @@ struct MapView: UIViewRepresentable {
 
                    return nil
                }
+        
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+           let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = overlay.title == "main" ? UIColor(red: 24/255, green: 100/255, blue: 230/255, alpha: 1.0) : .black
+                renderer.lineWidth = overlay.title == "main" ? 6 : 8
+                renderer.lineCap = .round
+                renderer.lineJoin = .bevel
+                return renderer
+                }
        
     }
     
