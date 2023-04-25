@@ -17,9 +17,8 @@ Use this for annotations: https://www.hackingwithswift.com/books/ios-swiftui/imp
 Challenge get all necessary done in next three days 4/19 on 4/21 be done
 
 Necessary ToDo before launching
-* Add white dot for starting position (done 4/19 but need to have it have a border for the image, basically done though)
 * Refactoring for neatness and good practices (done)
-* Menu creation for avoid highways and tolls option 
+* Menu creation for avoid highways and tolls option (done not properly formatted though)
 * Have loading screen wait for the map to load before showing the screen with the values or maybe put give it its own loading screen
 * Add user current location functionality 
 

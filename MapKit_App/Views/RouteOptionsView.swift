@@ -4,6 +4,7 @@
 //
 //  Created by James Meegan on 4/20/23.
 //
+
 import SwiftUI
 import Foundation
 
@@ -11,9 +12,12 @@ struct TogglesView: View {
     @Binding var avoidTolls: Bool
     @Binding var avoidHighways: Bool
     @State private var showingPopover = false
+    @State private var buttonRect: CGRect = .zero
+    
     var body: some View {
+        VStack {
             Button(action: {
-                showingPopover = true
+                showingPopover.toggle()
             }) {
                 HStack {
                     Text("Route Options")
@@ -21,41 +25,56 @@ struct TogglesView: View {
                     Image(systemName: "gearshape")
                 }
             }
-            .popover(isPresented: $showingPopover) {
-                VStack {
-                    HStack {
-                        Button(action: {
-                            showingPopover = false
-                        }) {
-                            HStack {
-                                Image(systemName: "arrow.left")
-                                Text("Back")
-                                    .font(.headline)
-                            }
-                            .foregroundColor(.blue)
-                        }
-                        Spacer()
+            .background(GeometryReader { geometry -> Color in
+                let rect = geometry.frame(in: .global)
+                if buttonRect != rect {
+                    DispatchQueue.main.async {
+                        buttonRect = rect
                     }
-                    .padding(.horizontal)
-
-                    Divider()
-
-                    VStack(spacing: 16) {
-                        Toggle(isOn: $avoidTolls) {
-                            Text("Avoid Tolls")
-                                .font(.body)
-                        }
-                        Toggle(isOn: $avoidHighways) {
-                            Text("Avoid Highways")
-                                .font(.body)
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    Spacer()
                 }
-                .padding()
-            }
+                return .clear
+            })
         }
+        .popover(isPresented: $showingPopover, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
+            popoverContent
+                .offset(x: 0, y: buttonRect.minY)
+        }
+    }
     
-  }
+    private var popoverContent: some View {
+        VStack {
+            HStack {
+                Button(action: {
+                    showingPopover = false
+                }) {
+                    HStack {
+                        Image(systemName: "arrow.left")
+                        Text("Back")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.blue)
+                }
+                Spacer()
+            }
+            .padding(.horizontal)
+
+            Divider()
+
+            VStack(spacing: 16) {
+                Toggle(isOn: $avoidTolls) {
+                    Text("Avoid Tolls")
+                        .font(.body)
+                }
+                Toggle(isOn: $avoidHighways) {
+                    Text("Avoid Highways")
+                        .font(.body)
+                }
+            }
+            .padding(.horizontal)
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
