@@ -37,7 +37,6 @@ struct TogglesView: View {
         }
         .popover(isPresented: $showingPopover, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
             popoverContent
-                .offset(x: 0, y: buttonRect.minY)
         }
     }
     
