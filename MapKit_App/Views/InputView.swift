@@ -50,7 +50,6 @@ struct InputView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 .shadow(radius: 5)
-
                 if (viewModel.showMapView) {
                     MapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
                         .id(viewModel.mapIdentifier)
@@ -81,4 +80,5 @@ struct InputView_Previews: PreviewProvider {
         InputView()
     }
 }
+
 

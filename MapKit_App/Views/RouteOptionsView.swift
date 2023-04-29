@@ -25,19 +25,11 @@ struct TogglesView: View {
                     Image(systemName: "gearshape")
                 }
             }
-            .background(GeometryReader { geometry -> Color in
-                let rect = geometry.frame(in: .global)
-                if buttonRect != rect {
-                    DispatchQueue.main.async {
-                        buttonRect = rect
-                    }
-                }
-                return .clear
-            })
         }
-        .popover(isPresented: $showingPopover, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
+        .popover(isPresented: $showingPopover) {
             popoverContent
         }
+        
     }
     
     private var popoverContent: some View {
@@ -71,9 +63,9 @@ struct TogglesView: View {
             }
             .padding(.horizontal)
             
-            Spacer()
         }
         .padding()
     }
+    
 }
 

@@ -15,6 +15,8 @@
 		119118E029F1CCA40064ABA2 /* OpenInAppleMapsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DF29F1CCA40064ABA2 /* OpenInAppleMapsButton.swift */; };
 		11DDC7A429E910A30093E3A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* MapView.swift */; };
 		11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */; };
+		11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 11E0E75129FCC13F00467EFE /* SwiftSoup */; };
+		11E0E75529FCC2CF00467EFE /* webScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0E75429FCC2CF00467EFE /* webScraper.swift */; };
 		11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE9F8629E1FCE900436563 /* MapKit_AppApp.swift */; };
 		11EE9F8B29E1FCEA00436563 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11EE9F8A29E1FCEA00436563 /* Assets.xcassets */; };
 		11EE9F8E29E1FCEA00436563 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11EE9F8D29E1FCEA00436563 /* Preview Assets.xcassets */; };
@@ -32,6 +34,7 @@
 		11DDC7A329E910A30093E3A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		11DDC7A529E944F10093E3A5 /* DevLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevLog.md; sourceTree = "<group>"; };
 		11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		11E0E75429FCC2CF00467EFE /* webScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = webScraper.swift; sourceTree = "<group>"; };
 		11EE9F8329E1FCE900436563 /* MapKit_App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapKit_App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11EE9F8629E1FCE900436563 /* MapKit_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKit_AppApp.swift; sourceTree = "<group>"; };
 		11EE9F8A29E1FCEA00436563 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +73,7 @@
 		119118E229F1D1790064ABA2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				11E0E75429FCC2CF00467EFE /* webScraper.swift */,
 				119118D529F1CC2D0064ABA2 /* TripViewModel.swift */,
 			);
 			path = Models;
@@ -137,6 +142,9 @@
 			dependencies = (
 			);
 			name = MapKit_App;
+			packageProductDependencies = (
+				11E0E75129FCC13F00467EFE /* SwiftSoup */,
+			);
 			productName = MapKit_App;
 			productReference = 11EE9F8329E1FCE900436563 /* MapKit_App.app */;
 			productType = "com.apple.product-type.application";
@@ -165,6 +173,9 @@
 				Base,
 			);
 			mainGroup = 11EE9F7A29E1FCE900436563;
+			packageReferences = (
+				11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = 11EE9F8429E1FCE900436563 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -191,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11E0E75529FCC2CF00467EFE /* webScraper.swift in Sources */,
 				119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */,
 				11EE9F9629E2076500436563 /* InputView.swift in Sources */,
 				119118DE29F1CC870064ABA2 /* ResultView.swift in Sources */,
@@ -401,6 +413,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11E0E75129FCC13F00467EFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11EE9F7B29E1FCE900436563 /* Project object */;
 }

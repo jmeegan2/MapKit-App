@@ -18,10 +18,12 @@ Challenge get all necessary done in next three days 4/19 on 4/21 be done
 
 Necessary ToDo before launching
 * Refactoring for neatness and good practices (done)
-* Menu creation for avoid highways and tolls option (done not properly formatted though)
+* Menu creation for avoid highways and tolls option (adequately properly formatted though)
 * Have loading screen wait for the map to load before showing the screen with the values or maybe put give it its own loading screen
 * Add user current location functionality 
+* add in webscraping for the gas price 
 
 Nice to haves 
 * Background for the route polyline 
 * Have the UIApplication.shared.open for open AppleMaps be able to take avoid tolls and highway preferences, dont think its possible though 
+* Have users be able to choose google maps and apple maps 
