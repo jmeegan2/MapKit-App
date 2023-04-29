@@ -14,6 +14,7 @@ import MapKit
 struct InputView: View {
     @StateObject private var viewModel = TripViewModel()
 
+    
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.isLoading {
@@ -23,12 +24,12 @@ struct InputView: View {
                     LocationTextField(label: "Starting Location", text: $viewModel.startingLocation)
                     LocationTextField(label: "Destination Location", text: $viewModel.destinationLocation)
                     HStack {
-                        ValueTextField(label: "Vehicle MPG", text: $viewModel.mpg)
+                        ValueTextField(label: "Vehicle MPG", text: $viewModel.mpg);
                         Spacer()
-                        ValueTextField(label: "Average Gas Price", text: $viewModel.averageGasPrice)
+                        ValueTextField(label: "Gas Price",text: $viewModel.averageGasPrice, showInfoIcon: true) 
                     }
 
-                    TogglesView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
+                    RouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
 
                     Button(action: viewModel.calculateTripDetails) {
                         Text("Calculate")

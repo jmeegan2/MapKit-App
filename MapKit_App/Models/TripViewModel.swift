@@ -141,6 +141,9 @@ class TripViewModel: ObservableObject {
         isLoading = false
         showAlert = true
     }
+    
+  
+
 
     private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
         time = route.expectedTravelTime / 3600 // Convert seconds to hours
@@ -180,4 +183,20 @@ class TripViewModel: ObservableObject {
         }
     }
         //End of view
+    
+    
+    func fetchAverageGasPrice() {
+        scrapePrice { [weak self] price in
+            DispatchQueue.main.async {
+                if let price = price {
+                    self?.averageGasPrice = String(price)
+                } else {
+                    print("Failed to fetch average gas price")
+                }
+            }
+        }
+    }
+    init() {
+            fetchAverageGasPrice()
+        }
 }
