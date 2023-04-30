@@ -13,22 +13,24 @@ struct ValueTextField: View {
     var showInfoIcon: Bool = false
     var infoMessage: String?
     
-    @State private var showInfoAlert = false
+    @State private var showInfoPopover = false
+    @State private var popoverRect: CGRect = .zero
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(label)
                     .font(.headline)
-                Spacer()
                 if showInfoIcon {
                     Image(systemName: "info.circle")
                         .foregroundColor(.blue)
                         .onTapGesture {
-                            print("hello")
-                            showInfoAlert = true
-                            if(showInfoAlert){
-                                print("show info change")
+                            showInfoPopover.toggle()
+                        }
+                        .popover(isPresented: $showInfoPopover) {
+                            VStack {
+                                Text(infoMessage ?? "AAA National Average")
+                                    .padding()
                             }
                         }
                 }
@@ -38,5 +40,4 @@ struct ValueTextField: View {
         }
        
     }
-    
 }
