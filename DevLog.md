@@ -27,3 +27,6 @@ Nice to haves
 * Background for the route polyline 
 * Have the UIApplication.shared.open for open AppleMaps be able to take avoid tolls and highway preferences, dont think its possible though 
 * Have users be able to choose google maps and apple maps 
+
+
+Change popover for gas price to a alert 
