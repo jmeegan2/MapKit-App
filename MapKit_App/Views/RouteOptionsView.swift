@@ -29,7 +29,6 @@ struct RouteOptionsView: View {
         .popover(isPresented: $showingPopover) {
             popoverContent
         }
-        
     }
     
     private var popoverContent: some View {
@@ -68,4 +67,3 @@ struct RouteOptionsView: View {
     }
     
 }
-

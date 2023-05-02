@@ -4,9 +4,7 @@
 //
 //  Created by James Meegan on 4/8/23.
 //
-//Baltimore 39.284176, -76.622368
-//San Francisco  37.773972, -122.431297
-//Omaha, Nebraska 41.257160 Longitude: -95.995102
+
 
 import SwiftUI
 import MapKit
@@ -31,9 +29,7 @@ struct InputView: View {
                             text: $viewModel.averageGasPrice,
                             showInfoIcon: true
                         )
-                        .onTapGesture {
-                            viewModel.infoIconTapped()
-                        }
+                     
                     }
 
                     RouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)

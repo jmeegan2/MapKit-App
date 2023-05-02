@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 @main
 struct MapKit_AppApp: App {
     var body: some Scene {

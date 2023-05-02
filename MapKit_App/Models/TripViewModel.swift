@@ -62,7 +62,6 @@ class TripViewModel: ObservableObject {
    
     // MARK: - Functions
     func infoIconTapped() {
-        
         showAlert = true
         alertMessage = "Today’s AAA National Average"
         return
