@@ -119,36 +119,6 @@ struct MapView: UIViewRepresentable {
         init(_ parent: MapView) {
             self.parent = parent
         }
-        
-//        func resizeImage(image: UIImage, newSize: CGSize = CGSize(width: 12, height: 12)) -> UIImage {
-//            let renderer = UIGraphicsImageRenderer(size: newSize)
-//            let newImage = renderer.image { _ in
-//                image.draw(in: CGRect(origin: .zero, size: newSize))
-//            }
-//            return newImage
-//        }
-        
-//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//            if annotation is StartingAnnotation {
-//                let reuseId = "customAnnotation"
-//                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-//
-//                if annotationView == nil {
-//                           annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-//                           annotationView?.canShowCallout = true
-//                           if let startingImage = UIImage(named: "/Users/jamesmeegan/Desktop/softwareDev/mobileApp/MapKit_App/MapKit_App/Photos/circleThickOutline.jpg") {
-//                               annotationView?.image = resizeImage(image: startingImage)
-//                           }
-//                       } else {
-//                           annotationView?.annotation = annotation
-//                       }
-//
-//                       return annotationView
-//                   }
-//
-//                   return nil
-//               }
-        
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
            let renderer = MKPolylineRenderer(overlay: overlay)
             renderer.strokeColor = overlay.title == "main" ? UIColor(red: 24/255, green: 100/255, blue: 230/255, alpha: 1.0) : .black

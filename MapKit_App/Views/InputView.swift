@@ -13,7 +13,7 @@ import MapKit
 
 struct InputView: View {
     @StateObject private var viewModel = TripViewModel()
-
+    @State var showAlert = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,9 +24,16 @@ struct InputView: View {
                     LocationTextField(label: "Starting Location", text: $viewModel.startingLocation)
                     LocationTextField(label: "Destination Location", text: $viewModel.destinationLocation)
                     HStack {
-                        ValueTextField(label: "Vehicle MPG", text: $viewModel.mpg);
+                        ValueTextField(label: "Vehicle MPG", text: $viewModel.mpg)
                         Spacer()
-                        ValueTextField(label: "Gas Price",text: $viewModel.averageGasPrice, showInfoIcon: true) 
+                        ValueTextField(
+                            label: "Gas Price",
+                            text: $viewModel.averageGasPrice,
+                            showInfoIcon: true
+                        )
+                        .onTapGesture {
+                            viewModel.infoIconTapped()
+                        }
                     }
 
                     RouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
@@ -41,6 +48,7 @@ struct InputView: View {
                             .cornerRadius(10)
                     }
                 }
+                
                 VStack(alignment: .leading, spacing: 10) {
                     ResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
                     ResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
@@ -61,7 +69,7 @@ struct InputView: View {
             }
         }
         .alert(isPresented: $viewModel.showAlert) {
-            Alert(title: Text("Error"),
+            Alert(title: Text("Alert"),
                   message: Text(viewModel.alertMessage),
                   dismissButton: .default(Text("OK")) {
                 viewModel.calculateButtonPressed = false // Set the button state back to false

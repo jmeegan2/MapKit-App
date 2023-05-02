@@ -17,11 +17,11 @@ Use this for annotations: https://www.hackingwithswift.com/books/ios-swiftui/imp
 Challenge get all necessary done in next three days 4/19 on 4/21 be done
 
 Necessary ToDo before launching
-* Refactoring for neatness and good practices (done)
-* Menu creation for avoid highways and tolls option (adequately properly formatted though)
+* Refactoring for neatness and good practices (DO again)
+* Menu creation for avoid highways and tolls option (DONE)
 * Have loading screen wait for the map to load before showing the screen with the values or maybe put give it its own loading screen
 * Add user current location functionality 
-* add in webscraping for the gas price 
+* add in webscraping for the gas price (DONE)
 
 Nice to haves 
 * Background for the route polyline 

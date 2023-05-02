@@ -8,36 +8,27 @@ import SwiftUI
 import Foundation
 
 struct ValueTextField: View {
+    
     var label: String
     @Binding var text: String
-    var showInfoIcon: Bool = false
-    var infoMessage: String?
-    
-    @State private var showInfoPopover = false
-    @State private var popoverRect: CGRect = .zero
-    
+    @State var showInfoIcon: Bool = false
+    @State var tapped: Bool = false
+
+//    @Binding var iconTapped: Bool
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(label)
                     .font(.headline)
                 if showInfoIcon {
-                    Image(systemName: "info.circle")
-                        .foregroundColor(.blue)
-                        .onTapGesture {
-                            showInfoPopover.toggle()
-                        }
-                        .popover(isPresented: $showInfoPopover) {
-                            VStack {
-                                Text(infoMessage ?? "AAA National Average")
-                                    .padding()
-                            }
-                        }
-                }
+                       Image(systemName: "info.circle")
+                           .foregroundColor(.blue)
+                   }
+                
             }
             TextField("", text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
         }
-       
     }
 }

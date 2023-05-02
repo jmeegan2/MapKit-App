@@ -23,9 +23,11 @@ class TripViewModel: ObservableObject {
        @Published var time: Double = 0
        @Published var mapIdentifier = UUID()
        @Published var showAlert = false
+    
        @Published var alertMessage = ""
        @Published var calculateButtonPressed = false
-       
+    
+    @Published var showInfoAlert = false
        // MARK: - Computed Properties
        var showMapView: Bool {
            !showAlert && calculateButtonPressed && distance > 0
@@ -56,14 +58,23 @@ class TripViewModel: ObservableObject {
         }
     }
     
+    
    
     // MARK: - Functions
+    func infoIconTapped() {
+        
+        showAlert = true
+        alertMessage = "Today’s AAA National Average"
+        return
+    }
+    
     func calculateTripDetails() {
         calculateButtonPressed = true
         mapIdentifier = UUID()
 
         guard let mpg = Double(mpg),
-              let gasPrice = Double(averageGasPrice) else {
+              let gasPrice = Double(averageGasPrice)
+        else {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
             return
@@ -199,4 +210,7 @@ class TripViewModel: ObservableObject {
     init() {
             fetchAverageGasPrice()
         }
+    
+    
+
 }
