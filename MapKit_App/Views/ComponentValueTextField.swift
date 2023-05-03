@@ -7,7 +7,7 @@
 import SwiftUI
 import Foundation
 
-struct ValueTextField: View {
+struct ComponentValueTextField: View {
     
     var label: String
     @Binding var text: String

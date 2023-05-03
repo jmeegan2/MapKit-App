@@ -10,7 +10,7 @@ import MapKit
 
 class StartingAnnotation: MKPointAnnotation {}
 
-struct MapView: UIViewRepresentable {
+struct ComponentMapView: UIViewRepresentable {
     var startingLocation: String
     var destinationLocation: String
     var avoidTolls: Bool
@@ -114,9 +114,9 @@ struct MapView: UIViewRepresentable {
 
 
     class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapView
+        var parent: ComponentMapView
 
-        init(_ parent: MapView) {
+        init(_ parent: ComponentMapView) {
             self.parent = parent
         }
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -135,6 +135,6 @@ struct MapView: UIViewRepresentable {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        InputView()
+        MainView()
     }
 }

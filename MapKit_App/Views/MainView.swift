@@ -9,7 +9,7 @@
 import SwiftUI
 import MapKit
 
-struct InputView: View {
+struct MainView: View {
     @StateObject private var viewModel = TripViewModel()
     @State var showAlert = false
     
@@ -19,12 +19,12 @@ struct InputView: View {
                 LoadingView()
             } else {
                 Group {
-                    LocationTextField(label: "Starting Location", text: $viewModel.startingLocation)
-                    LocationTextField(label: "Destination Location", text: $viewModel.destinationLocation)
+                    ComponentLocationTextField(label: "Starting Location", text: $viewModel.startingLocation)
+                    ComponentLocationTextField(label: "Destination Location", text: $viewModel.destinationLocation)
                     HStack {
-                        ValueTextField(label: "Vehicle MPG", text: $viewModel.mpg)
+                        ComponentValueTextField(label: "Vehicle MPG", text: $viewModel.mpg)
                         Spacer()
-                        ValueTextField(
+                        ComponentValueTextField(
                             label: "Gas Price",
                             text: $viewModel.averageGasPrice,
                             showInfoIcon: true
@@ -32,7 +32,7 @@ struct InputView: View {
                      
                     }
 
-                    RouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
+                    ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
 
                     Button(action: viewModel.calculateTripDetails) {
                         Text("Calculate")
@@ -47,9 +47,9 @@ struct InputView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    ResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                    ResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
-                    ResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
+                    ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
+                    ComponentResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
+                    ComponentResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
@@ -57,9 +57,9 @@ struct InputView: View {
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 if (viewModel.showMapView) {
-                    MapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
+                    ComponentMapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
                         .id(viewModel.mapIdentifier)
-                    OpenInAppleMapsButton(action: viewModel.openInAppleMaps)
+                    ComponentAppleMapsButton(action: viewModel.openInAppleMaps)
                 } else {
                     Color.clear
                 }
@@ -83,7 +83,7 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
     static var previews: some View {
-        InputView()
+        MainView()
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct RouteOptionsView: View {
+struct ComponentRouteOptionsView: View {
     @Binding var avoidTolls: Bool
     @Binding var avoidHighways: Bool
     @State private var showingPopover = false

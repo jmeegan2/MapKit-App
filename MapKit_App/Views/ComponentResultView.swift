@@ -1,13 +1,13 @@
 //
-//  ResultView.swift
+//  ComponentResultView.swift
 //  MapKit_App
 //
-//  Created by James Meegan on 4/20/23.
+//  Created by James Meegan on 5/3/23.
 //
 import SwiftUI
 import Foundation
 
-struct ResultView: View {
+struct ComponentResultView: View {
     var title: String
     var value: String
 
@@ -20,3 +20,4 @@ struct ResultView: View {
         }
     }
 }
+
