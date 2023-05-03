@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		11368CEE2A02DBEC0026A513 /* ComponentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11368CED2A02DBEC0026A513 /* ComponentResultView.swift */; };
 		119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D529F1CC2D0064ABA2 /* TripViewModel.swift */; };
-		119118D829F1CC3D0064ABA2 /* ComponentLocationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D729F1CC3D0064ABA2 /* ComponentLocationTextField.swift */; };
-		119118DA29F1CC4F0064ABA2 /* ComponentValueTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D929F1CC4F0064ABA2 /* ComponentValueTextField.swift */; };
+		119118D829F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */; };
+		119118DA29F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */; };
 		119118DC29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */; };
 		119118E029F1CCA40064ABA2 /* ComponentAppleMapsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */; };
 		11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */; };
@@ -26,8 +26,8 @@
 		11368CED2A02DBEC0026A513 /* ComponentResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentResultView.swift; sourceTree = "<group>"; };
 		116D930329F870A90058F442 /* circleThickOutline.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circleThickOutline.jpg; sourceTree = "<group>"; };
 		119118D529F1CC2D0064ABA2 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
-		119118D729F1CC3D0064ABA2 /* ComponentLocationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLocationTextField.swift; sourceTree = "<group>"; };
-		119118D929F1CC4F0064ABA2 /* ComponentValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValueTextField.swift; sourceTree = "<group>"; };
+		119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLocationTextFieldView.swift; sourceTree = "<group>"; };
+		119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValueTextFieldView.swift; sourceTree = "<group>"; };
 		119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRouteOptionsView.swift; sourceTree = "<group>"; };
 		119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentAppleMapsButton.swift; sourceTree = "<group>"; };
 		11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMapView.swift; sourceTree = "<group>"; };
@@ -56,10 +56,10 @@
 		119118E129F1D0DA0064ABA2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				119118D729F1CC3D0064ABA2 /* ComponentLocationTextField.swift */,
-				119118D929F1CC4F0064ABA2 /* ComponentValueTextField.swift */,
-				119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */,
 				119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */,
+				119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */,
+				119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */,
+				119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */,
 				11368CED2A02DBEC0026A513 /* ComponentResultView.swift */,
 				11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
@@ -201,10 +201,10 @@
 			files = (
 				119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */,
 				11EE9F9629E2076500436563 /* MainView.swift in Sources */,
-				119118DA29F1CC4F0064ABA2 /* ComponentValueTextField.swift in Sources */,
+				119118DA29F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift in Sources */,
 				11368CEE2A02DBEC0026A513 /* ComponentResultView.swift in Sources */,
 				11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */,
-				119118D829F1CC3D0064ABA2 /* ComponentLocationTextField.swift in Sources */,
+				119118D829F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift in Sources */,
 				11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */,
 				11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */,
 				119118E029F1CCA40064ABA2 /* ComponentAppleMapsButton.swift in Sources */,

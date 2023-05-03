@@ -19,12 +19,12 @@ struct MainView: View {
                 LoadingView()
             } else {
                 Group {
-                    ComponentLocationTextField(label: "Starting Location", text: $viewModel.startingLocation)
-                    ComponentLocationTextField(label: "Destination Location", text: $viewModel.destinationLocation)
+                    ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation)
+                    ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation)
                     HStack {
-                        ComponentValueTextField(label: "Vehicle MPG", text: $viewModel.mpg)
+                        ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
                         Spacer()
-                        ComponentValueTextField(
+                        ComponentValueTextFieldView(
                             label: "Gas Price",
                             text: $viewModel.averageGasPrice,
                             showInfoIcon: true
@@ -36,11 +36,10 @@ struct MainView: View {
 
                     Button(action: viewModel.calculateTripDetails) {
                         Text("Calculate")
+                            .foregroundColor(Color("ButtonText"))
                             .frame(maxWidth: .infinity)
                             .padding(.all, 10)
-                            .foregroundColor(.white)
-//                            .background(Color(red: 30/255, green: 65/255, blue: 105/255))
-                            .background(.blue)
+                            .background(Color("Button"))
                             .fontWeight(.bold)
                             .cornerRadius(10)
                     }
@@ -51,9 +50,10 @@ struct MainView: View {
                     ComponentResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
                     ComponentResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
                 }
+                
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
-                .background(Color.white)
+                .background(Color("Results"))
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 if (viewModel.showMapView) {
@@ -76,7 +76,7 @@ struct MainView: View {
             })
         }
         .padding()
-        .background(Color.white)
+//        .background(Color.white)
         .padding(.horizontal)
     }
 }

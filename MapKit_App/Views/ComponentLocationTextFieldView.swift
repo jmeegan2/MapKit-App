@@ -7,7 +7,7 @@
 import SwiftUI
 import Foundation
 
-struct ComponentLocationTextField: View {
+struct ComponentLocationTextFieldView: View {
     var label: String
     @Binding var text: String
 
@@ -18,8 +18,7 @@ struct ComponentLocationTextField: View {
             TextField(label, text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(UITextAutocapitalizationType.words)
-                .disableAutocorrection(true)
-                
+                .disableAutocorrection(true)                
         }
     }
 }

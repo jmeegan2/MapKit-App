@@ -14,10 +14,11 @@ struct ComponentAppleMapsButton: View {
     var body: some View {
         Button(action: action) {
             Text("Open in Apple Maps")
+                .foregroundColor(Color("ButtonText"))
                 .frame(maxWidth: .infinity)
                 .padding(.all, 10.0)
                 .foregroundColor(.white)
-                .background(.blue)
+                .background(Color("Button"))
                 .fontWeight(.bold)
                 .cornerRadius(10)
         }

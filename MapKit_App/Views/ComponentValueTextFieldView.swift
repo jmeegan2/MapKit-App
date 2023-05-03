@@ -7,7 +7,7 @@
 import SwiftUI
 import Foundation
 
-struct ComponentValueTextField: View {
+struct ComponentValueTextFieldView: View {
     
     var label: String
     @Binding var text: String
@@ -30,10 +30,10 @@ struct ComponentValueTextField: View {
                    }
                 
             }
-            TextField("", text: $text)
+            TextField(label, text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                
         }
-        .padding(.trailing)
         .popover(isPresented: $tapped) {
             VStack {
                 Spacer()
