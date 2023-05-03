@@ -61,12 +61,7 @@ class TripViewModel: ObservableObject {
     
    
     // MARK: - Functions
-    func infoIconTapped() {
-        showAlert = true
-        alertMessage = "Today’s AAA National Average"
-        return
-    }
-    
+  
     func calculateTripDetails() {
         calculateButtonPressed = true
         mapIdentifier = UUID()

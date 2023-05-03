@@ -33,23 +33,12 @@ struct RouteOptionsView: View {
     
     private var popoverContent: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    showingPopover = false
-                }) {
-                    HStack {
-                        Image(systemName: "arrow.left")
-                        Text("Back")
-                            .font(.headline)
-                    }
-                    .foregroundColor(.blue)
-                }
-                Spacer()
-            }
-            .padding(.horizontal)
-
-            Divider()
-
+            Spacer()
+            Text("Route Options")
+                .font(.system(size: 25, weight:.bold, design: .default))
+                .padding(.bottom, 8)
+                .foregroundColor(.blue)
+           
             VStack(spacing: 16) {
                 Toggle(isOn: $avoidTolls) {
                     Text("Avoid Tolls")
@@ -61,9 +50,8 @@ struct RouteOptionsView: View {
                 }
             }
             .padding(.horizontal)
-            
+            Spacer()
         }
         .padding()
     }
-    
 }

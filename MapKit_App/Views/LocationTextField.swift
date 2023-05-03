@@ -17,6 +17,9 @@ struct LocationTextField: View {
                 .font(.headline)
             TextField(label, text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(UITextAutocapitalizationType.words)
+                .disableAutocorrection(true)
+                
         }
     }
 }

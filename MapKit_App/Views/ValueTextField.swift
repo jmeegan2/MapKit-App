@@ -36,14 +36,13 @@ struct ValueTextField: View {
         .padding(.trailing)
         .popover(isPresented: $tapped) {
             VStack {
+                Spacer()
                 Text("Info")
-                    .font(.system(size: 30, weight:.bold, design: .default))
+                    .font(.system(size: 25, weight:.bold, design: .default))
                     .padding(.bottom, 8)
                     
                     .foregroundColor(.blue)
-                Spacer()
-                Text("Today's Nation Average for a gallon of gasoline in USA. Source is from AAA(https://gasprices.aaa.com/)")
-                    .multilineTextAlignment(.center)
+                Text("Today's US National Average for gasoline. Source: AAA (https://gasprices.aaa.com/)")
                     .padding(.horizontal)
                 Spacer()
             }

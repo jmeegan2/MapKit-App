@@ -17,7 +17,7 @@ struct OpenInAppleMapsButton: View {
                 .frame(maxWidth: .infinity)
                 .padding(.all, 10.0)
                 .foregroundColor(.white)
-                .background(Color(red: 30/255, green: 65/255, blue: 105/255))
+                .background(.blue)
                 .fontWeight(.bold)
                 .cornerRadius(10)
         }
