@@ -42,10 +42,11 @@ struct ValueTextField: View {
                     .padding(.bottom, 8)
                     
                     .foregroundColor(.blue)
-                Text("Today's US National Average for gasoline. Source: AAA (https://gasprices.aaa.com/)")
+                Text("Today's US National Average for gasoline. \nSource: AAA (https://gasprices.aaa.com/)")
                     .padding(.horizontal)
                 Spacer()
             }
+            .frame(maxWidth:375)
             .padding()
         }
     }
