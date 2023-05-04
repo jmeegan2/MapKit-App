@@ -14,10 +14,12 @@ struct MainView: View {
     @State var showAlert = false
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             if viewModel.isLoading {
                 LoadingView()
             } else {
+                
                 Group {
                     ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation)
                     ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation)
