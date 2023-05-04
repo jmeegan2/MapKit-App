@@ -25,7 +25,6 @@ struct ComponentValueTextFieldView: View {
                     Button( action: { tapped.toggle()}) {
                         Image(systemName: "info.circle")
                             .foregroundColor(.blue)
-                            
                     }
                    }
                 
