@@ -51,11 +51,11 @@ class TripViewModel: ObservableObject {
             let hours = Int(time.truncatingRemainder(dividingBy: 24))
             return "\(days) day\(days == 1 ? "" : "s") \(hours) hour\(hours == 1 ? "" : "s")"
         } else if time < 1 {
-            let minutes = Int(ceil(time * 60))
+            let minutes = Int(round(time * 60))
             return "\(minutes) minute\(minutes == 1 ? "" : "s")"
         } else {
             let hours = Int(time)
-            let minutes = Int(ceil((time - Double(hours)) * 60))
+            let minutes = Int(round((time - Double(hours)) * 60))
             return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
         }
     }

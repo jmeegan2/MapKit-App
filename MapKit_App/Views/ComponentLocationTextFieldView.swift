@@ -16,9 +16,20 @@ struct ComponentLocationTextFieldView: View {
             Text(label)
                 .font(.headline)
             TextField(label, text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.all, 5)
+                .background(Color("TextField"))
+                .cornerRadius(10)
                 .autocapitalization(UITextAutocapitalizationType.words)
                 .disableAutocorrection(true)
+                
         }
+    }
+}
+
+
+
+struct TextFieldView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainView()
     }
 }

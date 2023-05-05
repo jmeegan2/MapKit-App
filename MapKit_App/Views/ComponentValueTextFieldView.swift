@@ -24,14 +24,16 @@ struct ComponentValueTextFieldView: View {
                 if showInfoIcon {
                     Button( action: { tapped.toggle()}) {
                         Image(systemName: "info.circle")
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color("Button"))
                     }
                    }
                 
             }
             TextField(label, text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                
+                .padding(.all, 5)
+                .background(Color("TextField"))
+                .cornerRadius(10)
+
         }
         .popover(isPresented: $tapped) {
             VStack {
@@ -39,10 +41,13 @@ struct ComponentValueTextFieldView: View {
                 Text("Info")
                     .font(.system(size: 25, weight:.bold, design: .default))
                     .padding(.bottom, 8)
+                    .foregroundColor(Color("Button"))
                     
                     .foregroundColor(.blue)
-                Text("Today's US National Average for gasoline. \nSource: AAA (https://gasprices.aaa.com/)")
+                Text("Today's US National Average price for gasoline.Source: AAA (https://gasprices.aaa.com/)")
                     .padding(.horizontal)
+                    .multilineTextAlignment(.center)
+                    
                 Spacer()
             }
             .frame(maxWidth:375)

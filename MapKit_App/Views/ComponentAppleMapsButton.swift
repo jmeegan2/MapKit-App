@@ -15,6 +15,7 @@ struct ComponentAppleMapsButton: View {
         Button(action: action) {
             Text("Open in Apple Maps")
                 .foregroundColor(Color("ButtonText"))
+                .background(Color("Button"))
                 .frame(maxWidth: .infinity)
                 .padding(.all, 10.0)
                 .foregroundColor(.white)

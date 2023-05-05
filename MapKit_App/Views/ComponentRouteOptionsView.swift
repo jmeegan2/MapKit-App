@@ -26,6 +26,7 @@ struct ComponentRouteOptionsView: View {
                 }
             }
         }
+        .foregroundColor(Color("Button"))
         .popover(isPresented: $showingPopover) {
             popoverContent
         }
@@ -37,7 +38,8 @@ struct ComponentRouteOptionsView: View {
             Text("Route Options")
                 .font(.system(size: 25, weight:.bold, design: .default))
                 .padding(.bottom, 8)
-                .foregroundColor(.blue)
+                .foregroundColor(Color("Button"))
+                
            
             VStack(spacing: 16) {
                 Toggle(isOn: $avoidTolls) {

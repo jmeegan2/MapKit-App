@@ -30,9 +30,12 @@ struct MainView: View {
                             label: "Gas Price",
                             text: $viewModel.averageGasPrice,
                             showInfoIcon: true
-                        )
+    
+                        ).foregroundColor(.white)
+                       
                      
                     }
+                    .foregroundColor(.white)
 
                     ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
 
@@ -46,7 +49,6 @@ struct MainView: View {
                             .cornerRadius(10)
                     }
                 }
-                
                 VStack(alignment: .leading, spacing: 10) {
                     ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
                     ComponentResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
