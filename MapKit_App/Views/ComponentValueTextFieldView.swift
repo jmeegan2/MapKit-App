@@ -30,7 +30,7 @@ struct ComponentValueTextFieldView: View {
                 
             }
             TextField(label, text: $text)
-                .padding(.all, 5)
+                .padding(.all, 7)
                 .background(Color("TextField"))
                 .cornerRadius(10)
 
@@ -41,10 +41,8 @@ struct ComponentValueTextFieldView: View {
                 Text("Info")
                     .font(.system(size: 25, weight:.bold, design: .default))
                     .padding(.bottom, 8)
-                    .foregroundColor(Color("Button"))
-                    
-                    .foregroundColor(.blue)
-                Text("Today's US National Average price for gasoline.Source: AAA (https://gasprices.aaa.com/)")
+                    .foregroundColor(Color(("Button")))
+                Text("Please provide the current price of gasoline in the United States, indicating either the local price in your area or the national average price per gallon.")
                     .padding(.horizontal)
                     .multilineTextAlignment(.center)
                     

@@ -85,8 +85,8 @@ struct ComponentMapView: UIViewRepresentable {
                         mapView?.addAnnotation(startingAnnotation)
                         
                         var regionRect = mainPolyline.boundingMapRect
-                        let wPadding = regionRect.size.width * 0.25
-                        let hPadding = regionRect.size.height * 0.25
+                        let wPadding = regionRect.size.width * 0.35
+                        let hPadding = regionRect.size.height * 0.35
                         regionRect.size.width += wPadding
                         regionRect.size.height += hPadding
                         regionRect.origin.x -= wPadding / 2

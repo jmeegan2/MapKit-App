@@ -31,11 +31,11 @@ struct MainView: View {
                             text: $viewModel.averageGasPrice,
                             showInfoIcon: true
     
-                        ).foregroundColor(.white)
+                        )
                        
                      
                     }
-                    .foregroundColor(.white)
+                    
 
                     ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
 

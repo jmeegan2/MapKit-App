@@ -16,11 +16,12 @@ struct ComponentLocationTextFieldView: View {
             Text(label)
                 .font(.headline)
             TextField(label, text: $text)
-                .padding(.all, 5)
+                .padding(.all, 7)
                 .background(Color("TextField"))
                 .cornerRadius(10)
                 .autocapitalization(UITextAutocapitalizationType.words)
                 .disableAutocorrection(true)
+                
                 
         }
     }
