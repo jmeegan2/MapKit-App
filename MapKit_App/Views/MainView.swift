@@ -20,7 +20,9 @@ struct MainView: View {
                 if viewModel.isLoading {
                     LoadingView()
                 }else {
-                    SearchAddressView(viewModel: viewModel)
+                    SearchAddressView(viewModel: viewModel,selectedAddress: $viewModel.startingLocation)
+                    SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.destinationLocation)
+
                     Group {
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation)
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation)

@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchAddressView: View {
     @ObservedObject var viewModel: TripViewModel
     @FocusState private var isFocusedTextField: Bool
-
+    @Binding var selectedAddress: String
     var body: some View {
         NavigationView {
             VStack {
@@ -38,9 +38,16 @@ struct SearchAddressView: View {
                     }
 
                 List(viewModel.results) { address in
-                    AddressRow(address: address)
-                        .listRowBackground(Color(.yellow))
-                }
+                           Button(action: {
+                               selectedAddress = address.title
+                               viewModel.searchableText = ""
+                               viewModel.results = []
+                               isFocusedTextField = false
+                           }) {
+                               AddressRow(address: address)
+                                   .listRowBackground(Color(.yellow))
+                           }
+                       }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
             }

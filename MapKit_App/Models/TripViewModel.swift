@@ -38,7 +38,8 @@ class TripViewModel: NSObject, ObservableObject {
     ////NEW IMPLEMENTATION
     ///
     // MARK: - MKLocalSearchCompleter
-      @Published private(set) var results: Array<AddressResult> = []
+    //was previously private
+      @Published var results: Array<AddressResult> = []
       @Published var searchableText = ""
 
       private lazy var localSearchCompleter: MKLocalSearchCompleter = {
