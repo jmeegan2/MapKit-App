@@ -12,6 +12,8 @@ import MapKit
 struct MainView: View {
     @StateObject private var viewModel = TripViewModel()
     @State var showAlert = false
+    @State private var showStartingLocationSearch = false
+    @State private var showDestinationLocationSearch = false
     @FocusState private var isFocusedTextField: Bool
     var backgroundColor: Color = Color.init(uiColor: .systemGray6)
     var body: some View {
@@ -20,12 +22,32 @@ struct MainView: View {
                 if viewModel.isLoading {
                     LoadingView()
                 }else {
-                    SearchAddressView(viewModel: viewModel,selectedAddress: $viewModel.startingLocation)
-                    SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.destinationLocation)
+                    if showStartingLocationSearch {
+                        SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.startingLocation)
+                            .onChange(of: viewModel.startingLocation) { _ in
+                                showStartingLocationSearch = false
+                            }
+                    }
+
+                    if showDestinationLocationSearch {
+                        SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.destinationLocation)
+                            .onChange(of: viewModel.destinationLocation) { _ in
+                                showDestinationLocationSearch = false
+                            }
+                    }
 
                     Group {
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation)
+                            .onTapGesture {
+                                showStartingLocationSearch = true
+                                showDestinationLocationSearch = false
+                            }
+
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation)
+                            .onTapGesture {
+                                showDestinationLocationSearch = true
+                                showStartingLocationSearch = false
+                            }
                         HStack {
                             ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
                             Spacer()
