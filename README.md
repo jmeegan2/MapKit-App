@@ -1,4 +1,4 @@
-# Mile Marker
+# Gas Route
 This trip cost calculator is a SwiftUI app that allows users to calculate the cost of their trips based on fuel efficiency, gas prices, and route details. It uses Apple's MapKit framework for displaying and calculating routes, and it also provides users the option to avoid toll roads.
 
 Features
@@ -24,5 +24,6 @@ Usage
 
 References used
 * https://www.hackingwithswift.com/example-code/location/how-to-find-directions-using-mkmapview-and-mkdirectionsrequest
+* https://levelup.gitconnected.com/implementing-address-autocomplete-using-swiftui-and-mapkit-c094d08cda24
 
 
