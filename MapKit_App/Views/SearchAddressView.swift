@@ -11,6 +11,7 @@ struct SearchAddressView: View {
     @ObservedObject var viewModel: TripViewModel
     @FocusState private var isFocusedTextField: Bool
     @Binding var selectedAddress: String
+    @Binding var isShowing: Bool
     var body: some View {
         NavigationView {
             VStack {
@@ -47,9 +48,8 @@ struct SearchAddressView: View {
                                AddressRow(address: address)
                                    .listRowBackground(Color(.yellow))
                            }
-                       }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
+                }
+                    .scrollContentBackground(.hidden)
             }
         }
     }
