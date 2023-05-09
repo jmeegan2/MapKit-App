@@ -23,40 +23,10 @@ struct MainView: View {
                 if viewModel.isLoading {
                     LoadingView()
                 }else {
-//                    if showStartingLocationSearch {
-//                        SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.startingLocation)
-//                            .onChange(of: viewModel.startingLocation) { _ in
-//                                showStartingLocationSearch = false
-//                            }
-//                    }
-//
-//                    if showDestinationLocationSearch {
-//                        SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.destinationLocation)
-//                            .onChange(of: viewModel.destinationLocation) { _ in
-//                                showDestinationLocationSearch = false
-//                            }
-//                    }
-
                     Group {
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
-
-                               
-
-//                               if showStartingLocationSearch {
-//                                   SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.startingLocation, isShowing: $showStartingLocationSearch)
-//                                       .onChange(of: viewModel.startingLocation) { _ in
-//                                           showStartingLocationSearch = false
-//                                       }
-//                               }
-
-                        
-//                        if showDestinationLocationSearch {
-//                            SearchAddressView(viewModel: viewModel, selectedAddress: $viewModel.destinationLocation, isShowing: $showDestinationLocationSearch)
-//                                .onChange(of: viewModel.destinationLocation) { _ in
-//                                    showDestinationLocationSearch = false
-//                                }
-//                        }
+    
                         HStack {
                             ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
                             Spacer()

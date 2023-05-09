@@ -45,7 +45,6 @@ class TripViewModel: NSObject, ObservableObject {
       private lazy var localSearchCompleter: MKLocalSearchCompleter = {
           let completer = MKLocalSearchCompleter()
           completer.delegate = self
-          print(completer)
           return completer
           
       }()

@@ -12,9 +12,24 @@ struct SearchAddressView: View {
     @FocusState private var isFocusedTextField: Bool
     @Binding var selectedAddress: String
     @Binding var isShowing: Bool
+    var value = 4
     var body: some View {
         NavigationView {
             VStack {
+               
+                    List(viewModel.results) { address in
+                        Button(action: {
+                            selectedAddress = address.title
+                            viewModel.searchableText = ""
+                            viewModel.results = []
+                            isFocusedTextField = false
+                        }) {
+                            AddressRow(address: address)
+                                .listRowBackground(Color(.yellow))
+                        }
+                    }
+                    .scrollContentBackground(.hidden)
+                }
                 TextField("Type address", text: $viewModel.searchableText)
                     .padding()
                     .autocorrectionDisabled()
@@ -37,20 +52,7 @@ struct SearchAddressView: View {
                     .onAppear {
                         isFocusedTextField = true
                     }
-
-                List(viewModel.results) { address in
-                           Button(action: {
-                               selectedAddress = address.title
-                               viewModel.searchableText = ""
-                               viewModel.results = []
-                               isFocusedTextField = false
-                           }) {
-                               AddressRow(address: address)
-                                   .listRowBackground(Color(.yellow))
-                           }
-                }
-                    .scrollContentBackground(.hidden)
             }
         }
-    }
+    
 }

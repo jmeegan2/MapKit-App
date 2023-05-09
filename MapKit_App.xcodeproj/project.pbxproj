@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		11368CEE2A02DBEC0026A513 /* ComponentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11368CED2A02DBEC0026A513 /* ComponentResultView.swift */; };
 		1147F8102A06EA0D00A0AB92 /* AddressResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F80F2A06EA0D00A0AB92 /* AddressResult.swift */; };
-		1147F8142A06EF1B00A0AB92 /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F8132A06EF1B00A0AB92 /* ClearButton.swift */; };
 		1147F8162A06EFB500A0AB92 /* AddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F8152A06EFB500A0AB92 /* AddressRow.swift */; };
 		1147F81A2A06F13C00A0AB92 /* MapViewModelForSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */; };
 		1147F81C2A06F61400A0AB92 /* SearchAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */; };
@@ -18,6 +17,7 @@
 		119118DA29F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */; };
 		119118DC29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */; };
 		119118E029F1CCA40064ABA2 /* ComponentAppleMapsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */; };
+		11A9DE502A09DF11009597FD /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A9DE4F2A09DF11009597FD /* ClearButton.swift */; };
 		11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */; };
 		11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */; };
 		11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 11E0E75129FCC13F00467EFE /* SwiftSoup */; };
@@ -30,7 +30,6 @@
 /* Begin PBXFileReference section */
 		11368CED2A02DBEC0026A513 /* ComponentResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentResultView.swift; sourceTree = "<group>"; };
 		1147F80F2A06EA0D00A0AB92 /* AddressResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResult.swift; sourceTree = "<group>"; };
-		1147F8132A06EF1B00A0AB92 /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		1147F8152A06EFB500A0AB92 /* AddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRow.swift; sourceTree = "<group>"; };
 		1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModelForSearchResults.swift; sourceTree = "<group>"; };
 		1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressView.swift; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValueTextFieldView.swift; sourceTree = "<group>"; };
 		119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRouteOptionsView.swift; sourceTree = "<group>"; };
 		119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentAppleMapsButton.swift; sourceTree = "<group>"; };
+		11A9DE4F2A09DF11009597FD /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMapView.swift; sourceTree = "<group>"; };
 		11DDC7A529E944F10093E3A5 /* DevLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevLog.md; sourceTree = "<group>"; };
 		11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -74,9 +74,9 @@
 				11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */,
 				11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */,
 				11EE9F9529E2076500436563 /* MainView.swift */,
-				1147F8132A06EF1B00A0AB92 /* ClearButton.swift */,
 				1147F8152A06EFB500A0AB92 /* AddressRow.swift */,
 				1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */,
+				11A9DE4F2A09DF11009597FD /* ClearButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,11 +221,11 @@
 				119118DA29F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift in Sources */,
 				11368CEE2A02DBEC0026A513 /* ComponentResultView.swift in Sources */,
 				1147F81A2A06F13C00A0AB92 /* MapViewModelForSearchResults.swift in Sources */,
+				11A9DE502A09DF11009597FD /* ClearButton.swift in Sources */,
 				11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */,
 				119118D829F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift in Sources */,
 				1147F81C2A06F61400A0AB92 /* SearchAddressView.swift in Sources */,
 				11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */,
-				1147F8142A06EF1B00A0AB92 /* ClearButton.swift in Sources */,
 				11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */,
 				119118E029F1CCA40064ABA2 /* ComponentAppleMapsButton.swift in Sources */,
 				119118DC29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift in Sources */,
