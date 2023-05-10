@@ -51,18 +51,11 @@ struct ComponentLocationTextFieldView: View {
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
+                .frame(height:225)
             } else if text.isEmpty {
                 
             }
         }
-    }
-}
-
-
-
-struct TextFieldView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
     }
 }
 
