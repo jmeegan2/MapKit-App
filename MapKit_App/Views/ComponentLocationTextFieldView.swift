@@ -52,6 +52,7 @@ struct ComponentLocationTextFieldView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
             } else if text.isEmpty {
+                
             }
         }
     }

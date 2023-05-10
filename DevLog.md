@@ -28,10 +28,14 @@ Nice to haves
 * Background for the route polyline 
 * Have the UIApplication.shared.open for open AppleMaps be able to take avoid tolls and highway preferences, dont think its possible though 
 * Have users be able to choose google maps and apple maps 
-* Ad
 
 Change popover for gas price to a alert 
 
 Failed to publish to App store, no Info.plist file but I'll try to finish tmrw and upload it.
 
 Reason its poping down before u enter location is because it has a .focus($isTextFieldFocused)
+
+
+5/9 
+Currently working on clearing the search results when u click on a different locationField so its not the first thing that pops
+up during ur new search
