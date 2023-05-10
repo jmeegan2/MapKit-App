@@ -33,3 +33,5 @@ Nice to haves
 Change popover for gas price to a alert 
 
 Failed to publish to App store, no Info.plist file but I'll try to finish tmrw and upload it.
+
+Reason its poping down before u enter location is because it has a .focus($isTextFieldFocused)

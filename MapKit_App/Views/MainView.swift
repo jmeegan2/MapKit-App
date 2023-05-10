@@ -12,11 +12,6 @@ import MapKit
 struct MainView: View {
     @StateObject private var viewModel = TripViewModel()
     @State var showAlert = false
-    @State private var showStartingLocationSearch = false
-    @State private var showDestinationLocationSearch = false
-    @FocusState private var isFocusedTextField: Bool
-    @State private var showSearchResults: Bool = false
-    var backgroundColor: Color = Color.init(uiColor: .systemGray6)
     var body: some View {
         
             VStack(alignment: .leading) {

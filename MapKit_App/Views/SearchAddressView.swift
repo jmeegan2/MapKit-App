@@ -30,28 +30,7 @@ struct SearchAddressView: View {
                     }
                     .scrollContentBackground(.hidden)
                 }
-                TextField("Type address", text: $viewModel.searchableText)
-                    .padding()
-                    .autocorrectionDisabled()
-                    .focused($isFocusedTextField)
-                    .font(.title)
-                    .onReceive(
-                        viewModel.$searchableText.debounce(
-                            for: .seconds(1),
-                            scheduler: DispatchQueue.main
-                        )
-                    ) {
-                        viewModel.searchAddress($0)
-                    }
-                    .background(Color.init(uiColor: .systemBackground))
-                    .overlay {
-                        ClearButton(text: $viewModel.searchableText)
-                            .padding(.trailing)
-                            .padding(.top, 8)
-                    }
-                    .onAppear {
-                        isFocusedTextField = true
-                    }
+       
             }
         }
     

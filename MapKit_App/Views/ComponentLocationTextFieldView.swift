@@ -19,6 +19,7 @@ struct ComponentLocationTextFieldView: View {
             Text(label)
                 .font(.headline)
             TextField(label, text: $text.onChange { newText in
+                print(text.count)
                 viewModel.searchableText = newText
             })
                 .padding(.all, 7)
@@ -34,9 +35,10 @@ struct ComponentLocationTextFieldView: View {
                 ) {
                     viewModel.searchAddress($0)
                 }
+            
                 .focused($isFocusedTextField)
 
-            if isFocusedTextField {
+            if isFocusedTextField && !text.isEmpty {
                 List(viewModel.results) { address in
                     Button(action: {
                         text = address.title
@@ -45,11 +47,11 @@ struct ComponentLocationTextFieldView: View {
                         isFocusedTextField = false
                     }) {
                         AddressRow(address: address)
-                            .listRowBackground(Color(.yellow))
                     }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
+            } else if text.isEmpty {
             }
         }
     }
