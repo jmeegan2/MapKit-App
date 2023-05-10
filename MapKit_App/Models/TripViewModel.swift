@@ -52,7 +52,6 @@ class TripViewModel: NSObject, ObservableObject {
       func searchAddress(_ searchableText: String) {
           guard searchableText.isEmpty == false else { return }
           localSearchCompleter.queryFragment = searchableText
-          print(searchableText)
       }
     
     
@@ -160,8 +159,6 @@ class TripViewModel: NSObject, ObservableObject {
 
     private func handleRouteCalculationError(_ error: Error) {
         alertMessage = "Failed to calculate route: \(error.localizedDescription)"
-        print("Error calculating route: \(error.localizedDescription)")
-        print("\nMore error description: \(error.self)")
         isLoading = false
         showAlert = true
     }
@@ -179,13 +176,6 @@ class TripViewModel: NSObject, ObservableObject {
         time = route.expectedTravelTime / 3600 // Convert seconds to hours
         distance = round(route.distance / 1609.344) // Convert meters to miles
         cost = (distance / mpg) * gasPrice
-        
-        print("\n\n")
-        print("Expected travel time: \(String(format: "%.2f", time)) hours\n"
-            + "Distance: \(String(format: "%.2f", route.distance / 1609.344)) miles\n"
-            + "Cost: $\(String(format: "%.2f", cost))")
-        print("\n\n")
-        
         isLoading = false
     }
     
@@ -227,13 +217,11 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         Task { @MainActor in
             results = completer.results.map {
-                print(results)
                 return AddressResult(title: $0.title, subtitle: $0.subtitle)
             }
         }
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        print(error)
     }
 }
