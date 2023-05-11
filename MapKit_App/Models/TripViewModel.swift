@@ -25,18 +25,34 @@ class TripViewModel: NSObject, ObservableObject {
        @Published var time: Double = 0
        @Published var mapIdentifier = UUID()
        @Published var showAlert = false
-    
        @Published var alertMessage = ""
        @Published var calculateButtonPressed = false
+       @Published var showInfoAlert = false
+        var showMapView: Bool {
+               !showAlert && calculateButtonPressed && distance > 0
+           }
     
-    @Published var showInfoAlert = false
-       // MARK: - Computed Properties
-       var showMapView: Bool {
-           !showAlert && calculateButtonPressed && distance > 0
-       }
+   
+    private let locationManager = CLLocationManager()
+        @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+
+        override init() {
+            super.init()
+            self.locationManager.delegate = self
+        }
+
+        public func requestAuthorisation(always: Bool = false) {
+            if always {
+                self.locationManager.requestAlwaysAuthorization()
+            } else {
+                self.locationManager.requestWhenInUseAuthorization()
+            }
+        }
     
-    ////NEW IMPLEMENTATION
-    ///
+
+    
+    
+    
     // MARK: - MKLocalSearchCompleter
     //was previously private
       @Published var results: Array<AddressResult> = []
@@ -82,10 +98,6 @@ class TripViewModel: NSObject, ObservableObject {
         }
     }
     
-    
-   
-    // MARK: - Functions
-  
     func calculateTripDetails() {
         calculateButtonPressed = true
         mapIdentifier = UUID()
@@ -225,5 +237,12 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+    }
+}
+
+extension TripViewModel: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.authorisationStatus = status
     }
 }

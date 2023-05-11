@@ -46,15 +46,19 @@ struct ComponentLocationTextFieldView: View {
                         viewModel.results = []
                         isFocusedTextField = false
                     }) {
+                        
                         AddressRow(address: address)
                     }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
-                .frame(height:225)
+                .frame(height:200)
             } else if text.isEmpty {
                 
             }
+        } .onAppear{
+            viewModel.requestAuthorisation()
+            print(viewModel.requestAuthorisation())
         }
     }
 }

@@ -31,8 +31,6 @@ struct MainView: View {
                                 showInfoIcon: true
 
                             )
-
-
                         }
 
 
