@@ -130,11 +130,6 @@ class TripViewModel: NSObject, ObservableObject {
         print("this is distance \(route.distance)")
         distance = (route.distance / 1609.344) // Convert meters to miles
         distanceDecimalOne = round(distance * 10) / 10.0
-        if(distance > 10){
-            distance = distance.rounded()
-        } else {
-            distance = distanceDecimalOne
-        }
         cost = (distance / mpg) * gasPrice
         isLoading = false
     }

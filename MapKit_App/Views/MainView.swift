@@ -29,13 +29,8 @@ struct MainView: View {
                                 label: "Gas Price",
                                 text: $viewModel.averageGasPrice,
                                 showInfoIcon: true
-
                             )
-
-
                         }
-
-
                         ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
 
                         Button(action: viewModel.calculateTripDetails) {
@@ -50,7 +45,7 @@ struct MainView: View {
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                        ComponentResultView(title: "Distance:", value: "\(String(viewModel.distance)) miles")
+                        ComponentResultView(title: "Distance:", value: "\(String(viewModel.distanceDecimalOne)) miles")
                         ComponentResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
                     }
                     

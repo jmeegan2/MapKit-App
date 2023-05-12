@@ -37,10 +37,11 @@ struct ComponentLocationTextFieldView: View {
                 }
             
                 .focused($isFocusedTextField)
-
+            
             if isFocusedTextField && !text.isEmpty {
                 List(viewModel.results) { address in
                     Button(action: {
+//                        viewModel.requestAuthorisation()
                         text = address.title
                         viewModel.searchableText = ""
                         viewModel.results = []
@@ -56,10 +57,7 @@ struct ComponentLocationTextFieldView: View {
                 
             }
         }
-        .onAppear{
-                    viewModel.requestAuthorisation()
-            
-                }
+       
     }
 }
 
