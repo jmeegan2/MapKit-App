@@ -19,48 +19,52 @@ class TripViewModel: NSObject, ObservableObject {
        @Published var mpg = ""
        @Published var averageGasPrice = ""
        @Published var distance: Double = 0
+       @Published var distanceDecimalOne: Double = 0
        @Published var cost: Double = 0
        @Published var avoidTolls = false
        @Published var avoidHighways = false
        @Published var time: Double = 0
        @Published var mapIdentifier = UUID()
        @Published var showAlert = false
-    
        @Published var alertMessage = ""
        @Published var calculateButtonPressed = false
-    
-    @Published var showInfoAlert = false
-       // MARK: - Computed Properties
+       @Published var showInfoAlert = false
        var showMapView: Bool {
            !showAlert && calculateButtonPressed && distance > 0
        }
-    
-    
-    
-    
-    
-    
-    private let locationManager = CLLocationManager()
-            @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
 
-            override init() {
-                super.init()
-                self.locationManager.delegate = self
+        // MARK: -USER LOCATION
+        private let locationManager = CLLocationManager()
+        @Published var userLocation: CLLocation?
+        @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+
+        override init() {
+            super.init()
+           
+            self.locationManager.delegate = self
+                   self.locationManager.requestWhenInUseAuthorization()
+                   self.locationManager.startUpdatingLocation()
+        }
+
+        public func requestAuthorisation(always: Bool = false) {
+            if always {
+                self.locationManager.requestAlwaysAuthorization()
+            } else {
+                self.locationManager.requestWhenInUseAuthorization()
             }
-
-            public func requestAuthorisation(always: Bool = false) {
-                if always {
-                    self.locationManager.requestAlwaysAuthorization()
-                } else {
-                    self.locationManager.requestWhenInUseAuthorization()
-                }
-            }
+        }
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+              if let location = locations.last {
+                  DispatchQueue.main.async { [weak self] in
+                      self?.userLocation = location
+                      print("User location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+                  }
+              }
+          }
 
     
-    ////NEW IMPLEMENTATION
-    ///
+
     // MARK: - MKLocalSearchCompleter
-    //was previously private
       @Published var results: Array<AddressResult> = []
       @Published var searchableText = ""
 
@@ -76,11 +80,8 @@ class TripViewModel: NSObject, ObservableObject {
           localSearchCompleter.queryFragment = searchableText
       }
     
-    
-    ///NEW IMPLEMENTATION
-       
-       // MARK: - Functionns
-       
+
+   // MARK: -Trip Details
     func handleTripCalculation() {
         calculateTripDetails()
     }
@@ -99,14 +100,10 @@ class TripViewModel: NSObject, ObservableObject {
             return "\(minutes) minute\(minutes == 1 ? "" : "s")"
         } else {
             let hours = Int(time)
-            let minutes = Int(round((time - Double(hours)) * 60))
+            let minutes = Int((time - Double(hours)).truncatingRemainder(dividingBy: 1) * 60)
             return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
         }
     }
-    
-    
-   
-    // MARK: - Functions
   
     func calculateTripDetails() {
         calculateButtonPressed = true
@@ -127,7 +124,22 @@ class TripViewModel: NSObject, ObservableObject {
             }
         }
     }
+    
+    private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
+        time = route.expectedTravelTime / 3600 // Convert seconds to hours
+        print("this is distance \(route.distance)")
+        distance = (route.distance / 1609.344) // Convert meters to miles
+        distanceDecimalOne = round(distance * 10) / 10.0
+        if(distance > 10){
+            distance = distance.rounded()
+        } else {
+            distance = distanceDecimalOne
+        }
+        cost = (distance / mpg) * gasPrice
+        isLoading = false
+    }
 
+    
     func searchLocation(_ location: String, completion: @escaping (MKPlacemark) -> Void) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = location
@@ -150,17 +162,14 @@ class TripViewModel: NSObject, ObservableObject {
         let directions = MKDirections(request: request)
         directions.calculate { [weak self] response, error in
             guard let self = self else { return }
-            
             if let error = error {
                 self.handleRouteCalculationError(error)
                 return
             }
-            
             guard let route = response?.routes.first else {
                 self.handleRouteCalculationFailure()
                 return
             }
-            
             self.updateTripDetails(from: route, mpg: mpg, gasPrice: gasPrice)
         }
     }
@@ -175,7 +184,6 @@ class TripViewModel: NSObject, ObservableObject {
         request.transportType = .automobile
         request.tollPreference = avoidTolls ? .avoid : .any
         request.highwayPreference = avoidHighways ? .avoid : .any
-        
         return request
     }
 
@@ -190,17 +198,6 @@ class TripViewModel: NSObject, ObservableObject {
         isLoading = false
         showAlert = true
     }
-    
-  
-
-
-    private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
-        time = route.expectedTravelTime / 3600 // Convert seconds to hours
-        distance = round(route.distance / 1609.344) // Convert meters to miles
-        cost = (distance / mpg) * gasPrice
-        isLoading = false
-    }
-    
     
     func openInAppleMaps() {
         guard let startingLocation = startingLocation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
@@ -224,13 +221,6 @@ class TripViewModel: NSObject, ObservableObject {
             isLoading = false
         }
     }
-        //End of view
-    
-    
-    
-    
-    
-    
 }
 
 

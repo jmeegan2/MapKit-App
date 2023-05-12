@@ -50,9 +50,10 @@ struct MainView: View {
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                        ComponentResultView(title: "Distance:", value: "\(Int(viewModel.distance)) miles")
+                        ComponentResultView(title: "Distance:", value: "\(String(viewModel.distance)) miles")
                         ComponentResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
                     }
+                    
 
                     .padding(.vertical, 10)
                     .padding(.horizontal, 20)

@@ -35,6 +35,7 @@
 		1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressView.swift; sourceTree = "<group>"; };
 		116D930329F870A90058F442 /* circleThickOutline.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circleThickOutline.jpg; sourceTree = "<group>"; };
 		11891D3C2A0DCC9C0058F92C /* MapKit-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapKit-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		11891D3E2A0DDCA10058F92C /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		119118D529F1CC2D0064ABA2 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLocationTextFieldView.swift; sourceTree = "<group>"; };
 		119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValueTextFieldView.swift; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 		11EE9F7A29E1FCE900436563 = {
 			isa = PBXGroup;
 			children = (
+				11891D3E2A0DDCA10058F92C /* Testing.swift */,
 				11EE9F9429E2066100436563 /* README.md */,
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
 				11EE9F8529E1FCE900436563 /* MapKit_App */,
