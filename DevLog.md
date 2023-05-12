@@ -39,10 +39,3 @@ Reason its poping down before u enter location is because it has a .focus($isTex
 5/9 
 Currently working on clearing the search results when u click on a different locationField so its not the first thing that pops
 up during ur new search
-
-5/10
-Working on implementing user location access
-current issue: 
-2023-05-10 22:14:45.035191-0400 MapKit_App[99705:1966006] This app has attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an “NSLocationWhenInUseUsageDescription” key with a string value explaining to the user how the app uses this data
-()
-

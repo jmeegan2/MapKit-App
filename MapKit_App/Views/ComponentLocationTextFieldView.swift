@@ -19,7 +19,7 @@ struct ComponentLocationTextFieldView: View {
             Text(label)
                 .font(.headline)
             TextField(label, text: $text.onChange { newText in
-                print(text.count)
+                
                 viewModel.searchableText = newText
             })
                 .padding(.all, 7)
@@ -46,20 +46,20 @@ struct ComponentLocationTextFieldView: View {
                         viewModel.results = []
                         isFocusedTextField = false
                     }) {
-                        
                         AddressRow(address: address)
                     }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
-                .frame(height:200)
+                .frame(height:225)
             } else if text.isEmpty {
                 
             }
-        } .onAppear{
-            viewModel.requestAuthorisation()
-            print(viewModel.requestAuthorisation())
         }
+        .onAppear{
+                    viewModel.requestAuthorisation()
+            
+                }
     }
 }
 

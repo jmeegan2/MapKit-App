@@ -12,7 +12,6 @@
 		1147F8162A06EFB500A0AB92 /* AddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F8152A06EFB500A0AB92 /* AddressRow.swift */; };
 		1147F81A2A06F13C00A0AB92 /* MapViewModelForSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */; };
 		1147F81C2A06F61400A0AB92 /* SearchAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */; };
-		11891D3A2A0C84380058F92C /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11891D392A0C84370058F92C /* LocationModel.swift */; };
 		119118D629F1CC2D0064ABA2 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D529F1CC2D0064ABA2 /* TripViewModel.swift */; };
 		119118D829F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */; };
 		119118DA29F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */; };
@@ -35,7 +34,7 @@
 		1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModelForSearchResults.swift; sourceTree = "<group>"; };
 		1147F81B2A06F61400A0AB92 /* SearchAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressView.swift; sourceTree = "<group>"; };
 		116D930329F870A90058F442 /* circleThickOutline.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circleThickOutline.jpg; sourceTree = "<group>"; };
-		11891D392A0C84370058F92C /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		11891D3C2A0DCC9C0058F92C /* MapKit-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapKit-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		119118D529F1CC2D0064ABA2 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		119118D729F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLocationTextFieldView.swift; sourceTree = "<group>"; };
 		119118D929F1CC4F0064ABA2 /* ComponentValueTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentValueTextFieldView.swift; sourceTree = "<group>"; };
@@ -89,7 +88,6 @@
 				119118D529F1CC2D0064ABA2 /* TripViewModel.swift */,
 				1147F80F2A06EA0D00A0AB92 /* AddressResult.swift */,
 				1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */,
-				11891D392A0C84370058F92C /* LocationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -123,6 +121,7 @@
 		11EE9F8529E1FCE900436563 /* MapKit_App */ = {
 			isa = PBXGroup;
 			children = (
+				11891D3C2A0DCC9C0058F92C /* MapKit-App-Info.plist */,
 				119118E129F1D0DA0064ABA2 /* Views */,
 				119118E229F1D1790064ABA2 /* Models */,
 				119118E329F1D1BB0064ABA2 /* Photos */,
@@ -225,7 +224,6 @@
 				11368CEE2A02DBEC0026A513 /* ComponentResultView.swift in Sources */,
 				1147F81A2A06F13C00A0AB92 /* MapViewModelForSearchResults.swift in Sources */,
 				11A9DE502A09DF11009597FD /* ClearButton.swift in Sources */,
-				11891D3A2A0C84380058F92C /* LocationModel.swift in Sources */,
 				11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */,
 				119118D829F1CC3D0064ABA2 /* ComponentLocationTextFieldView.swift in Sources */,
 				1147F81C2A06F61400A0AB92 /* SearchAddressView.swift in Sources */,
@@ -365,8 +363,10 @@
 				DEVELOPMENT_TEAM = KN479YZ6NH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MapKit-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Gas Route";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -397,8 +397,10 @@
 				DEVELOPMENT_TEAM = KN479YZ6NH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MapKit-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Gas Route";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
