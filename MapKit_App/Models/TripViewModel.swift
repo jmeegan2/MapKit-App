@@ -127,9 +127,11 @@ class TripViewModel: NSObject, ObservableObject {
     
     private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
         time = route.expectedTravelTime / 3600 // Convert seconds to hours
+        print(route.expectedTravelTime)
         print("this is distance \(route.distance)")
         distance = (route.distance / 1609.344) // Convert meters to miles
-        distanceDecimalOne = round(distance * 10) / 10.0
+        distanceDecimalOne = round(distance * 100) / 100.0
+        
         cost = (distance / mpg) * gasPrice
         isLoading = false
     }

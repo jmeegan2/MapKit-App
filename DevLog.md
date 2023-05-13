@@ -8,7 +8,7 @@ Issues:
 * Not able to pass tollsPreference or highwayPreference when opening the maps app from mine, not sure if possible, read on old threads its not
 * Had been using GLGeocode but it didnt accept things like 'The White House' as an entry it wanted the actual address which isnt very practical for user to have to to type in so I changed it to use MKLocalSearch so it recognizes those kind of non-specifc locations
 * Didn't realize that if I get a 'Directions not available' error message from 'error.localizedDescription' that its most likely a problem with the roads and not my actual code. Like you cant get directions to Yellowstone if the roads are blocked with snow or some kind of natural event impeading traffic
-
+* Not sure how i can add the userLocation into the address rows 
 
 Random notes:
 
@@ -38,4 +38,8 @@ Reason its poping down before u enter location is because it has a .focus($isTex
 
 5/9 
 Currently working on clearing the search results when u click on a different locationField so its not the first thing that pops
-up during ur new search
+up during ur new search *
+
+5/12 
+Need to make it so that the user will on be shown the annotation.title if its zoomed in on. Right now the 
+annotation is too long sometimes now that I'm using address.title & address.subtitle if clicked on row.  
