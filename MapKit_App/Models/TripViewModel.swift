@@ -117,7 +117,7 @@ class TripViewModel: NSObject, ObservableObject {
             return
         }
         isLoading = true
-
+        print("\n\nSTARTING LOCATION: \(startingLocation)\n\n")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
             searchLocation(destinationLocation) { [self] (destinationPlacemark) in
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)

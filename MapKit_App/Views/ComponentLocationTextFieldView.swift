@@ -41,12 +41,13 @@ struct ComponentLocationTextFieldView: View {
             if isFocusedTextField && !text.isEmpty {
                 List(viewModel.results) { address in
                     Button(action: {
-//                        viewModel.requestAuthorisation()
-                        text = address.title
+                        viewModel.requestAuthorisation()
+                        text = String("\(address.title) \(address.subtitle)")
                         viewModel.searchableText = ""
                         viewModel.results = []
                         isFocusedTextField = false
                     }) {
+                        
                         AddressRow(address: address)
                     }
                 }
@@ -59,6 +60,7 @@ struct ComponentLocationTextFieldView: View {
         }
        
     }
+   
 }
 
 extension Binding {
