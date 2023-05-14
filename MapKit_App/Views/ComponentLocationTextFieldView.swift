@@ -54,9 +54,9 @@ struct ComponentLocationTextFieldView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .frame(height:225)
-            } else if text.isEmpty {
-                
+            } else if isFocusedTextField && text.isEmpty {
             }
+            Text(viewModel.locationString)
         }
        
     }

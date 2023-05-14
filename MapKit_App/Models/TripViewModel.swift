@@ -32,6 +32,7 @@ class TripViewModel: NSObject, ObservableObject {
        var showMapView: Bool {
            !showAlert && calculateButtonPressed && distance > 0
        }
+    @Published var locationString = ""
 
         // MARK: -USER LOCATION
         private let locationManager = CLLocationManager()
@@ -53,14 +54,41 @@ class TripViewModel: NSObject, ObservableObject {
                 self.locationManager.requestWhenInUseAuthorization()
             }
         }
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-              if let location = locations.last {
-                  DispatchQueue.main.async { [weak self] in
-                      self?.userLocation = location
-                      print("User location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
-                  }
-              }
-          }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location) { [self] placemarks, error in
+                if let placemark = placemarks?.first {
+                    let locationString = "\(placemark.name ?? ""), \(placemark.locality ?? ""), \(placemark.administrativeArea ?? "")"
+                    
+                    // Handle the location string or pass it to the appropriate method in your TripViewModel
+                    self.handleLocationString(locationString)
+                } else {
+                    // Failed to reverse geocode location
+                    handleLocationString(nil)
+                
+                }
+            }
+            print("USER LOCATION \(location)")
+        }
+       
+    }
+    
+    
+    func handleLocationString(_ locationString: String?) {
+        // Handle the location string or pass it to the appropriate method in your TripViewModel
+        DispatchQueue.main.async {
+            if let locationString = locationString {
+                print("User Location: \(locationString)")
+                self.locationString = locationString // Update locationString with the new value
+
+            } else {
+                print("User location is unavailable.")
+            }
+        }
+    }
+
+
 
     
 
@@ -218,6 +246,7 @@ class TripViewModel: NSObject, ObservableObject {
             isLoading = false
         }
     }
+    
 }
 
 
@@ -228,6 +257,7 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
             results = completer.results.map {
             
                 return AddressResult(title: $0.title, subtitle: $0.subtitle)
+                
                 
             }
         }
