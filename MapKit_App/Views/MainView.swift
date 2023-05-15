@@ -19,7 +19,7 @@ struct MainView: View {
                     LoadingView()
                 }else {
                     Group {
-                        Text(viewModel.locationString)
+//                        Text(viewModel.locationString)
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
     

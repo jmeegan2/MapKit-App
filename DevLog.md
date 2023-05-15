@@ -43,3 +43,6 @@ up during ur new search *
 5/12 
 Need to make it so that the user will on be shown the annotation.title if its zoomed in on. Right now the 
 annotation is too long sometimes now that I'm using address.title & address.subtitle if clicked on row.  
+
+5/15
+viewModel.locationString is my userlocation

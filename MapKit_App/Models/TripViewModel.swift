@@ -254,12 +254,9 @@ class TripViewModel: NSObject, ObservableObject {
 extension TripViewModel: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         Task { @MainActor in
-            results = completer.results.map {
-            
-                return AddressResult(title: $0.title, subtitle: $0.subtitle)
-                
-                
-            }
+            var resultsArray = [AddressResult(title: "Your Location", subtitle: locationString)]
+            resultsArray += completer.results.map { AddressResult(title: $0.title, subtitle: $0.subtitle) }
+            results = resultsArray
         }
     }
     
