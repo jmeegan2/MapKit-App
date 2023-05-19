@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "94B4D7E1-DA9C-4CB9-AC7E-B7394EACE9B3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MapKit_App.xcodeproj",
+        "identifier" : "110F3DD62A14AC93004390B5",
+        "name" : "MapKit_AppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

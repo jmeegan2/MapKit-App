@@ -19,7 +19,6 @@ struct ComponentLocationTextFieldView: View {
             Text(label)
                 .font(.headline)
             TextField(label, text: $text.onChange { newText in
-                
                 viewModel.searchableText = newText
             })
                 .padding(.all, 7)
@@ -43,6 +42,7 @@ struct ComponentLocationTextFieldView: View {
                     Button(action: {
                         viewModel.requestAuthorisation()
                         text = String("\(address.title) \(address.subtitle)")
+                        viewModel.checkAddressAndModifyLocationString(addressTitle: address.title)
                         viewModel.searchableText = ""
                         viewModel.results = []
                         isFocusedTextField = false
@@ -54,13 +54,10 @@ struct ComponentLocationTextFieldView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .frame(height:225)
-            } else if isFocusedTextField && text.isEmpty {
-            }
-            Text(viewModel.locationString)
+            } 
         }
        
     }
-   
 }
 
 extension Binding {
@@ -74,3 +71,5 @@ extension Binding {
         )
     }
 }
+
+

@@ -54,6 +54,7 @@ class TripViewModel: NSObject, ObservableObject {
                 self.locationManager.requestWhenInUseAuthorization()
             }
         }
+   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let geocoder = CLGeocoder()
@@ -253,19 +254,44 @@ class TripViewModel: NSObject, ObservableObject {
  // MARK: - Extension MKLocalSearchCompleter
 extension TripViewModel: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        
         Task { @MainActor in
-            var resultsArray = [AddressResult(title: "Your Location", subtitle: locationString)]
-            resultsArray += completer.results.map { AddressResult(title: $0.title, subtitle: $0.subtitle) }
-            results = resultsArray
+            if(locationString.isEmpty) {
+                results = completer.results.map {
+                                return AddressResult(title: $0.title, subtitle: $0.subtitle)
+                            }
+            } else {
+                var resultsArray = [AddressResult(title: "Current Location", subtitle: locationString)]
+               
+                resultsArray += completer.results.map { AddressResult(title: $0.title, subtitle: $0.subtitle) }
+                
+                results = resultsArray
+                
+            }
         }
     }
     
+    func checkAddressAndModifyLocationString(addressTitle: String) {
+            if (addressTitle == "Current Location") {
+                print("you clicked your location")
+                self.locationString = ""
+            }
+        }
+    
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
     }
+    
+    
 }
+
+
+
+
 extension TripViewModel: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorisationStatus = status
     }
 }
+
+
