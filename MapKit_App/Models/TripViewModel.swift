@@ -157,10 +157,7 @@ class TripViewModel: NSObject, ObservableObject {
 
     func loadSavedMpg() {
         let savedMpg = UserDefaults.standard.double(forKey: "SavedMpg")
-        if savedMpg != 0 {
-            mpg = String(savedMpg)
-        }
-        mpg = String(savedMpg)
+        mpg = savedMpg != 0 ? String(savedMpg) : ""
     }
     
     private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
@@ -271,7 +268,7 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
                             }
             } else {
                 var resultsArray = [AddressResult(title: "Current Location", subtitle: locationString)]
-               
+            
                 resultsArray += completer.results.map { AddressResult(title: $0.title, subtitle: $0.subtitle) }
                 
                 results = resultsArray
