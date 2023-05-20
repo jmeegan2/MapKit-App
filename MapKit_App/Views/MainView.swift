@@ -64,6 +64,9 @@ struct MainView: View {
                     }
                 }
             }
+            .onAppear {
+                        viewModel.loadSavedMpg()
+                    }
         
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text("Alert"),
@@ -79,6 +82,7 @@ struct MainView: View {
 //        .background(Color.white)
         .padding(.horizontal)
     }
+       
 }
 
 struct InputView_Previews: PreviewProvider {

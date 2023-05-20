@@ -139,12 +139,13 @@ class TripViewModel: NSObject, ObservableObject {
         mapIdentifier = UUID()
 
         guard let mpg = Double(mpg),
-              let gasPrice = Double(averageGasPrice)
+            let gasPrice = Double(averageGasPrice)
         else {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
             return
         }
+        UserDefaults.standard.set(mpg, forKey: "SavedMpg")
         isLoading = true
         print("\n\nSTARTING LOCATION: \(startingLocation)\n\n")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
@@ -152,6 +153,14 @@ class TripViewModel: NSObject, ObservableObject {
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
             }
         }
+    }
+
+    func loadSavedMpg() {
+        let savedMpg = UserDefaults.standard.double(forKey: "SavedMpg")
+        if savedMpg != 0 {
+            mpg = String(savedMpg)
+        }
+        mpg = String(savedMpg)
     }
     
     private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
