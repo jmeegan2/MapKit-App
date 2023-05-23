@@ -46,11 +46,13 @@ struct ComponentMapView: UIViewRepresentable {
                 
                 let destinationAnnotation = MKPointAnnotation()
                 destinationAnnotation.coordinate = destinationCoordinate
-                destinationAnnotation.title = destinationLocation
+                destinationAnnotation.title = destinationLocation.components(separatedBy: ",").first?.trimmingCharacters(in: .whitespacesAndNewlines)
+               
                 
                 let startingAnnotation = StartingAnnotation()
                 startingAnnotation.coordinate = startingCoordinate
-                startingAnnotation.title = startingLocation
+                startingAnnotation.title = startingLocation.components(separatedBy: ",").first?.trimmingCharacters(in: .whitespacesAndNewlines)
+             
                 
                 let directionRequest = MKDirections.Request()
                 directionRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: startingCoordinate))

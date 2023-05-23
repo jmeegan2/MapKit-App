@@ -45,8 +45,8 @@ struct MainView: View {
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                        ComponentResultView(title: "Distance:", value: "\(String(viewModel.distanceDecimalOne)) miles")
-                        ComponentResultView(title: "Cost:", value: String(format: "$%.2f", viewModel.cost))
+                        ComponentResultView(title: "Distance:", value: "\((viewModel.stringDistance))")
+                        ComponentResultView(title: "Cost:", value:  (viewModel.cost))
                     }
                     
 
@@ -73,9 +73,9 @@ struct MainView: View {
                   message: Text(viewModel.alertMessage),
                   dismissButton: .default(Text("OK")) {
                 viewModel.calculateButtonPressed = false // Set the button state back to false
-                viewModel.distance = 0
+                viewModel.stringDistance = ""
                 viewModel.time = 0
-                viewModel.cost = 0
+                viewModel.cost = ""
             })
         }
         .padding()

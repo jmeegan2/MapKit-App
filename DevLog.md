@@ -46,3 +46,6 @@ annotation is too long sometimes now that I'm using address.title & address.subt
 
 5/15
 viewModel.locationString is my userlocation
+
+5/23
+Its hard to understand how apple is presenting their values on maps, sometimes they floor and other times they round. 

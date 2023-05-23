@@ -10,6 +10,7 @@ import Foundation
 
 struct ComponentAppleMapsButton: View {
     var action: () -> Void
+    
 
     var body: some View {
         Button(action: action) {

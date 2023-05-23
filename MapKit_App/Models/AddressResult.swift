@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct AddressResult: Identifiable {
     let id = UUID()
+    var titleImage: Image?
     var title: String
     var subtitle: String
 

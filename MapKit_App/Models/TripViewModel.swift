@@ -16,11 +16,12 @@ class TripViewModel: NSObject, ObservableObject {
        @Published var isLoading = false
        @Published var startingLocation = ""
        @Published var destinationLocation = ""
+    @Published var stringDistance = ""
        @Published var mpg = ""
        @Published var averageGasPrice = ""
        @Published var distance: Double = 0
-       @Published var distanceDecimalOne: Double = 0
-       @Published var cost: Double = 0
+       @Published var doubleDistanceValue: Double = 0
+       @Published var cost = ""
        @Published var avoidTolls = false
        @Published var avoidHighways = false
        @Published var time: Double = 0
@@ -33,6 +34,7 @@ class TripViewModel: NSObject, ObservableObject {
            !showAlert && calculateButtonPressed && distance > 0
        }
     @Published var locationString = ""
+
 
         // MARK: -USER LOCATION
         private let locationManager = CLLocationManager()
@@ -70,7 +72,6 @@ class TripViewModel: NSObject, ObservableObject {
                 
                 }
             }
-            print("USER LOCATION \(location)")
         }
        
     }
@@ -80,11 +81,8 @@ class TripViewModel: NSObject, ObservableObject {
         // Handle the location string or pass it to the appropriate method in your TripViewModel
         DispatchQueue.main.async {
             if let locationString = locationString {
-                print("User Location: \(locationString)")
                 self.locationString = locationString // Update locationString with the new value
 
-            } else {
-                print("User location is unavailable.")
             }
         }
     }
@@ -118,21 +116,23 @@ class TripViewModel: NSObject, ObservableObject {
            openInAppleMaps()
        }
        
-    
     func formatTime(_ time: Double) -> String {
-        if time >= 24 {
-            let days = Int(time / 24)
-            let hours = Int(time.truncatingRemainder(dividingBy: 24))
-            return "\(days) day\(days == 1 ? "" : "s") \(hours) hour\(hours == 1 ? "" : "s")"
-        } else if time < 1 {
-            let minutes = Int(round(time * 60))
-            return "\(minutes) minute\(minutes == 1 ? "" : "s")"
-        } else {
-            let hours = Int(time)
-            let minutes = Int((time - Double(hours)).truncatingRemainder(dividingBy: 1) * 60)
-            return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
+            if time >= 24 {
+                let days = Int(time / 24)
+                let hours = Int(time.truncatingRemainder(dividingBy: 24))
+                return "\(days) day\(days == 1 ? "" : "s") \(hours) hour\(hours == 1 ? "" : "s")"
+            } else if time < 1 && time != 0{
+                let minutes = Int(round(time * 60))
+                return "\(minutes) minute\(minutes == 1 ? "" : "s")"
+            } else if time == 0 {
+                return ""
+            } else {
+                let hours = Int(time)
+                let minutes = Int((time - Double(hours)).truncatingRemainder(dividingBy: 1) * 60)
+                return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
+            }
         }
-    }
+
   
     func calculateTripDetails() {
         calculateButtonPressed = true
@@ -147,7 +147,6 @@ class TripViewModel: NSObject, ObservableObject {
         }
         UserDefaults.standard.set(mpg, forKey: "SavedMpg")
         isLoading = true
-        print("\n\nSTARTING LOCATION: \(startingLocation)\n\n")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
             searchLocation(destinationLocation) { [self] (destinationPlacemark) in
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
@@ -160,14 +159,23 @@ class TripViewModel: NSObject, ObservableObject {
         mpg = savedMpg != 0 ? String(savedMpg) : ""
     }
     
-    private func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
+     func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
+
         time = route.expectedTravelTime / 3600 // Convert seconds to hours
-        print(route.expectedTravelTime)
-        print("this is distance \(route.distance)")
         distance = (route.distance / 1609.344) // Convert meters to miles
-        distanceDecimalOne = round(distance * 100) / 100.0
+        if (distance > 10) {
+            doubleDistanceValue = round(distance)
+        } else {
+            doubleDistanceValue = round(distance * 10) / 10
+        }
+
+          if doubleDistanceValue > 10 {
+              stringDistance = String(format: "%.0f miles", doubleDistanceValue)
+          } else {
+              stringDistance = String(format: "%.1f miles", doubleDistanceValue)
+          }
+        cost = String(format: "$%.2f", (distance / mpg) * gasPrice) // Convert cost to string
         
-        cost = (distance / mpg) * gasPrice
         isLoading = false
     }
 
@@ -268,7 +276,6 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
                             }
             } else {
                 var resultsArray = [AddressResult(title: "Current Location", subtitle: locationString)]
-            
                 resultsArray += completer.results.map { AddressResult(title: $0.title, subtitle: $0.subtitle) }
                 
                 results = resultsArray
@@ -279,7 +286,6 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
     
     func checkAddressAndModifyLocationString(addressTitle: String) {
             if (addressTitle == "Current Location") {
-                print("you clicked your location")
                 self.locationString = ""
             }
         }

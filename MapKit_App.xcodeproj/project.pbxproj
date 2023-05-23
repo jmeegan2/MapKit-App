@@ -63,7 +63,6 @@
 		11EE9F8D29E1FCEA00436563 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		11EE9F9429E2066100436563 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		11EE9F9529E2076500436563 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		11F273F62A17583500D5F95D /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 		11F2C2852A1759120017ED05 /* MapKit_App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapKit_App.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +114,6 @@
 		119118E229F1D1790064ABA2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				11F273F62A17583500D5F95D /* TestPlan.xctestplan */,
 				119118D529F1CC2D0064ABA2 /* TripViewModel.swift */,
 				1147F80F2A06EA0D00A0AB92 /* AddressResult.swift */,
 				1147F8192A06F13C00A0AB92 /* MapViewModelForSearchResults.swift */,
