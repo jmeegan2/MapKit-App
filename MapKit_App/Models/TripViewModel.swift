@@ -117,21 +117,21 @@ class TripViewModel: NSObject, ObservableObject {
        }
        
     func formatTime(_ time: Double) -> String {
-            if time >= 24 {
-                let days = Int(time / 24)
-                let hours = Int(time.truncatingRemainder(dividingBy: 24))
-                return "\(days) day\(days == 1 ? "" : "s") \(hours) hour\(hours == 1 ? "" : "s")"
-            } else if time < 1 && time != 0{
-                let minutes = Int(round(time * 60))
-                return "\(minutes) minute\(minutes == 1 ? "" : "s")"
-            } else if time == 0 {
-                return ""
-            } else {
-                let hours = Int(time)
-                let minutes = Int((time - Double(hours)).truncatingRemainder(dividingBy: 1) * 60)
-                return "\(hours) hour\(hours == 1 ? "" : "s") \(minutes) minute\(minutes == 1 ? "" : "s")"
-            }
+        if time == 0 {
+               return ""
+           }
+           
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.unitsStyle = .full
+        
+        let timeInterval = TimeInterval(time * 60 * 60)
+        guard let formattedString = formatter.string(from: timeInterval) else {
+            return ""
         }
+        
+        return formattedString
+    }
 
   
     func calculateTripDetails() {
