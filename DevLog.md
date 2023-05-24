@@ -49,3 +49,5 @@ viewModel.locationString is my userlocation
 
 5/23
 Its hard to understand how apple is presenting their values on maps, sometimes they floor and other times they round. 
+
+New Feature will be a send button in the corner to send an invoice 

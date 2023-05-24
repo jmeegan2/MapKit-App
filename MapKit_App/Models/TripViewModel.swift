@@ -9,14 +9,15 @@ import Foundation
 import MapKit
 import Foundation
 import SwiftSoup
+import CoreLocation
 
-class TripViewModel: NSObject, ObservableObject {
-    
+class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+
     // MARK: - Published Properties
        @Published var isLoading = false
        @Published var startingLocation = ""
        @Published var destinationLocation = ""
-    @Published var stringDistance = ""
+       @Published var stringDistance = ""
        @Published var mpg = ""
        @Published var averageGasPrice = ""
        @Published var distance: Double = 0
@@ -147,6 +148,7 @@ class TripViewModel: NSObject, ObservableObject {
         }
         UserDefaults.standard.set(mpg, forKey: "SavedMpg")
         isLoading = true
+        print("starting location\(startingLocation)")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
             searchLocation(destinationLocation) { [self] (destinationPlacemark) in
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)
@@ -293,17 +295,11 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
     }
     
-    
 }
 
 
 
 
-extension TripViewModel: CLLocationManagerDelegate {
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        self.authorisationStatus = status
-    }
-}
+ 
 
 

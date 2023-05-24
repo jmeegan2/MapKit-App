@@ -14,7 +14,6 @@ struct ComponentValueTextFieldView: View {
     @State var showInfoIcon: Bool = false
     @State var tapped = false
 
-//    @Binding var iconTapped: Bool
 
     var body: some View {
         VStack(alignment: .leading) {

@@ -12,14 +12,24 @@ import MapKit
 struct MainView: View {
     @StateObject private var viewModel = TripViewModel()
     @State var showAlert = false
+    @State var isHiPageVisible = false // Track the visibility of the "hi" page
+
     var body: some View {
         
             VStack(alignment: .leading) {
                 if viewModel.isLoading {
                     LoadingView()
                 }else {
+                  
                     Group {
+                        HStack{
+                            Spacer()
+                            Button(action: {isHiPageVisible = true}, label: {
+                                Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
+                                .frame(width: 25, height: 25)})
+                        }
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
+                        Text(viewModel.startingLocation)
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
     
                         HStack {
@@ -66,6 +76,10 @@ struct MainView: View {
             }
             .onAppear {
                         viewModel.loadSavedMpg()
+                    }
+            .fullScreenCover(isPresented: $isHiPageVisible) {
+                HiPage(viewModel: viewModel)
+                   
                     }
         
         .alert(isPresented: $viewModel.showAlert) {
