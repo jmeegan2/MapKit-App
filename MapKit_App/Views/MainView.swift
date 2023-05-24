@@ -78,7 +78,7 @@ struct MainView: View {
                         viewModel.loadSavedMpg()
                     }
             .fullScreenCover(isPresented: $isHiPageVisible) {
-                HiPage(viewModel: viewModel)
+                SendInvoiceView(viewModel: viewModel)
                    
                     }
         
