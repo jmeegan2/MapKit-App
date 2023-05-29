@@ -23,6 +23,8 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
        @Published var distance: Double = 0
        @Published var doubleDistanceValue: Double = 0
        @Published var cost = ""
+    @Published var costInvoice: Double = 0
+
        @Published var avoidTolls = false
        @Published var avoidHighways = false
        @Published var time: Double = 0
@@ -177,7 +179,7 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
               stringDistance = String(format: "%.1f miles", doubleDistanceValue)
           }
         cost = String(format: "$%.2f", (distance / mpg) * gasPrice) // Convert cost to string
-        
+        costInvoice = ((distance / mpg) * gasPrice)
         isLoading = false
     }
 

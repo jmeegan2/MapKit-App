@@ -29,7 +29,6 @@ struct MainView: View {
                                 .frame(width: 25, height: 25)})
                         }
                         ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
-                        Text(viewModel.startingLocation)
                         ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
     
                         HStack {
