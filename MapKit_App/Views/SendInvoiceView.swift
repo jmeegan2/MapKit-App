@@ -17,7 +17,7 @@ struct SendInvoiceView: View {
     @State private var perPersonCostSection = false
     @State private var calculateCostString = ""
     @FocusState private var numOfPeopleField: Bool
-
+    
     var body: some View {
         Form {
             Section(header: Text("Trip Details").font(.title).fontWeight(.bold)) {
@@ -32,29 +32,41 @@ struct SendInvoiceView: View {
                     Text("\(viewModel.mpg)")
                     Text("Time:")
                     Text(viewModel.formatTime(viewModel.time))
-                    
                 }
             }
             
             Section(header: Text("Invoice").font(.title).fontWeight(.bold)) {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                     Text("Cost:")
-                    Text(viewModel.cost) //this is a string
-                    
-                    
-                    //Make button here that will say would you like to split cost
-                    
+                    Text(viewModel.cost) // this is a string
                 }
+                
                 Button(action: {
                     isSplittingCost.toggle()
-                    
                 }) {
                     Text("Click Here to Split Cost")
+                        .multilineTextAlignment(.center)
                 }
-                if isSplittingCost{
+              
+                    Button(action: {
+                        print("Mail clicked")
+                    }){
+                        Image(systemName: "mail").resizable().aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                    }
+                    
+                    Button(action: {
+                        print("Message clicked")
+                    }){
+                        Image(systemName: "message").resizable().aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                    }
+              
+                
+                if isSplittingCost {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                         Text("Number of People:")
-                        TextField("", text:$numberOfPeople )
+                        TextField("", text: $numberOfPeople)
                             .focused($numOfPeopleField)
                             .padding(.all, 7)
                             .background(Color("TextField"))
@@ -62,12 +74,7 @@ struct SendInvoiceView: View {
                     }
                 }
                 
-                //if they click on the button section below is show
-                //If they click this then they will
-                //similar to section above it will use a lazy v grid the number of people on left than will show cost per each person in right side
-                
-                // Calculate button
-                if(!numberOfPeople.isEmpty){
+                if !numberOfPeople.isEmpty {
                     Button(action: {
                         numOfPeopleField = false
                         let costValue = viewModel.costInvoice
@@ -75,57 +82,43 @@ struct SendInvoiceView: View {
                         if costValue > 0 && numberOfPeopleValue ?? 0 > 0 {
                             let calculatedCost = (costValue / (numberOfPeopleValue ?? 0))
                             calculateCostString = String(format: "%.2f", calculatedCost)
-                            perPersonCostSection = true;
+                            perPersonCostSection = true
                         } else {
-                            perPersonCostSection = false;
+                            perPersonCostSection = false
                         }
                     }) {
                         Text("Calculate")
+                            .multilineTextAlignment(.center)
                     }
                 }
+                
                 if perPersonCostSection {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                         Text("Cost Per Person:")
-                        Text(calculateCostString) //this is a string
-                        
-                        
-                        //Make button here that will say would you like to split cost
-                        
+                        Text(calculateCostString) // this is a string
                     }
-
                 }
-                
-                
             }
-                
             
-
-        
+            Spacer()
             
-                        
-           
-                
-                Spacer()
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Close the screen
-                }) {
-                    Text("Close")
-                        .foregroundColor(Color("ButtonText"))
-                        .background(Color("Button"))
-                        .frame(maxWidth: .infinity)
-                        .padding(.all, 10.0)
-                        .foregroundColor(.white)
-                        .background(Color("Button"))
-                        .fontWeight(.bold)
-                        .cornerRadius(10)
-                }
-                .padding()
-                .navigationBarTitle(Text("Invoice View"), displayMode: .inline)
+            Button(action: {
+                presentationMode.wrappedValue.dismiss() // Close the screen
+            }) {
+                Text("Close")
+                    .foregroundColor(Color("ButtonText"))
+                    .background(Color("Button"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.all, 10.0)
+                    .foregroundColor(.white)
+                    .background(Color("Button"))
+                    .fontWeight(.bold)
+                    .cornerRadius(10)
             }
+            .padding()
+            .navigationBarTitle(Text("Invoice View"), displayMode: .inline)
         }
     }
-// Function to calculate cost based on number of people and cost value
-func calculateCost(numberOfPeople: Int, costValue: Float) -> Float {
-    return Float(numberOfPeople) / costValue
 }
+
 
