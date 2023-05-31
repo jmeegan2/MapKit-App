@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import SwiftUIMessage
+import MessageUI
 
 struct SendInvoiceView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -17,6 +19,8 @@ struct SendInvoiceView: View {
     @State private var perPersonCostSection = false
     @State private var calculateCostString = ""
     @FocusState private var numOfPeopleField: Bool
+    @State private var showMailComposeView = false
+    @State private var showMessageComposeView = false
     
     var body: some View {
         Form {
@@ -48,15 +52,35 @@ struct SendInvoiceView: View {
                         .multilineTextAlignment(.center)
                 }
               
-                    Button(action: {
-                        print("Mail clicked")
-                    }){
-                        Image(systemName: "mail").resizable().aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
+                Button(action: {
+                    print("Mail clicked")
+                    showMailComposeView.toggle()
+                }) {
+                    Image(systemName: "mail").resizable().aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+                }
+                .sheet(isPresented: $showMailComposeView) {
+                    if MFMailComposeViewController.canSendMail() {
+                        MailComposeView(
+                            .init(subject: "Subject",
+                                  toRecipients: [
+                                      "dummy@gmail.com"
+                                  ],
+                                  ccRecipients: nil,
+                                  bccRecipients: nil,
+                                  body: "This is an example email body.",
+                                  bodyIsHTML: false,
+                                  preferredSendingEmailAddress: nil)
+                        )
+                        .ignoresSafeArea()
+                    } else {
+                        Text("Mail cannot be sent from your device.")
                     }
+                }
                     
                     Button(action: {
                         print("Message clicked")
+                        
                     }){
                         Image(systemName: "message").resizable().aspectRatio(contentMode: .fit)
                             .frame(width: 25, height: 25)

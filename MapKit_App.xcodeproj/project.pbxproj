@@ -20,6 +20,7 @@
 		119118DC29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DB29F1CC6B0064ABA2 /* ComponentRouteOptionsView.swift */; };
 		119118E029F1CCA40064ABA2 /* ComponentAppleMapsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119118DF29F1CCA40064ABA2 /* ComponentAppleMapsButton.swift */; };
 		11A9DE502A09DF11009597FD /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A9DE4F2A09DF11009597FD /* ClearButton.swift */; };
+		11CF3D7B2A27EBE700FF1CF3 /* SwiftUIMessage in Frameworks */ = {isa = PBXBuildFile; productRef = 11CF3D7A2A27EBE700FF1CF3 /* SwiftUIMessage */; };
 		11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */; };
 		11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */; };
 		11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 11E0E75129FCC13F00467EFE /* SwiftSoup */; };
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11CF3D7B2A27EBE700FF1CF3 /* SwiftUIMessage in Frameworks */,
 				11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +95,13 @@
 				110F3DD92A14AC93004390B5 /* MapKit_AppTests.swift */,
 			);
 			path = MapKit_AppTests;
+			sourceTree = "<group>";
+		};
+		111B3A8F2A27EAC80061CB2C /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		119118E129F1D0DA0064ABA2 /* Views */ = {
@@ -135,6 +144,7 @@
 		11EE9F7A29E1FCE900436563 = {
 			isa = PBXGroup;
 			children = (
+				111B3A8F2A27EAC80061CB2C /* Packages */,
 				11F2C2852A1759120017ED05 /* MapKit_App.xctestplan */,
 				11EE9F9429E2066100436563 /* README.md */,
 				11DDC7A529E944F10093E3A5 /* DevLog.md */,
@@ -211,6 +221,7 @@
 			name = MapKit_App;
 			packageProductDependencies = (
 				11E0E75129FCC13F00467EFE /* SwiftSoup */,
+				11CF3D7A2A27EBE700FF1CF3 /* SwiftUIMessage */,
 			);
 			productName = MapKit_App;
 			productReference = 11EE9F8329E1FCE900436563 /* MapKit_App.app */;
@@ -246,6 +257,7 @@
 			mainGroup = 11EE9F7A29E1FCE900436563;
 			packageReferences = (
 				11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				11CF3D792A27EBE700FF1CF3 /* XCRemoteSwiftPackageReference "SwiftUIMessage" */,
 			);
 			productRefGroup = 11EE9F8429E1FCE900436563 /* Products */;
 			projectDirPath = "";
@@ -580,6 +592,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		11CF3D792A27EBE700FF1CF3 /* XCRemoteSwiftPackageReference "SwiftUIMessage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/edonv/SwiftUIMessage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
 		11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -591,6 +611,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		11CF3D7A2A27EBE700FF1CF3 /* SwiftUIMessage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11CF3D792A27EBE700FF1CF3 /* XCRemoteSwiftPackageReference "SwiftUIMessage" */;
+			productName = SwiftUIMessage;
+		};
 		11E0E75129FCC13F00467EFE /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
