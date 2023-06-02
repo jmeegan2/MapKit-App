@@ -22,7 +22,9 @@ struct SendInvoiceView: View {
     @State private var showMailComposeView = false
     @State private var showMessageComposeView = false
     
+    
     var body: some View {
+        
         Form {
             Section(header: Text("Trip Details").font(.title).fontWeight(.bold)) {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
@@ -77,14 +79,41 @@ struct SendInvoiceView: View {
                         Text("Mail cannot be sent from your device.")
                     }
                 }
+                
+                
+                Button(action: {
+                           print("Message clicked")
+                           showMessageComposeView.toggle()
+                       }) {
+                           Image(systemName: "message").resizable().aspectRatio(contentMode: .fit)
+                               .frame(width: 25, height: 25)
+                       }
+                       .sheet(isPresented: $showMessageComposeView) {
+                           
+                           if MFMessageComposeViewController.canSendText() {
+                                   let messageBody = """
+                                   From: \(viewModel.startingLocation)
+                                   To: \(viewModel.destinationLocation)
+                                   Distance: \(viewModel.stringDistance)
+                                   MPG: \(viewModel.mpg)
+                                   Time: \(viewModel.formatTime(viewModel.time))
+                                   Cost: \((viewModel.cost))
+                                   Cost Per Person: $\(calculateCostString)
+                                   """
+                                   
+                                   
+                                   MessageComposeView(
+                                    .init(recipients: [""],
+                                          body: messageBody)
+                                   )
+                               
+                                   .ignoresSafeArea()
+                               } else {
+                                   Text("Message cannot be sent from your device.")
+                               }
+                       }
                     
-                    Button(action: {
-                        print("Message clicked")
-                        
-                    }){
-                        Image(systemName: "message").resizable().aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                    }
+
               
                 
                 if isSplittingCost {
@@ -120,6 +149,10 @@ struct SendInvoiceView: View {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                         Text("Cost Per Person:")
                         Text(calculateCostString) // this is a string
+                    
+                        
+                            
+                        
                     }
                 }
             }
