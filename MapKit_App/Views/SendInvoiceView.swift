@@ -18,6 +18,7 @@ struct SendInvoiceView: View {
     @State private var calculateCost = 0
     @State private var perPersonCostSection = false
     @State private var calculateCostString = ""
+    @State private var sendInvoiceCostPerPerson = ""
     @FocusState private var numOfPeopleField: Bool
     @State private var showMailComposeView = false
     @State private var showMessageComposeView = false
@@ -98,7 +99,7 @@ struct SendInvoiceView: View {
                                    MPG: \(viewModel.mpg)
                                    Time: \(viewModel.formatTime(viewModel.time))
                                    Cost: \((viewModel.cost))
-                                   Cost Per Person: $\(calculateCostString)
+                                   \((sendInvoiceCostPerPerson))
                                    """
                                    
                                    
@@ -136,6 +137,7 @@ struct SendInvoiceView: View {
                             let calculatedCost = (costValue / (numberOfPeopleValue ?? 0))
                             calculateCostString = String(format: "%.2f", calculatedCost)
                             perPersonCostSection = true
+                            sendInvoiceCostPerPerson = String("Number of People: \(numberOfPeople) \nCost Per Person: $\(calculateCostString)")
                         } else {
                             perPersonCostSection = false
                         }
@@ -144,15 +146,12 @@ struct SendInvoiceView: View {
                             .multilineTextAlignment(.center)
                     }
                 }
+            
                 
                 if perPersonCostSection {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                         Text("Cost Per Person:")
                         Text(calculateCostString) // this is a string
-                    
-                        
-                            
-                        
                     }
                 }
             }
