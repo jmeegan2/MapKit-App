@@ -10,7 +10,7 @@ import SwiftUI
 import MapKit
 
 struct MainView: View {
-    @StateObject private var viewModel = TripViewModel()
+    @StateObject private var viewModel_Main = TripViewModel()
     
     
     @State var showAlert = false
@@ -19,7 +19,7 @@ struct MainView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            if viewModel.isLoading {
+            if viewModel_Main.isLoading {
                 LoadingView()
             }else {
                 
@@ -30,21 +30,21 @@ struct MainView: View {
                             Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
                             .frame(width: 25, height: 25)})
                     }
-                    ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
-                    ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
+                    ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel_Main.startingLocation, viewModel: viewModel_Main)
+                    ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel_Main.destinationLocation, viewModel: viewModel_Main)
                     
                     HStack {
-                        ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
+                        ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel_Main.mpg)
                         Spacer()
                         ComponentValueTextFieldView(
                             label: "Gas Price",
-                            text: $viewModel.averageGasPrice,
+                            text: $viewModel_Main.averageGasPrice,
                             showInfoIcon: true
                         )
                     }
-                    ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
+                    ComponentRouteOptionsView(avoidTolls: $viewModel_Main.avoidTolls, avoidHighways: $viewModel_Main.avoidHighways)
                     
-                    Button(action: viewModel.calculateTripDetails) {
+                    Button(action: viewModel_Main.calculateTripDetails) {
                         Text("Calculate")
                             .foregroundColor(Color("ButtonText"))
                             .frame(maxWidth: .infinity)
@@ -55,9 +55,9 @@ struct MainView: View {
                     }
                 }
                 VStack(alignment: .leading, spacing: 10) {
-                    ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                    ComponentResultView(title: "Distance:", value: "\((viewModel.stringDistance))")
-                    ComponentResultView(title: "Cost:", value:  (viewModel.cost))
+                    ComponentResultView(title: "Trip Duration:", value: viewModel_Main.formatTime(viewModel_Main.time))
+                    ComponentResultView(title: "Distance:", value: "\((viewModel_Main.stringDistance))")
+                    ComponentResultView(title: "Cost:", value:  (viewModel_Main.cost))
                 }
                 
                 
@@ -66,31 +66,31 @@ struct MainView: View {
                 .background(Color("Results"))
                 .cornerRadius(10)
                 .shadow(radius: 5)
-                if (viewModel.showMapView) {
-                    ComponentMapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
-                        .id(viewModel.mapIdentifier)
-                    ComponentAppleMapsButtonView(action: viewModel.openInAppleMaps)
+                if (viewModel_Main.showMapView) {
+                    ComponentMapView(startingLocation: viewModel_Main.startingLocation, destinationLocation: viewModel_Main.destinationLocation, avoidTolls: viewModel_Main.avoidTolls, avoidHighways: viewModel_Main.avoidHighways)
+                        .id(viewModel_Main.mapIdentifier)
+                    ComponentAppleMapsButtonView(action: viewModel_Main.openInAppleMaps)
                 } else {
                     Color.clear
                 }
             }
         }
         .onAppear {
-            viewModel.loadSavedMpg()
+            viewModel_Main.loadSavedMpg()
         }
         .fullScreenCover(isPresented: $isHiPageVisible) {
-            SendInvoiceView(viewModel_Main: viewModel)
+            SendInvoiceView(viewModel_Main: viewModel_Main)
             
         }
         
-        .alert(isPresented: $viewModel.showAlert) {
+        .alert(isPresented: $viewModel_Main.showAlert) {
             Alert(title: Text("Alert"),
-                  message: Text(viewModel.alertMessage),
+                  message: Text(viewModel_Main.alertMessage),
                   dismissButton: .default(Text("OK")) {
-                viewModel.calculateButtonPressed = false // Set the button state back to false
-                viewModel.stringDistance = ""
-                viewModel.time = 0
-                viewModel.cost = ""
+                viewModel_Main.calculateButtonPressed = false // Set the button state back to false
+                viewModel_Main.stringDistance = ""
+                viewModel_Main.time = 0
+                viewModel_Main.cost = ""
             })
         }
         .padding()

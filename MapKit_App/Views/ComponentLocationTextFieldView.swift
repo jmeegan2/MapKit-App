@@ -41,8 +41,10 @@ struct ComponentLocationTextFieldView: View {
                 List(viewModel.results) { address in
                     Button(action: {
                         viewModel.requestAuthorisation()
-                        if(address.title.contains("Current Location")){
+                        if address.title.contains("Current Location") {
                             text = String("\(address.subtitle)")
+                        } else if address.subtitle.contains("Search Nearby") {
+                            text = String("\(address.title)")
                         } else {
                             text = String("\(address.title) \(address.subtitle)")
                         }

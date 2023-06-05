@@ -54,3 +54,10 @@ New Feature will be a send button in the corner to send an invoice
 
 6/4
 Almost done invoice but now i noticed that current location wont just have one instance but multiple
+
+Currently working on the removing bug where user location is able to be chosen more than once in the list of locations and finishing the invoice form
+
+6/5
+Still have to fix parts of invoice view 
+
+

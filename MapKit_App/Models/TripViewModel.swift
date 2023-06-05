@@ -25,8 +25,7 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
        @Published var distance: Double = 0
        @Published var doubleDistanceValue: Double = 0
        @Published var cost = ""
-        @Published var costInvoice: Double = 0
-
+       @Published var costInvoice: Double = 0
        @Published var avoidTolls = false
        @Published var avoidHighways = false
        @Published var time: Double = 0
