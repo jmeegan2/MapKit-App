@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AddressRow: View {
+struct ComponentAddressRow: View {
     
     let address: AddressResult
     

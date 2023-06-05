@@ -13,9 +13,9 @@ class MapViewModelForSearchResults: ObservableObject {
     @Published var region = MKCoordinateRegion()
     
     func getPlace(from address: AddressResult) {
-        let request = MKLocalSearch.Request()
-        let title = address.title
-        let subTitle = address.subtitle
+        var request = MKLocalSearch.Request()
+        var title = address.title
+        var subTitle = address.subtitle
         
         request.naturalLanguageQuery = subTitle.contains(title)
         ? subTitle : title + ", " + subTitle

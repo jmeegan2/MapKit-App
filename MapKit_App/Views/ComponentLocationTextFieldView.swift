@@ -41,14 +41,18 @@ struct ComponentLocationTextFieldView: View {
                 List(viewModel.results) { address in
                     Button(action: {
                         viewModel.requestAuthorisation()
-                        text = String("\(address.title) \(address.subtitle)")
+                        if(address.title.contains("Current Location")){
+                            text = String("\(address.subtitle)")
+                        } else {
+                            text = String("\(address.title) \(address.subtitle)")
+                        }
                         viewModel.checkAddressAndModifyLocationString(addressTitle: address.title)
                         viewModel.searchableText = ""
                         viewModel.results = []
                         isFocusedTextField = false
                     }) {
                         
-                        AddressRow(address: address)
+                        ComponentAddressRow(address: address)
                     }
                 }
                 .listStyle(.plain)

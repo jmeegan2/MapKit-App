@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-struct SearchAddressView: View {
+struct ComponentSearchAddressView: View {
     @ObservedObject var viewModel: TripViewModel
     @FocusState private var isFocusedTextField: Bool
     @Binding var selectedAddress: String
@@ -24,7 +24,7 @@ struct SearchAddressView: View {
                             viewModel.results = []
                             isFocusedTextField = false
                         }) {
-                            AddressRow(address: address)
+                            ComponentAddressRow(address: address)
                                 .listRowBackground(Color(.yellow))
                         }
                     }

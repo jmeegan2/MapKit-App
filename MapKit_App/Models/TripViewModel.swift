@@ -10,6 +10,8 @@ import MapKit
 import Foundation
 import SwiftSoup
 import CoreLocation
+import SwiftUIMessage
+import MessageUI
 
 class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
@@ -23,7 +25,7 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
        @Published var distance: Double = 0
        @Published var doubleDistanceValue: Double = 0
        @Published var cost = ""
-    @Published var costInvoice: Double = 0
+        @Published var costInvoice: Double = 0
 
        @Published var avoidTolls = false
        @Published var avoidHighways = false
@@ -33,11 +35,11 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
        @Published var alertMessage = ""
        @Published var calculateButtonPressed = false
        @Published var showInfoAlert = false
+     @Published var numOfPeopleField: Int = 0
        var showMapView: Bool {
            !showAlert && calculateButtonPressed && distance > 0
        }
     @Published var locationString = ""
-
 
         // MARK: -USER LOCATION
         private let locationManager = CLLocationManager()
@@ -296,6 +298,8 @@ extension TripViewModel: MKLocalSearchCompleterDelegate {
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
     }
+    
+
     
 }
 

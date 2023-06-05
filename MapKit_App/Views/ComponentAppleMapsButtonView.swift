@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct ComponentAppleMapsButton: View {
+struct ComponentAppleMapsButtonView: View {
     var action: () -> Void
     
 

@@ -11,75 +11,77 @@ import MapKit
 
 struct MainView: View {
     @StateObject private var viewModel = TripViewModel()
+    
+    
     @State var showAlert = false
     @State var isHiPageVisible = false // Track the visibility of the "hi" page
-
+    
     var body: some View {
         
-            VStack(alignment: .leading) {
-                if viewModel.isLoading {
-                    LoadingView()
-                }else {
-                  
-                    Group {
-                        HStack{
-                            Spacer()
-                            Button(action: {isHiPageVisible = true}, label: {
-                                Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
-                                .frame(width: 25, height: 25)})
-                        }
-                        ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
-                        ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
-    
-                        HStack {
-                            ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
-                            Spacer()
-                            ComponentValueTextFieldView(
-                                label: "Gas Price",
-                                text: $viewModel.averageGasPrice,
-                                showInfoIcon: true
-                            )
-                        }
-                        ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
-
-                        Button(action: viewModel.calculateTripDetails) {
-                            Text("Calculate")
-                                .foregroundColor(Color("ButtonText"))
-                                .frame(maxWidth: .infinity)
-                                .padding(.all, 10)
-                                .background(Color("Button"))
-                                .fontWeight(.bold)
-                                .cornerRadius(10)
-                        }
+        VStack(alignment: .leading) {
+            if viewModel.isLoading {
+                LoadingView()
+            }else {
+                
+                Group {
+                    HStack{
+                        Spacer()
+                        Button(action: {isHiPageVisible = true}, label: {
+                            Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)})
                     }
-                    VStack(alignment: .leading, spacing: 10) {
-                        ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
-                        ComponentResultView(title: "Distance:", value: "\((viewModel.stringDistance))")
-                        ComponentResultView(title: "Cost:", value:  (viewModel.cost))
-                    }
+                    ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel.startingLocation, viewModel: viewModel)
+                    ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel.destinationLocation, viewModel: viewModel)
                     
-
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(Color("Results"))
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                    if (viewModel.showMapView) {
-                        ComponentMapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
-                            .id(viewModel.mapIdentifier)
-                        ComponentAppleMapsButton(action: viewModel.openInAppleMaps)
-                    } else {
-                        Color.clear
+                    HStack {
+                        ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel.mpg)
+                        Spacer()
+                        ComponentValueTextFieldView(
+                            label: "Gas Price",
+                            text: $viewModel.averageGasPrice,
+                            showInfoIcon: true
+                        )
+                    }
+                    ComponentRouteOptionsView(avoidTolls: $viewModel.avoidTolls, avoidHighways: $viewModel.avoidHighways)
+                    
+                    Button(action: viewModel.calculateTripDetails) {
+                        Text("Calculate")
+                            .foregroundColor(Color("ButtonText"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.all, 10)
+                            .background(Color("Button"))
+                            .fontWeight(.bold)
+                            .cornerRadius(10)
                     }
                 }
+                VStack(alignment: .leading, spacing: 10) {
+                    ComponentResultView(title: "Trip Duration:", value: viewModel.formatTime(viewModel.time))
+                    ComponentResultView(title: "Distance:", value: "\((viewModel.stringDistance))")
+                    ComponentResultView(title: "Cost:", value:  (viewModel.cost))
+                }
+                
+                
+                .padding(.vertical, 10)
+                .padding(.horizontal, 20)
+                .background(Color("Results"))
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                if (viewModel.showMapView) {
+                    ComponentMapView(startingLocation: viewModel.startingLocation, destinationLocation: viewModel.destinationLocation, avoidTolls: viewModel.avoidTolls, avoidHighways: viewModel.avoidHighways)
+                        .id(viewModel.mapIdentifier)
+                    ComponentAppleMapsButtonView(action: viewModel.openInAppleMaps)
+                } else {
+                    Color.clear
+                }
             }
-            .onAppear {
-                        viewModel.loadSavedMpg()
-                    }
-            .fullScreenCover(isPresented: $isHiPageVisible) {
-                SendInvoiceView(viewModel: viewModel)
-                   
-                    }
+        }
+        .onAppear {
+            viewModel.loadSavedMpg()
+        }
+        .fullScreenCover(isPresented: $isHiPageVisible) {
+            SendInvoiceView(viewModel_Main: viewModel)
+            
+        }
         
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text("Alert"),
@@ -92,10 +94,10 @@ struct MainView: View {
             })
         }
         .padding()
-//        .background(Color.white)
+        //        .background(Color.white)
         .padding(.horizontal)
     }
-       
+    
 }
 
 struct InputView_Previews: PreviewProvider {

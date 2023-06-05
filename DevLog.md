@@ -51,3 +51,6 @@ viewModel.locationString is my userlocation
 Its hard to understand how apple is presenting their values on maps, sometimes they floor and other times they round. 
 
 New Feature will be a send button in the corner to send an invoice 
+
+6/4
+Almost done invoice but now i noticed that current location wont just have one instance but multiple
