@@ -13,7 +13,8 @@ import MessageUI
 struct SendInvoiceView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel_Main: TripViewModel
-    @ObservedObject var viewModel_Invoice = InvoiceViewModel()
+    @StateObject var viewModel_Invoice = InvoiceViewModel()
+    
     @State private var numberOfPeople: String = ""
     @State private var calculateCost = 0
     @State private var calculateCostString = ""
@@ -98,7 +99,7 @@ struct SendInvoiceView: View {
                         <style>
                         body {
                             font-family: Arial, sans-serif;
-                            font-size: 14px;
+                            font-size: 24px;
                             line-height: 1.5;
                         }
                         p {
