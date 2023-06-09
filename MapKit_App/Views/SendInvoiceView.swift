@@ -45,9 +45,10 @@ struct SendInvoiceView: View {
                 }) {
                     Text("Click Here to Split Cost")
                         .multilineTextAlignment(.center)
-                }
+                }.frame(maxWidth: .infinity)
                 if viewModel_Invoice.isSplittingCost {
-                    VStack(alignment: .leading, spacing: 10) {
+                    
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
                         Text("Number of People:")
                         TextField("", text: $numberOfPeople)
                             .focused($numOfPeopleField)
@@ -64,7 +65,7 @@ struct SendInvoiceView: View {
                     }) {
                         Text("Calculate")
                             .multilineTextAlignment(.center)
-                    }
+                    }.frame(maxWidth: .infinity)
                 }
                 
                 if viewModel_Invoice.perPersonCostSection {
