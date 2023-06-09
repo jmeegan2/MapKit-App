@@ -38,7 +38,7 @@ class InvoiceViewModel: ObservableObject {
                 calculateCostString = String(format: "%.2f", calculatedCost)
                 perPersonCostSection = true
                 sendInvoiceCostPerPerson = "Cost Per Person: $\(calculateCostString)"
-                sendInvoiceNumberOfPeople = "Number of People: \(numberOfPeople)"
+                sendInvoiceNumberOfPeople = "Number of People: \(Int(numberOfPeople))"
             } else {
                 perPersonCostSection = false
             }

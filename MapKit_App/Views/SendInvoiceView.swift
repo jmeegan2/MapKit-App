@@ -99,7 +99,7 @@ struct SendInvoiceView: View {
                         <style>
                         body {
                             font-family: Arial, sans-serif;
-                            font-size: 24px;
+                            font-size: 14px;
                             line-height: 1.5;
                         }
                         p {
