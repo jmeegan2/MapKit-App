@@ -8,14 +8,14 @@
 import Foundation
 import MapKit
 
-class MapViewModelForSearchResults: ObservableObject {
+class MapForSearchResultsViewModel: ObservableObject {
 
     @Published var region = MKCoordinateRegion()
     
     func getPlace(from address: AddressResult) {
-        var request = MKLocalSearch.Request()
-        var title = address.title
-        var subTitle = address.subtitle
+        let request = MKLocalSearch.Request()
+        let title = address.title
+        let subTitle = address.subtitle
         
         request.naturalLanguageQuery = subTitle.contains(title)
         ? subTitle : title + ", " + subTitle

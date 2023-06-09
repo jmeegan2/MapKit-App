@@ -14,7 +14,7 @@ struct MainView: View {
     
     
     @State var showAlert = false
-    @State var isHiPageVisible = false // Track the visibility of the "hi" page
+    @State var showInvoiceView = false // Track the visibility of the "hi" page
     
     var body: some View {
         
@@ -26,7 +26,7 @@ struct MainView: View {
                 Group {
                     HStack{
                         Spacer()
-                        Button(action: {isHiPageVisible = true}, label: {
+                        Button(action: {showInvoiceView = true}, label: {
                             Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
                             .frame(width: 25, height: 25)})
                     }
@@ -78,7 +78,7 @@ struct MainView: View {
         .onAppear {
             viewModel_Main.loadSavedMpg()
         }
-        .fullScreenCover(isPresented: $isHiPageVisible) {
+        .fullScreenCover(isPresented: $showInvoiceView) {
             SendInvoiceView(viewModel_Main: viewModel_Main)
             
         }
@@ -105,5 +105,6 @@ struct InputView_Previews: PreviewProvider {
         MainView()
     }
 }
+
 
 

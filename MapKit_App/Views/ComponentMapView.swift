@@ -135,8 +135,4 @@ struct ComponentMapView: UIViewRepresentable {
     
 }
 
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+

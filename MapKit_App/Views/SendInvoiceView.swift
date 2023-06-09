@@ -161,6 +161,8 @@ struct SendInvoiceView: View {
                     .sheet(isPresented: $showMessageComposeView) {
                         if MFMessageComposeViewController.canSendText() {
                             let messageBodyText = """
+                        ** Gas Route Invoice **
+                        
                         Date: \(viewModel_Invoice.formattedDate)
                         From: \(viewModel_Main.startingLocation)
                         To: \(viewModel_Main.destinationLocation)

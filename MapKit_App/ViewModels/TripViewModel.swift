@@ -138,9 +138,12 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
   
+    
     func calculateTripDetails() {
         calculateButtonPressed = true
         mapIdentifier = UUID()
+        
+        
 
         guard let mpg = Double(mpg),
             let gasPrice = Double(averageGasPrice)
@@ -149,6 +152,8 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             showAlert = true
             return
         }
+        
+        
         UserDefaults.standard.set(mpg, forKey: "SavedMpg")
         isLoading = true
         print("starting location\(startingLocation)")
