@@ -16,7 +16,6 @@ struct SendInvoiceView: View {
     @StateObject var viewModel_Invoice = InvoiceViewModel()
     
     @State private var numberOfPeople: String = ""
-    @State private var calculateCost = 0
     @State private var calculateCostString = ""
     @FocusState private var numOfPeopleField: Bool
     @State private var showMailComposeView = false
@@ -47,25 +46,17 @@ struct SendInvoiceView: View {
                         .multilineTextAlignment(.center)
                 }.frame(maxWidth: .infinity)
                 if viewModel_Invoice.isSplittingCost {
-                    
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
                         Text("Number of People:")
-                        TextField("", text: $numberOfPeople)
-                            .focused($numOfPeopleField)
-                            .padding(.all, 7)
-                            .background(Color("TextField"))
-                            .cornerRadius(10)
+                        TextField("", text: $numberOfPeople, onCommit: {
+                            numOfPeopleField = false
+                            viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: Double(numberOfPeople))
+                        })
+                        .focused($numOfPeopleField)
+                        .padding(.all, 7)
+                        .background(Color("TextField"))
+                        .cornerRadius(10)
                     }
-                }
-                
-                if !numberOfPeople.isEmpty {
-                    Button(action: {
-                        numOfPeopleField = false
-                        viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: Double(numberOfPeople))
-                    }) {
-                        Text("Calculate")
-                            .multilineTextAlignment(.center)
-                    }.frame(maxWidth: .infinity)
                 }
                 
                 if viewModel_Invoice.perPersonCostSection {
@@ -75,6 +66,7 @@ struct SendInvoiceView: View {
                     }
                 }
             }
+        
                 
                 
                 

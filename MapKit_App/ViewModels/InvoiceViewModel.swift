@@ -17,8 +17,7 @@ class InvoiceViewModel: ObservableObject {
     @Published var calculateCostString = ""
     @Published var sendInvoiceCostPerPerson = ""
     @Published var sendInvoiceNumberOfPeople = ""
-    @Published private var numberOfPeople: String = ""
-
+    @Published  var numberOfPeople: String = ""
     
 
     
@@ -43,5 +42,7 @@ class InvoiceViewModel: ObservableObject {
                 perPersonCostSection = false
             }
         }
+    
+
     
 }
