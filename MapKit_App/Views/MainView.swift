@@ -28,6 +28,8 @@ struct MainView: View {
                         Spacer()
                         Button(action: {showInvoiceView = true}, label: {
                             Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("Button"))
+                            
                             .frame(width: 25, height: 25)})
                     }
                     ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel_Main.startingLocation, viewModel: viewModel_Main)
@@ -77,6 +79,8 @@ struct MainView: View {
         }
         .onAppear {
             viewModel_Main.loadSavedMpg()
+            viewModel_Main.loadAverageGasPrice()
+            
         }
         .fullScreenCover(isPresented: $showInvoiceView) {
             SendInvoiceView(viewModel_Main: viewModel_Main)

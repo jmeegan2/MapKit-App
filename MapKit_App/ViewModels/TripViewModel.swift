@@ -147,6 +147,7 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         guard let mpg = Double(mpg),
             let gasPrice = Double(averageGasPrice)
+                
         else {
             alertMessage = "Invalid input, please check your values."
             showAlert = true
@@ -155,6 +156,8 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         
         UserDefaults.standard.set(mpg, forKey: "SavedMpg")
+        UserDefaults.standard.set(gasPrice, forKey: "SavedGasPrice") // Step 2: Save the gas price as well
+
         isLoading = true
         print("starting location\(startingLocation)")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
@@ -169,6 +172,10 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         mpg = savedMpg != 0 ? String(savedMpg) : ""
     }
     
+    func loadAverageGasPrice() {
+                let savedGasPrice = UserDefaults.standard.double(forKey: "SavedGasPrice")
+                averageGasPrice = savedGasPrice != 0 ? String(savedGasPrice) : ""
+    }
      func updateTripDetails(from route: MKRoute, mpg: Double, gasPrice: Double) {
 
         time = route.expectedTravelTime / 3600 // Convert seconds to hours

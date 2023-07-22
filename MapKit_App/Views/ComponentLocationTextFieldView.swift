@@ -45,7 +45,9 @@ struct ComponentLocationTextFieldView: View {
                             text = String("\(address.subtitle)")
                         } else if address.subtitle.contains("Search Nearby") {
                             text = String("\(address.title)")
-                        } else {
+                        } else if(address.subtitle.contains("No Results Nearby")) {
+                            text = String("\(address.title)")
+                        }else {
                             text = String("\(address.title) \(address.subtitle)")
                         }
                         viewModel.checkAddressAndModifyLocationString(addressTitle: address.title)
