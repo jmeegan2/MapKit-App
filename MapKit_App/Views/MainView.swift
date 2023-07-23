@@ -24,16 +24,40 @@ struct MainView: View {
             }else {
                 
                 Group {
-                    HStack{
+                    HStack {
                         Spacer()
-                        Button(action: {showInvoiceView = true}, label: {
-                            Image(systemName: "paperplane").resizable().aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color("Button"))
-                            
-                            .frame(width: 25, height: 25)})
+                        Button(action: { showInvoiceView = true }) {
+//                            Image(systemName: "paperplane")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .foregroundColor(Color("Button"))
+//                                .frame(width: 25, height: 25)
+//                                .padding(.trailing) // Add some padding to the trailing edge of the image
+                        }
                     }
+                    .overlay(
+                        // Place the image at the top trailing corner of the VStack
+                        GeometryReader { geometry in
+                            Image(systemName: "paperplane")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("Button"))
+                                .frame(width: 25, height: 25)
+                                .padding(.trailing) // Add some padding to the trailing edge of the image
+                                .position(
+                                    x: geometry.size.width - 20, // Adjust the x position as needed
+                                    y: 20 // Adjust the y position as needed
+                                )
+                                .onTapGesture {
+                                    showInvoiceView = true
+                                }
+                        }
+                    )
                     ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel_Main.startingLocation, viewModel: viewModel_Main)
+                        .tint(Color("TextFieldCursors"))
                     ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel_Main.destinationLocation, viewModel: viewModel_Main)
+                        .tint(Color("TextFieldCursors"))
+
                     
                     HStack {
                         ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel_Main.mpg)
@@ -61,8 +85,6 @@ struct MainView: View {
                     ComponentResultView(title: "Distance:", value: "\((viewModel_Main.stringDistance))")
                     ComponentResultView(title: "Cost:", value:  (viewModel_Main.cost))
                 }
-                
-                
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 .background(Color("Results"))

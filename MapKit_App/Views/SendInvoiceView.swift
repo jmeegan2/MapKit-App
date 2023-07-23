@@ -44,6 +44,7 @@ struct SendInvoiceView: View {
                 }) {
                     Text("Click Here to Split Cost")
                         .multilineTextAlignment(.center)
+                        .foregroundColor(Color("InvoiceBtnText"))
                 }.frame(maxWidth: .infinity)
                 if viewModel_Invoice.isSplittingCost {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
@@ -56,6 +57,7 @@ struct SendInvoiceView: View {
                         .padding(.all, 7)
                         .background(Color("TextField"))
                         .cornerRadius(10)
+                        .tint(Color("TextFieldCursors"))
                     }
                 }
                 
@@ -80,8 +82,11 @@ struct SendInvoiceView: View {
                             Image(systemName: "mail")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("Button"))
                                 .frame(width: 25, height: 25)
                             Text("Email Invoice")
+                                .foregroundColor(Color("Mess&EmailText"))
+
                         }
                     }
                     .sheet(isPresented: $showMailComposeView) {
@@ -147,8 +152,11 @@ struct SendInvoiceView: View {
                             Image(systemName: "message")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("Button"))
                                 .frame(width: 25, height: 25)
                             Text("Message Invoice")
+                                .foregroundColor(Color("Mess&EmailText"))
+
                         }
                     }
                     .sheet(isPresented: $showMessageComposeView) {
@@ -182,10 +190,10 @@ struct SendInvoiceView: View {
                     presentationMode.wrappedValue.dismiss() // Close the screen
                 }) {
                     Text("Close")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("ButtonText"))
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color("Button"))
                         .cornerRadius(10)
                         .font(.headline)
                 }

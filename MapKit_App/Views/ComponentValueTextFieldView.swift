@@ -41,7 +41,7 @@ struct ComponentValueTextFieldView: View {
                     .font(.system(size: 25, weight:.bold, design: .default))
                     .padding(.bottom, 8)
                     .foregroundColor(Color(("Button")))
-                Text("Current price for gallon of fuel.")
+                Text("Current price for gallon of fuel. Previous value will be saved.")
                     .padding(.horizontal)
                     .multilineTextAlignment(.center)
                     
