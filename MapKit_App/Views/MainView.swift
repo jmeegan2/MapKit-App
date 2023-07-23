@@ -45,14 +45,15 @@ struct MainView: View {
                                 .frame(width: 25, height: 25)
                                 .padding(.trailing) // Add some padding to the trailing edge of the image
                                 .position(
-                                    x: geometry.size.width - 20, // Adjust the x position as needed
-                                    y: 20 // Adjust the y position as needed
+                                    x: geometry.size.width - 10, // Adjust the x position as needed
+                                    y: 10 // Adjust the y position as needed
                                 )
                                 .onTapGesture {
                                     showInvoiceView = true
                                 }
                         }
                     )
+                    .padding(.top,15)
                     ComponentLocationTextFieldView(label: "Starting Location", text: $viewModel_Main.startingLocation, viewModel: viewModel_Main)
                         .tint(Color("TextFieldCursors"))
                     ComponentLocationTextFieldView(label: "Destination Location", text: $viewModel_Main.destinationLocation, viewModel: viewModel_Main)
@@ -61,12 +62,16 @@ struct MainView: View {
                     
                     HStack {
                         ComponentValueTextFieldView(label: "Vehicle MPG", text: $viewModel_Main.mpg)
+                            .tint(Color("TextFieldCursors"))
+
                         Spacer()
                         ComponentValueTextFieldView(
                             label: "Gas Price",
                             text: $viewModel_Main.averageGasPrice,
                             showInfoIcon: true
                         )
+                        .tint(Color("TextFieldCursors"))
+
                     }
                     ComponentRouteOptionsView(avoidTolls: $viewModel_Main.avoidTolls, avoidHighways: $viewModel_Main.avoidHighways)
                     

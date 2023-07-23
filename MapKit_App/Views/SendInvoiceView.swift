@@ -26,7 +26,7 @@ struct SendInvoiceView: View {
             
             
             Section(header: Text("Trip Details").font(.title).fontWeight(.bold)) {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
+                LazyVGrid(columns: [GridItem(.fixed(75)), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                     Text("From:")
                     Text(viewModel_Main.startingLocation)
                     Text("To:")
@@ -37,6 +37,7 @@ struct SendInvoiceView: View {
                     Text("\(viewModel_Main.mpg)")
                     Text("Cost:")
                     Text(viewModel_Main.cost) // this is a string
+                    
                     
                 }
                 Button(action: {

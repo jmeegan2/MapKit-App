@@ -47,7 +47,7 @@ struct ComponentValueTextFieldView: View {
                     
                 Spacer()
             }
-            .frame(maxWidth:375)
+            .frame(maxWidth:500)
             .padding()
         }
     }
