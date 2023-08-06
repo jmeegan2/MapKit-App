@@ -23,7 +23,6 @@
 		11CF3D7B2A27EBE700FF1CF3 /* SwiftUIMessage in Frameworks */ = {isa = PBXBuildFile; productRef = 11CF3D7A2A27EBE700FF1CF3 /* SwiftUIMessage */; };
 		11DDC7A429E910A30093E3A5 /* ComponentMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7A329E910A30093E3A5 /* ComponentMapView.swift */; };
 		11DDC7AD29E95E2F0093E3A5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDC7AC29E95E2F0093E3A5 /* LoadingView.swift */; };
-		11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 11E0E75129FCC13F00467EFE /* SwiftSoup */; };
 		11EE9F8729E1FCE900436563 /* MapKit_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE9F8629E1FCE900436563 /* MapKit_AppApp.swift */; };
 		11EE9F8B29E1FCEA00436563 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11EE9F8A29E1FCEA00436563 /* Assets.xcassets */; };
 		11EE9F9629E2076500436563 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE9F9529E2076500436563 /* MainView.swift */; };
@@ -79,7 +78,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				11CF3D7B2A27EBE700FF1CF3 /* SwiftUIMessage in Frameworks */,
-				11E0E75229FCC13F00467EFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,7 +205,6 @@
 			);
 			name = MapKit_App;
 			packageProductDependencies = (
-				11E0E75129FCC13F00467EFE /* SwiftSoup */,
 				11CF3D7A2A27EBE700FF1CF3 /* SwiftUIMessage */,
 			);
 			productName = MapKit_App;
@@ -599,11 +596,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 11CF3D792A27EBE700FF1CF3 /* XCRemoteSwiftPackageReference "SwiftUIMessage" */;
 			productName = SwiftUIMessage;
-		};
-		11E0E75129FCC13F00467EFE /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11E0E75029FCC13F00467EFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
