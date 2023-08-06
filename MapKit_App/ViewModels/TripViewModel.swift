@@ -8,7 +8,6 @@ import SwiftUI
 import Foundation
 import MapKit
 import Foundation
-import SwiftSoup
 import CoreLocation
 import SwiftUIMessage
 import MessageUI
@@ -159,7 +158,6 @@ class TripViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         UserDefaults.standard.set(gasPrice, forKey: "SavedGasPrice") // Step 2: Save the gas price as well
         
         isLoading = true
-        print("starting location\(startingLocation)")
         searchLocation(startingLocation) { [self] (startingPlacemark) in
             searchLocation(destinationLocation) { [self] (destinationPlacemark) in
                 calculateRoute(from: startingPlacemark, to: destinationPlacemark, mpg: mpg, gasPrice: gasPrice)

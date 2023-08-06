@@ -40,36 +40,37 @@ struct SendInvoiceView: View {
                     
                     
                 }
-                Button(action: {
-                    viewModel_Invoice.isSplittingCost.toggle()
-                }) {
-                    Text("Click Here to Split Cost")
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color("InvoiceBtnText"))
-                }.frame(maxWidth: .infinity)
-                if viewModel_Invoice.isSplittingCost {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
-                        Text("Number of People:")
-                        TextField("", text: $numberOfPeople, onCommit: {
-                            numOfPeopleField = false
-                            viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: Double(numberOfPeople))
-                        })
-                        .focused($numOfPeopleField)
-                        .padding(.all, 7)
-                        .background(Color("TextField"))
-                        .cornerRadius(10)
-                        .tint(Color("TextFieldCursors"))
+                    
+                    Button(action: {
+                        viewModel_Invoice.isSplittingCost.toggle()
+                    }) {
+                        Text("Click Here to Split Cost")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color("Button"))
+
                     }
-                }
-                
-                if viewModel_Invoice.perPersonCostSection {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
-                        Text("Cost Per Person:")
-                        Text("$\(viewModel_Invoice.calculateCostString)")
-                    }
+            }
+            if viewModel_Invoice.isSplittingCost {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
+                    Text("Number of People:")
+                    TextField("", text: $numberOfPeople, onCommit: {
+                        numOfPeopleField = false
+                        viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: Double(numberOfPeople))
+                    })
+                    .focused($numOfPeopleField)
+                    .padding(.all, 7)
+                    .background(Color("TextField"))
+                    .cornerRadius(10)
+                    .tint(Color("TextFieldCursors"))
                 }
             }
-        
+            
+            if viewModel_Invoice.perPersonCostSection {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
+                    Text("Cost Per Person:")
+                    Text("$\(viewModel_Invoice.calculateCostString)")
+                }
+            }
                 
                 
                 
