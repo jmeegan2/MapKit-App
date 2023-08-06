@@ -6,6 +6,7 @@ Features
 * Display the route on an interactive map
 * Toggle between avoiding or allowing toll roads
 * Open the calculated route in Apple Maps for easy navigation
+* Send a invoice using iMessage or Email
 * Clean and user-friendly interface
 
 Installation Prerequisites
@@ -21,7 +22,7 @@ Usage
 5. Click the "Calculate" button to generate the trip details, which includes the trip duration, distance, and cost.
 6. View the route on the interactive map.
 7. Optionally, click the "Open in Apple Maps" button to open the route in the Apple Maps app for easy navigation.
-
+8. To send an invoice click the paperplane symbol in top right corner of screen to go to invoice screen.
 References used
 * https://www.hackingwithswift.com/example-code/location/how-to-find-directions-using-mkmapview-and-mkdirectionsrequest
 * https://levelup.gitconnected.com/implementing-address-autocomplete-using-swiftui-and-mapkit-c094d08cda24
