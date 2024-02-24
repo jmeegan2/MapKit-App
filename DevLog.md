@@ -60,7 +60,11 @@ Currently working on the removing bug where user location is able to be chosen m
 6/5
 Still have to fix parts of invoice view 
 
-6/8
+6/8/ 2023
 Ok we have to finish to this invoice page up, working on removing all logic atm, still need to fix the bug of user location
 
+
+Been awhile since working on this 
+
+2/24/2024
 

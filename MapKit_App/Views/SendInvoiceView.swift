@@ -51,17 +51,20 @@ struct SendInvoiceView: View {
                     }
             }
             if viewModel_Invoice.isSplittingCost {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10){
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 10) {
                     Text("Number of People:")
-                    TextField("", text: $numberOfPeople, onCommit: {
-                        numOfPeopleField = false
-                        viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: Double(numberOfPeople))
-                    })
-                    .focused($numOfPeopleField)
-                    .padding(.all, 7)
-                    .background(Color("TextField"))
-                    .cornerRadius(10)
-                    .tint(Color("TextFieldCursors"))
+                    TextField("", text: $numberOfPeople)
+                        .onChange(of: numberOfPeople) { newValue in
+                            if let numberOfPeopleValue = Double(newValue) {
+                                // Optionally, add additional checks here to decide when to call calculateCost
+                                viewModel_Invoice.calculateCost(costValue: viewModel_Main.costInvoice, numberOfPeopleValue: numberOfPeopleValue)
+                            }
+                        }
+                        .focused($numOfPeopleField)
+                        .padding(.all, 7)
+                        .background(Color("TextField"))
+                        .cornerRadius(10)
+                        .tint(Color("TextFieldCursors"))
                 }
             }
             
